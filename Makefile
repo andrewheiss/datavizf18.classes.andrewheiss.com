@@ -1,5 +1,5 @@
 OUTPUTDIR=public
-SSH_TARGET=cloud:/home/andrew/sites/datavizf17.classes/public_html
+SSH_TARGET=cloud:/home/andrew/sites/datavizf18.classes/public_html
 
 .PHONY : all
 
