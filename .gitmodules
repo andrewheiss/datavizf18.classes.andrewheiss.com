@@ -1,0 +1,3 @@
+[submodule "themes/ath-tufte-hugo"]
+	path = themes/ath-tufte-hugo
+	url = https://github.com/andrewheiss/ath-tufte-hugo.git

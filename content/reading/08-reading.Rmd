@@ -1,0 +1,27 @@
+---
+title: "Surveys and qualitative data"
+date: "2017-10-24"
+citeproc: false
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-fullnote-bibliography-no-bib.csl
+stuff-to-add: >-
+  "https://medium.com/hci-design-at-uw/explaining-the-gap-visualizing-ones-predictions-improves-recall-and-comprehension-of-data-ec848d5861d9; https://twitter.com/s_soroka/status/907941270735278085"
+---
+
+# Required
+
+- [Treasuring All Truth](http://www.mormonnewsroom.org/article/treasuring-all-truth)
+- Chapters 5 and 8 in Stephanie Evergreen, *Effective Data Visualization* [@Evergreen:2017]
+- [Six Ideas for Displaying Qualitative Data](http://annkemery.com/qual-dataviz/)
+- [Word clouds considered harmful](http://www.niemanlab.org/2011/10/word-clouds-considered-harmful/)
+- [Word clouds cause death… or something](https://flowingdata.com/2011/10/18/word-clouds-cause-death-or-something/)
+- [When It's Ok to Use Word Clouds](https://www.vis4.net/blog/2015/01/when-its-ok-to-use-word-clouds/)
+- [The Class of 2011](http://www.nytimes.com/interactive/2011/06/10/education/commencement-speeches-graphic.html)
+- [Sentiment Analysis of The Book of Mormon](https://www.sixteensmallstones.org/the-book-of-mormon-for-geeks-sentiment-analysis-of-the-book-of-mormon/)
+- [Tweet by \@s_soroka](https://twitter.com/s_soroka/status/907941270735278085)
+
+
+# Questions to reflect on
+
+- Why is qualitative data difficult to visualize?
+- Why are word clouds so problematic? When is (not) okay to use them? 

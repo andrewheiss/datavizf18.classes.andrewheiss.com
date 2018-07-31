@@ -1,0 +1,168 @@
+---
+title: "Final projects"
+slug: final-projects
+output: 
+  blogdown::html_page: 
+    fig_caption: no
+    template: ../pandoc/toc-title_html.template
+    toc: true
+---
+
+<span class="newthought">For their [final projects](/assignment/final-project/)</span>, students had to use R and Illustrator to take a huge dataset, explore it, tinker with it, and tell a nuanced story about it using at least three graphs. 
+
+The results were fantastic.
+
+Here are some of the visualizations.^[All have been shared with student permission.]
+
+
+# Natalia Brown: Analysis of travel runs in Yellowstone
+
+[<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Project description][brown-memo]&ensp;
+[<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Final PDF][brown-pdf]&ensp;
+[<i class="fa fa-picture-o" aria-hidden="true"></i> Final PNG][brown-png]
+
+<figure class="fullwidth">
+
+[![Natalia Brown final project][brown-png]][brown-pdf]
+
+</figure>
+
+[brown-png]: /final/natalia-brown/natalia-brown_final.png
+[brown-pdf]: /final/natalia-brown/natalia-brown_final.pdf
+[brown-memo]: /final/natalia-brown/natalia-brown_final_memo.pdf
+
+
+# Dan Sisco: Firefighter fatalities, 2000–2015
+
+[<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Project description][sisco-memo]&ensp;
+[<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Final PDF][sisco-pdf]&ensp;
+[<i class="fa fa-picture-o" aria-hidden="true"></i> Final PNG][sisco-png]
+
+<figure class="fullwidth">
+
+[![Dan Sisco final project][sisco-png]][sisco-pdf]
+
+</figure>
+
+[sisco-png]: /final/dan-sisco/dan-sisco_final.png
+[sisco-pdf]: /final/dan-sisco/dan-sisco_final.pdf
+[sisco-memo]: /final/dan-sisco/dan-sisco_final_memo.pdf
+
+
+# Whitney Royal: European hotel reviews
+
+[<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Project description][royal-memo]&ensp;
+[<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Final PDF][royal-pdf]&ensp;
+[<i class="fa fa-picture-o" aria-hidden="true"></i> Final PNG][royal-png]
+
+<figure class="fullwidth">
+
+[![Whitney Royal final project][royal-png]][royal-pdf]
+
+</figure>
+
+[royal-png]: /final/whitney-royal/whitney-royal_final.png
+[royal-pdf]: /final/whitney-royal/whitney-royal_final.pdf
+[royal-memo]: /final/whitney-royal/whitney-royal_final_memo.pdf
+
+
+# Jordan Hunter: Severe workplace injuries in the United States, 2015–2017
+
+[<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Project description][hunter-memo]&ensp;
+[<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Final PDF][hunter-pdf]&ensp;
+[<i class="fa fa-picture-o" aria-hidden="true"></i> Final PNG][hunter-png]
+
+<figure class="fullwidth">
+
+[![Jordan Hunter final project][hunter-png]][hunter-pdf]
+
+</figure>
+
+[hunter-png]: /final/jordan-hunter/jordan-hunter_final.png
+[hunter-pdf]: /final/jordan-hunter/jordan-hunter_final.pdf
+[hunter-memo]: /final/jordan-hunter/jordan-hunter_final_memo.pdf
+
+
+# James Sinkovic: Assassinations on the rise?
+
+[<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Project description][sinkovic-memo]&ensp;
+[<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Final PDF][sinkovic-pdf]&ensp;
+[<i class="fa fa-picture-o" aria-hidden="true"></i> Final PNG][sinkovic-png]
+
+<figure class="fullwidth">
+
+[![James Sinkovic final project][sinkovic-png]][sinkovic-pdf]
+
+</figure>
+
+[sinkovic-png]: /final/james-sinkovic/james-sinkovic_final.png
+[sinkovic-pdf]: /final/james-sinkovic/james-sinkovic_final.pdf
+[sinkovic-memo]: /final/james-sinkovic/james-sinkovic_final_memo.pdf
+
+
+# Christopher Law: European hotel reviews
+
+[<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Project description][law-memo]&ensp;
+[<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Final PDF][law-pdf]&ensp;
+[<i class="fa fa-picture-o" aria-hidden="true"></i> Final PNG][law-png]
+
+<figure class="fullwidth">
+
+[![Christopher Law final project][law-png]][law-pdf]
+
+</figure>
+
+[law-png]: /final/christopher-law/christopher-law_final.png
+[law-pdf]: /final/christopher-law/christopher-law_final.pdf
+[law-memo]: /final/christopher-law/christopher-law_final_memo.pdf
+
+
+# Jacob Fullmer: Chase Bank nationwide deposit trends, 2010–2016
+
+[<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Project description][fullmer-memo]&ensp;
+[<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Final PDF][fullmer-pdf]&ensp;
+[<i class="fa fa-picture-o" aria-hidden="true"></i> Final PNG][fullmer-png]
+
+<figure class="fullwidth">
+
+[![Jacob Fullmer final project][fullmer-png]][fullmer-pdf]
+
+</figure>
+
+[fullmer-png]: /final/jacob-fullmer/jacob-fullmer_final.png
+[fullmer-pdf]: /final/jacob-fullmer/jacob-fullmer_final.pdf
+[fullmer-memo]: /final/jacob-fullmer/jacob-fullmer_final_memo.pdf
+
+
+# Stephanie Dossena: Trends in terrorism, 1970–2010
+
+[<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Project description][dossena-memo]&ensp;
+[<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Final PDF][dossena-pdf]&ensp;
+[<i class="fa fa-picture-o" aria-hidden="true"></i> Final PNG][dossena-png]
+
+<figure class="fullwidth">
+
+[![Stephanie Dossena final project][dossena-png]][dossena-pdf]
+
+</figure>
+
+[dossena-png]: /final/stephanie-dossena/stephanie-dossena_final.png
+[dossena-pdf]: /final/stephanie-dossena/stephanie-dossena_final.pdf
+[dossena-memo]: /final/stephanie-dossena/stephanie-dossena_final_memo.pdf
+
+
+# Victor Obiri: Breaking down terrorism in the US
+
+[<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Project description][obiri-memo]&ensp;
+[<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Final PDF][obiri-pdf]&ensp;
+[<i class="fa fa-picture-o" aria-hidden="true"></i> Final PNG][obiri-png]
+
+<figure class="fullwidth">
+
+[![Victor Obiri final project][obiri-png]][obiri-pdf]
+
+</figure>
+
+[obiri-png]: /final/victor-obiri/victor-obiri_final.png
+[obiri-pdf]: /final/victor-obiri/victor-obiri_final.pdf
+[obiri-memo]: /final/victor-obiri/victor-obiri_final_memo.pdf

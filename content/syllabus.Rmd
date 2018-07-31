@@ -1,0 +1,134 @@
+---
+title: Syllabus
+slug: syllabus
+citeproc: false
+bibliography: ../static/bib/references.bib
+csl: ../static/bib/chicago-syllabus-no-bib.csl
+---
+
+```{r load-libraries, message=FALSE, warning=FALSE, include=FALSE}
+library(tidyverse)
+library(pander)
+```
+
+<span class="newthought">Data rarely speaks for itself.</span> [^courseinfo] By itself, the facts contained in raw data are difficult to understand, and in the absence of beauty and order, it is impossible to understand the truth that the data shows.
+
+In this class, you'll learn how to use industry-standard graphic and data design techniques to create beautiful, understandable visualizations and uncover truth in data.
+
+[^courseinfo]: {-}
+  `r blogdown::shortcode("courseinfo")`
+
+
+# Course objectives
+
+By the end of this course, you will become (1) literate in data and graphic design principles, (2) an ethical data communicator, and (3) a collaborative sharer by producing beautiful, powerful, and clear visualizations of your own data. Specifically, you should:
+
+- Understand the principles of data and graphic design
+- Evaluate the credibility, ethics, and aesthetics of data visualizations
+- Create well-designed data visualizations with appropriate tools
+- Share data and graphics in open forums
+- Be curious and confident in consuming and producing data
+
+Given these objectives, this course fulfills two of the four learning outcomes for BYU's [Master of Public Administration (MPA)](https://marriottschool.byu.edu/mpa/) program: 
+
+- **Quantitative Analysis**: BYU MPA graduates are skilled at evaluating programs and policies. They know how to gather data, correctly analyze it, and employ the analysis to recommend policy and programmatic action in public service organizations.
+
+- **Communications**: BYU MPA graduates effectively convey verbal and written information with the polish and professionalism appropriate for the public service context. They listen to and promote understanding among people with diverse viewpoints.
+
+
+# Course materials
+
+You'll need to get these books—they're definitely worth keeping for reference, too.
+
+- [@Cairo:2016] [$34 used, $40 new at [Amazon](https://www.amazon.com/Truthful-Art-Data-Charts-Communication/dp/0321934075)]
+- [@Evergreen:2017] [$36 used, $45 new at [Amazon](https://www.amazon.com/Effective-Data-Visualization-Right-Chart/dp/1506303056)]
+- [@Wong:2010] [$13 used, $18 new at [Amazon](https://www.amazon.com/Street-Journal-Guide-Information-Graphics/dp/0393347281)]
+
+These books are optional—we'll refer to stuff in them and they're useful for reference, but they're not absolutely necessary:
+
+- [@WickhamGrolemund:2017] [**FREE** [online](http://r4ds.had.co.nz/); $25 used, $33 new at [Amazon](https://www.amazon.com/R-Data-Science-Hadley-Wickham/dp/1491910399/)]
+- [@Cairo:2013] [$26 used, $37 new at [Amazon](https://www.amazon.com/Functional-Art-introduction-information-visualization/dp/0321834739)]
+- [@Williams:2008] [$15 used at [Amazon](https://www.amazon.com/Non-Designers-Design-Type-Books-Deluxe/dp/0321534050)]
+
+
+# Course policies
+
+**Be nice. Be honest. Don't cheat.**
+
+We will also follow the [full list of Marriott School and BYU classroom policies](https://marriottschool.byu.edu/policies/classroom/).
+
+
+## Counseling and Psychological Services (CAPS)
+
+Life at BYU can be complicated and challenging. You might feel overwhelmed, experience anxiety or depression, or struggle with relationships or family responsibilities. [Counseling and Psychological Services (CAPS)](https://caps.byu.edu/) provides free, *confidential* support for students who are struggling with mental health and emotional challenges. The CAPS office is staffed by professional psychologists who are attuned to the needs of all types of college students. Please do not hesitate to contact CAPS for assistance—getting help is a smart and courageous thing to do.
+
+
+## Basic needs security
+
+If you have difficulty affording groceries or accessing sufficient food to eat every day, or if you lack a safe and stable place to live, and you believe this may affect your performance in this course, please contact the [Dean of Students](https://deanofstudents.byu.edu/) for support. Please also consider speaking with your local LDS bishop regarding Church welfare assistance *regardless of whether or not you are LDS*. Additionally, please talk to me if you are comfortable in doing so. This will enable me to provide any resources that I might possess.
+
+
+## Class conduct and expectations
+
+On the first day of class we came up with rules, expectations, and policies for things like technology in the classroom, attendance, participation, late work, etc.
+
+- We decided that laptops and phones won't be banned (since they're kind of necessary for the class), and that they can be used responsibly (if you're dealing with family or other concerns, since we're an evening class). But you still need to pay attention and participate.
+- Late work is acceptable(ish) but discouraged. If you have to miss a lecture, it is your responsibility to catch up. Meet with your classmates or with me to make sure you cover everything you missed.
+- Above all, *be a responsible adult*.
+
+
+# Assignments and grades
+
+You can find descriptions and instructions of all assignments on the [assignments page](/assignments/).
+
+```{r assignments-grades, include=FALSE}
+assignments <- tribble(
+  ~Points, ~Assignment,
+  80     , "Weekly memos (8)",
+  80     , "Homework assignments (8)",
+  30     , "Redesign 1",
+  30     , "Redesign 2",
+  30     , "Redesign 3",
+  40     , "Rubric draft",
+  40     , "Rubric test run",
+  80     , "Final rubric",
+  100    , "Final project"
+)
+
+grading <- tribble(
+  ~Grade, ~Range,
+  "A",  "93–100%",
+  "A−", "90–92%",
+  "B+", "87–89%",
+  "B",  "83–86%",
+  "B−", "80–82%",
+  "C+", "77–79%",
+  "C",  "73–76%",
+  "C−", "70–72%",
+  "D+", "67–69%",
+  "D",  "63–66%",
+  "D−", "60–62%",
+  "F",  "< 60%"
+)
+```
+
+```{r show-assignments-table, echo=FALSE, results="asis"}
+assignments %>% 
+  select(Assignment, Points) %>% 
+  pandoc.table(justify = "lc")
+```
+
+## Grades
+
+```{r show-grades-table, echo=FALSE, results="asis"}
+grading %>%
+  pandoc.table(justify = "rc")
+```
+
+
+# Dinosaurs
+
+[^dinosaurs] Once you have read this entire syllabus and [the assignments page](/assignments/), please [click here](mailto:andrew_heiss@byu.edu) and e-mail me a picture of a dinosaur. For real. Brownie points if you send a picture of a cat or dog dressed as a dinosaur.
+
+[^dinosaurs]: {-}
+  ![Dinosaurs](/images/dinosaurs.jpg) Velociraptor and Protoceratops locked in a mortal combat, by [Raul Martin](https://dx.doi.org/10.1371/journal.pbio.0000040)

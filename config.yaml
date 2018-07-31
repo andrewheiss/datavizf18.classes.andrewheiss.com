@@ -1,0 +1,77 @@
+baseURL: "https://datavizf18.classes.andrewheiss.com/"
+languageCode: en-us
+title: Data visualization
+theme: ath-tufte-hugo
+googleAnalytics: ""
+ignoreFiles:
+  - \.Rmd$
+  - \.Rmarkdown$
+  - \.yaml$
+  - _files$
+  - _cache$
+  - \.csl$
+permalinks:
+  post: "/:year/:month/:day/:slug/"
+menu:
+  main:
+    - name: Syllabus
+      url: /syllabus/
+      weight: 1
+    - name: Assignments
+      url: /assignments/
+      weight: 3
+    - name: Schedule
+      url: /schedule/
+      weight: 2
+    - name: Reference
+      url: /reference/
+      weight: 4
+    - name: Final projects
+      url: /final-projects/
+      weight: 5
+# Disable taxonomies
+taxonomies:
+  tag: ""
+  group: ""
+  category: ""
+params:
+  author: Andrew Heiss
+  thumbnail: /images/dataviz_meta.png
+  instructor: 
+    name: Dr. Andrew Heiss
+    email: andrew_heiss@byu.edu
+    url: "https://www.andrewheiss.com"
+    twitter: andrewheiss
+    github: andrewheiss
+    office: 773 TNRB
+  course:
+    number: MPA 635
+    semester: Fall 2017
+    days: Tuesdays
+    time: "6:30–8:45 PM"
+    location: 270 TNRB
+    twitter: andrewheiss
+    slack: "https://mpa635fall2017.slack.com/"
+    dates: "September 5–October 24, 2017"
+    github: "andrewheiss/dataviz.andrewheiss.com"
+    copyrightYear: "2017"
+    contactDetails: >-
+      Office hours: Mondays from 10:30–11:30. [Sign up for other times here.](https://calendly.com/andrewheiss/meeting/)<br><br>E-mail is the best way to get in contact with me—I will respond to all course-related e-mails within 24 hours (*really*).
+  university: 
+    name: Brigham Young University
+    url: "https://www.byu.edu"
+  school:
+    name: Romney Institute of Public Management
+    url: "https://marriottschool.byu.edu/mpa/"
+  description: "Communicate science with beautiful graphics"
+  primaryColor: "#A5452B"
+  secondaryColor: "#ECAD49"
+  credits: >-
+    "bar graph" icon by [severino ribecca](https://thenounproject.com/r.severino/collection/data-visualisation-catalogue-icons/?i=115543) from the [noun project](https://thenounproject.com).<br>[obi-wan kenobi color scheme](http://www.colourlovers.com/palette/4506232/Obi-Wan_Kenobi) from [colourlovers](http://www.colourlovers.com/).
+  logo:
+    url: /images/dataviz_hires.png
+    alt: Data visualization
+  meta:
+    twitterSite: "@andrewheiss"
+    twitterCreator: "@andrewheiss"
+    fbAuthor: "https://www.facebook.com/andrewheiss"

@@ -1,0 +1,10 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+blogdown/
+public/
+.DS_Store
+static/slides/*
+static/**/*.zip
+assets/*

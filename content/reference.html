@@ -1,0 +1,154 @@
+---
+title: Reference
+slug: reference
+output:
+  blogdown::html_page:
+    template: ../pandoc/toc-title_html.template
+    toc: true
+---
+
+<!-- BLOGDOWN-HEAD -->
+<!-- /BLOGDOWN-HEAD -->
+
+<h2>Contents</h2>
+<div id="TOC">
+<ul>
+<li><a href="#citations-and-bibliography">Citations and bibliography</a></li>
+<li><a href="#interesting-and-excellent-real-world-examples">Interesting and excellent real world examples</a></li>
+<li><a href="#how-to-select-the-appropriate-chart-type">How to select the appropriate chart type</a></li>
+<li><a href="#resources">Helpful data visualization resources</a></li>
+<li><a href="#visualization-in-excel">Visualization in Excel</a></li>
+<li><a href="#visualization-in-tableau">Visualization in Tableau</a></li>
+<li><a href="#working-with-r-and-ggplot2">Working with R and ggplot2</a></li>
+<li><a href="#r-in-the-wild">R in the wild</a></li>
+<li><a href="#data">Data</a></li>
+<li><a href="#colors">Colors</a></li>
+<li><a href="#fonts">Fonts</a></li>
+<li><a href="#markdown">Markdown</a></li>
+</ul>
+</div>
+
+<h2 id="citations-and-bibliography">Citations and bibliography</h2>
+<p><span><label for="sn-1" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-1" class="margin-toggle"/><span class="marginnote"> You can open the file in <a href="http://bibdesk.sourceforge.net/">BibDesk on macOS</a>, <a href="http://www.jabref.org/">JabRef on Windows</a>, or <a href="https://www.zotero.org/">Zotero</a> or <a href="https://www.mendeley.com/">Mendeley</a> online.<br />
+<br />
+</span></span> You can <a href="/bib/references.bib">download a BibTeX file</a> of all the non-web-based readings in the course.</p>
+<h2 id="interesting-and-excellent-real-world-examples">Interesting and excellent real world examples</h2>
+<ul>
+<li><a href="http://www.storiesbehindaline.com/">The Stories Behind a Line</a></li>
+<li><a href="https://flowingdata.com/2017/06/28/australia-as-100-people/">Australia as 100 people</a><span><label for="sn-2" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-2" class="margin-toggle"/><span class="marginnote"> You can make something like this with d3 and the <a href="https://github.com/civisanalytics/potato">potato project</a>.<br />
+<br />
+</span></span></li>
+<li><a href="https://flowingdata.com/2017/07/17/marrying-age-over-the-past-century/">Marrying Later, Staying Single Longer</a></li>
+</ul>
+<h2 id="how-to-select-the-appropriate-chart-type">How to select the appropriate chart type</h2>
+<p><span><label for="sn-3" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-3" class="margin-toggle"/><span class="marginnote"> <a href="http://www.datavizcatalogue.com/"><img src="/images/reference/dataviz-catalogue.png" alt="The Data Visualisation Catalogue" /></a> <em>The Data Visualisation Catalogue</em><br />
+<br />
+</span></span> Many people have created many useful tools for selecting the correct chart type for a given dataset or question. Here are some of the best:</p>
+<ul>
+<li><a href="http://www.datavizcatalogue.com/"><strong>The Data Visualisation Catalogue</strong></a>: Descriptions, explanations, examples, and tools for creating 60 different types of visualizations.</li>
+<li><a href="http://datavizproject.com/"><strong>The Data Viz Project</strong></a>: Descriptions and examples for 150 different types of visualizations. Also allows you to search by data shape and chart function (comparison, correlation, distribution, geographical, part to whole, trend over time, etc.).</li>
+<li><a href="http://chartmaker.visualisingdata.com/"><strong>The Chartmaker Directory</strong></a>: xamples of how to create 51 different types of visualizations in 31 different software packages, including Excel, Tableau, and R.</li>
+<li><a href="http://shinyapps.stat.ubc.ca/r-graph-catalog/"><strong>R Graph Catalog</strong></a>: R code for 124 ggplot graphs.</li>
+<li><a href="http://annkemery.com/essentials/"><strong>Emery’s Essentials</strong></a>: Descriptions and examples of 26 different chart types.</li>
+</ul>
+<h2 id="resources">Helpful data visualization resources</h2>
+<ul>
+<li><a href="http://www.storytellingwithdata.com/"><strong>Storytelling with Data</strong></a>: Blog and site full of resources by Cole Nussbaumer Knaflic.</li>
+<li><a href="http://annkemery.com/blog/"><strong>Ann K. Emery’s blog</strong></a>: Blog and tutorials by <a href="https://twitter.com/AnnKEmery">Ann Emery</a>.</li>
+<li><a href="http://stephanieevergreen.com/"><strong>Evergreen Data</strong></a>: Helful resources by <a href="https://twitter.com/evergreendata">Stephanie Evergreen</a>.</li>
+<li><a href="https://policyviz.com/"><strong>PolicyViz</strong></a>: Regular podcast and site full of helpful resources by <a href="https://twitter.com/jschwabish">Jon Schwabisch</a>.</li>
+<li><a href="https://twitter.com/HelpMeViz"><strong>@HelpMeViz</strong></a>: Community of people who give advice on how to visualize data.</li>
+<li><a href="http://www.visualisingdata.com/"><strong>Visualising Data</strong></a>: Fantastic collection of visualization resources, articles, and tutorials by <a href="https://twitter.com/visualisingdata">Andy Kirk</a>.</li>
+<li><a href="http://infowetrust.com/"><strong>Info We Trust</strong></a>: Detailed explorations of visualizations by <a href="https://twitter.com/infowetrust">RJ Andrews</a>, including a <a href="http://infowetrust.com/history/">beautiful visual history of the field</a>.</li>
+<li><a href="https://flowingdata.com/"><strong>FlowingData</strong></a>: Blog by <a href="https://twitter.com/flowingdata">Nathan Yau</a>.</li>
+<li><a href="http://www.informationisbeautiful.net/"><strong>Information is Beautiful</strong></a>: Blog by <a href="https://twitter.com/mccandelish">David McCandless</a>.</li>
+<li><a href="http://junkcharts.typepad.com/"><strong>Junk Charts</strong></a>: Blog by <a href="https://twitter.com/junkcharts">Kaiser Fung</a>.</li>
+<li><a href="http://viz.wtf/"><strong>WTF Visualizations</strong></a>: Visualizations that make you ask “What the F<sup>rea</sup>k?”<span><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle"/><span class="sidenote"> 🙊 Hi BYU! 🙊<br />
+<br />
+</span></span></li>
+<li><span><label for="sn-5" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-5" class="margin-toggle"/><span class="marginnote"> This could be helpful for your rubric assignment.<br />
+<br />
+</span></span> <a href="http://annkemery.com/checklist/"><strong>The Data Visualization Checklist</strong></a>: A helpful set of criteria for grading the effectiveness of a graphic.</li>
+<li><a href="https://docs.google.com/document/d/1kKRadOiF0LruItsvGA40fSDZkAQfCqC_Ela0gBdo8A4/edit"><strong>Data Literacy Starter Kit</strong></a>: Compilation of resources to become data literate by <a href="http://lauracalloway.com/">Laura Calloway</a>.</li>
+<li><a href="http://seeingdata.org/"><strong>Seeing Data</strong></a>: A series of research projects about perceptions and visualizations.</li>
+</ul>
+<h2 id="visualization-in-excel">Visualization in Excel</h2>
+<ul>
+<li><span><label for="sn-6" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-6" class="margin-toggle"/><span class="marginnote"> <a href="http://stephanieevergreen.com/how-to/"><img src="/images/reference/evergreen-examples.png" alt="Stephanie Evergreen’s examples" /></a> <em>Stephanie Evergreen’s Excel tutorials</em><br />
+<br />
+</span></span> <a href="http://stephanieevergreen.com/how-to/"><strong>How to Build Data Visualizations in Excel</strong></a>: Detailed tutorials for creating 14 different visualizations in Excel.</li>
+<li><a href="http://annkemery.com/category/visualizing-data/tutorials/"><strong>Ann Emery’s tutorials</strong></a>: Fantastic series of tutorials for creating charts in Excel.</li>
+</ul>
+<h2 id="visualization-in-tableau">Visualization in Tableau</h2>
+<p>Because it is focused entirely on visualization (and because it’s a well-supported commercial product), Tableau has a <a href="https://www.tableau.com/learn/training">phenomenal library of tutorials and training videos</a>. There’s <a href="https://www.quora.com/What-are-some-good-video-tutorials-for-learning-Tableau">a helpful collections of videos here</a>, as well.</p>
+<h2 id="working-with-r-and-ggplot2">Working with R and ggplot2</h2>
+<ul>
+<li><span><label for="sn-7" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-7" class="margin-toggle"/><span class="marginnote"> <em>Pro-tip</em>: Searching for help with R on Google can be tricky because the program is, um, a single letter. Try searching for “rstats” instead. If you use Twitter, post R-related questions and content with <a href="https://twitter.com/search?q=%23rstats">#rstats</a>. The R community on <a href="https://stackoverflow.com/">StackOverflow</a> is also incredibly kind and helpful.<br />
+<br />
+</span></span> <a href="http://socviz.co/"><strong>Kieran Healy, <em>Data Visualization for Social Science: A practical introduction with R and ggplot2</em></strong></a>: This is a new, still-in-draft book that provides excellent examples and tutorials about how to create graphics with R and ggplot2.</li>
+<li><a href="http://stat545.com/"><strong>Stat 545</strong></a>: <a href="https://twitter.com/JennyBryan">Dr. Jenny Bryan</a> at the University of British Columbia has an entire introductory course in R, visualization, and data analysis online.</li>
+<li><a href="http://www2.stat.duke.edu/courses/Fall17/sta112.01/"><strong>STA 112FS: Data Science</strong></a>: <a href="https://twitter.com/minebocek">Dr. Mine Çetinkaya-Rundel</a> at Duke University has an entire introductory course in R, visualization, and data science online.</li>
+<li><a href="http://cslu.ohsu.edu/~bedricks/courses/cs631/"><strong>CSE 631: Principles &amp; Practice of Data Visualization</strong></a>: Yet another introductory course for R and ggplot2 by <a href="https://twitter.com/apreshill">Dr. Alison Presmanes Hill</a> at Ohio State University.</li>
+<li><a href="https://www.rstudio.com/resources/cheatsheets/"><strong>R and RStudio cheat sheets</strong></a>: A large collection of simple cheat sheets for RStudio, <code>ggplot2</code>, and other R-related things.</li>
+</ul>
+<h2 id="r-in-the-wild">R in the wild</h2>
+<p>A popular (and increasingly standard) way for sharing your analyses and visualizations is to post an annotated explanation of your process somewhere online. RStudio allows you to publish knitted HTML files directly to <a href="http://rpubs.com/">RPubs</a>, but you can also post your output to a blog or other type of website.<span><label for="sn-8" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-8" class="margin-toggle"/><span class="marginnote"> If you want to be really fancy, you can use <a href="https://bookdown.org/yihui/blogdown/">blogdown</a>, which makes a complete website with R Markdown files. That’s actually how this site is built (<a href="https://github.com/andrewheiss/dataviz.andrewheiss.com">see the source code</a>). You can build your own site <a href="https://apreshill.rbind.io/post/up-and-running-with-blogdown/">with this tutorial</a>.<br />
+<br />
+</span></span> Reading these kinds of posts is one of the best ways to learn R, since they walk you through each step of the process <em>and</em> show the code and output.</p>
+<p>Here are some of the best examples I’ve come across:</p>
+<ul>
+<li><a href="http://varianceexplained.org/r/trump-tweets/">Text analysis of Trump’s tweets confirms he writes only the (angrier) Android half</a> (with a <a href="http://varianceexplained.org/r/trump-followup/">follow-up</a>)</li>
+<li><a href="https://rudeboybert.github.io/fivethirtyeight/articles/bob_ross.html">Bob Ross - Joy of Painting</a></li>
+<li><a href="https://rudeboybert.github.io/fivethirtyeight/articles/bechdel.html">Bechdel analysis using the tidyverse</a><span><label for="sn-9" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-9" class="margin-toggle"/><span class="marginnote"> There are a bunch of examples <a href="https://rudeboybert.github.io/fivethirtyeight/articles/">using data from FiveThirtyEight</a>.<br />
+<br />
+</span></span></li>
+<li><a href="http://rpubs.com/Jwhitman/Final_Project">Sexism on the Silver Screen: Exploring film’s gender divide</a></li>
+<li><a href="http://soc301s2017.netlify.com/group_projects/group5">Comparison of Quentin Tarantino Movies by Box Office and the Bechdel Test</a></li>
+<li><a href="https://juliasilge.com/blog/who-came-to-vote/">Who came to vote in Utah’s caucuses?</a></li>
+<li><a href="https://juliasilge.com/blog/health-care-indicators/">Health care indicators in Utah counties</a></li>
+<li><a href="https://juliasilge.com/blog/song-lyrics-across/">Song lyrics across the United States</a></li>
+<li><a href="http://blog.karawoo.com/2016/09/22/A-decade-ish-of-listening-to-Sigur-Ros">A decade (ish) of listening to Sigur Rós</a></li>
+<li><a href="http://rpubs.com/ry_lisa_elana/chicago">When is Tom peeping these days?</a><span><label for="sn-10" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-10" class="margin-toggle"/><span class="marginnote"> There are a bunch of final projects from other R and data visualization classes <a href="http://soc301s2017.netlify.com/group-projects/">here</a> and <a href="https://rudeboybert.github.io/MATH116/PS/final_project/final_project_outline.html#past_examples">here</a>.<br />
+<br />
+</span></span></li>
+<li><a href="https://rud.is/b/2017/09/18/mapping-fall-foliage-with-sf/">Mapping Fall Foliage</a></li>
+<li><a href="https://rud.is/b/2017/07/25/r%E2%81%B6-general-attys-distributions/">General (Attys) Distributions</a></li>
+<li><a href="https://rud.is/b/2017/06/18/r%E2%81%B6-disproving-approval/">Disproving Approval</a></li>
+</ul>
+<h2 id="data">Data</h2>
+<ul>
+<li><a href="https://www.kaggle.com/datasets"><strong>Kaggle</strong></a>: Kaggle hosts machine learning competitions where people compete to create the fastest, most efficient, most predictive algorithms. A byproduct of these competitions is a host of fascinating datasets that are generally free and open to the public. See, for example, <a href="https://www.kaggle.com/hugomathien/soccer">the European Soccer Database</a>, the <a href="https://www.kaggle.com/rtatman/salem-witchcraft-dataset">Salem Witchcraft Dataset</a> or results from an <a href="https://www.kaggle.com/rtatman/oreo-flavors-tastetest-ratings">Oreo flavors taste test</a>.</li>
+<li><a href="http://www.threesixtygiving.org/data/data-registry/"><strong>360Giving</strong></a>: Dozens of British foundations follow a standard file format for sharing grant data and have made that data available online.</li>
+<li><a href="http://us-city.census.okfn.org/"><strong>US City Open Data Census</strong></a>: More than 100 US cities have committed to sharing dozens of types of data, including data about crime, budgets, campaign finance, lobbying, transit, and zoning. This site from the <a href="http://sunlightfoundation.com/">Sunlight Foundation</a> and <a href="http://www.codeforamerica.org//">Code for America</a> collects this data and rates cities by how well they’re doing.</li>
+<li><strong>Political science and economics datasets</strong>: There’s a wealth of data available for political science- and economics-related topics:
+<ul>
+<li><a href="https://github.com/briatte/srqm/wiki/Data"><strong>François Briatte’s extensive curated lists</strong></a>: Includes data from/about intergovernmental organizations (IGOs), nongovernmental organizations (NGOs), public opinion surveys, parliaments and legislatures, wars, human rights, elections, and municipalities.</li>
+<li><a href="https://github.com/leeper/poliscitoys/issues/1"><strong>Thomas Leeper’s list of political science datasets</strong></a>: Good short list of useful datasets, divided by type of data (country-level data, survey data, social media data, event data, text data, etc.).</li>
+<li><a href="https://github.com/erikgahner/PolData"><strong>Erik Gahner’s list of political science datasets</strong></a>: Huge list of useful datasets, divided by topic (governance, elections, policy, political elites, etc.)</li>
+</ul></li>
+</ul>
+<h2 id="colors">Colors</h2>
+<ul>
+<li><span><label for="sn-11" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-11" class="margin-toggle"/><span class="marginnote"> <img src="/images/reference/adobe-color.png" alt="Adobe Color" /> <em>Adboe Color</em><br />
+<br />
+</span></span> <a href="https://color.adobe.com"><strong>Adobe Color</strong></a>: Create, share, and explore rule-based and custom color palettes.</li>
+<li><a href="http://colorbrewer2.org/"><strong>ColorBrewer</strong></a>: Sequential, diverging, and qualitative color palettes that take accessibility into account.</li>
+<li><a href="http://vrl.cs.brown.edu/color"><strong>Colorgorical</strong></a>: Create color palettes based on fancy mathematical rules for perceptual distance.</li>
+<li><a href="http://tristen.ca/hcl-picker/"><strong>Colorpicker for data</strong></a>: More fancy mathematical rules for color palettes (<a href="https://www.vis4.net/blog/posts/avoid-equidistant-hsv-colors/">explanation</a>).</li>
+<li><a href="http://tools.medialab.sciences-po.fr/iwanthue/"><strong>iWantHue</strong></a>: Yet another perceptual distance-based color palette builder.</li>
+<li><a href="http://www.colourlovers.com/"><strong>ColourLovers</strong></a>: Like Facebook for color palettes.</li>
+<li><a href="https://photochrome.io/"><strong>Photochrome</strong></a>: Word-based color pallettes.</li>
+</ul>
+<h2 id="fonts">Fonts</h2>
+<ul>
+<li><a href="https://fonts.google.com/"><strong>Google Fonts</strong></a>: Huge collection of free, well-made fonts.</li>
+<li><a href="https://www.reliablepsd.com/ultimate-google-font-pairings/"><strong>The Ultimate Collection of Google Font Pairings</strong></a>: A list of great, well-designed font pairings from all those fonts hosted by Google (for when you’re looking for good contrasting or complementary fonts).</li>
+</ul>
+<h2 id="markdown">Markdown</h2>
+<ul>
+<li><span><label for="sn-12" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-12" class="margin-toggle"/><span class="marginnote"> <img src="/images/reference/markdown.png" alt="Markdown logo" /><br />
+<br />
+</span></span> <a href="http://plain-text.co/"><strong>The Plain Person’s Guide to Plain Text Social Science</strong></a>: A comprehensive explanation and tutorial about why you should write data-based reports in Markdown.</li>
+<li><a href="https://www.markdowntutorial.com/"><strong>Markdown tutorial</strong></a>: An interactive tutorial to practice using Markdown.</li>
+<li><a href="http://packetlife.net/media/library/16/Markdown.pdf"><strong>Markdown cheatsheet</strong></a>: Useful one-page reminder of Markdown syntax.</li>
+</ul>

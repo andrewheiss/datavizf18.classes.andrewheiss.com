@@ -1,0 +1,37 @@
+---
+title: "Change over time"
+date: "2017-10-10"
+citeproc: false
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-fullnote-bibliography-no-bib.csl
+stuff-to-add: >-
+  Sankey plots?
+---
+
+# Required
+
+- Chapter 8 in Alberto Cairo, *The Truthful Art* [@Cairo:2016]
+- Chapter 9 in Stephanie Evergreen, *Effective Data Visualization* [@Evergreen:2017]
+- [The Nuclear Threat—The Shadow Peace, part 1](http://www.fallen.io/shadow-peace/1/)
+- A bunch of (really) short blog posts:
+    - [Streamgraphs: Economic trade flows with R](http://austinwehrwein.com/tutorials/streams/)
+    - [A century of ocean shipping animated](https://flowingdata.com/2012/04/12/a-century-of-ocean-shipping-animated/)
+    - [What is seasonal adjustment and why is it used?](http://junkcharts.typepad.com/junk_charts/2010/11/what-is-seasonal-adjustment-and-why-is-it-used.html)
+    - [The start-at-zero rule](http://junkcharts.typepad.com/junk_charts/2005/09/the_startatzero.html)
+    - [Keeping one's appetite after touring the sausage factory](http://junkcharts.typepad.com/numbersruleyourworld/2011/02/keeping-ones-appetite-after-touring-the-sausage-factory.html)
+    - [How Common is Your Birthday? This Visualization Might Surprise You](http://thedailyviz.com/2016/09/17/how-common-is-your-birthday-dailyviz/)
+
+
+# Recommended
+
+- [Visualizing Statistical Mix Effects and Simpson's Paradox](https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/42901.pdf) [@ArmstrongWattenberg:2014]
+- [How To Fix a Toilet (And Other Things We Couldn't Do Without Search)](http://how-to-fix-a-toilet.com/)
+- [11 Ways to Visualize Changes Over Time – A Guide](https://flowingdata.com/2010/01/07/11-ways-to-visualize-changes-over-time-a-guide/)
+- [The Fallen of World War II](http://www.fallen.io/ww2/)
+
+
+# Questions to reflect on
+
+- When is it okay (or not) to truncate the y-axis?
+- It is remarkably easy to mislead people with many of these chart types. Why? How can you avoid the same mistakes?
+- All these types of charts are good at communicating change over time, but some are more appropriate in different situations. When is it best to use these different types (e.g. line graphs vs. area graphs vs. horizon charts vs. heatmaps, etc.)?
