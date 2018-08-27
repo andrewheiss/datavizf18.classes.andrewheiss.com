@@ -7,7 +7,8 @@ csl: ../static/bib/chicago-syllabus-no-bib.csl
 ---
 
 ```{r load-libraries, message=FALSE, warning=FALSE, include=FALSE}
-library(tidyverse)
+library(dplyr)
+library(tibble)
 library(pander)
 ```
 
@@ -21,7 +22,7 @@ In this class, you'll learn how to use industry-standard graphic and data design
 
 # Course objectives
 
-By the end of this course, you will become (1) literate in data and graphic design principles, (2) an ethical data communicator, and (3) a collaborative sharer by producing beautiful, powerful, and clear visualizations of your own data. Specifically, you should:
+<span class="newthought">By the end of this course,</span> you will become (1) literate in data and graphic design principles, (2) an ethical data communicator, and (3) a collaborative sharer by producing beautiful, powerful, and clear visualizations of your own data. Specifically, you should:
 
 - Understand the principles of data and graphic design
 - Evaluate the credibility, ethics, and aesthetics of data visualizations
@@ -38,97 +39,114 @@ Given these objectives, this course fulfills two of the four learning outcomes f
 
 # Course materials
 
-You'll need to get these books—they're definitely worth keeping for reference, too.
+<span class="newthought">Most of the readings in this class are free.</span> We will only use one physical textbook.^[And the library provides access to it for free.]
 
-- [@Cairo:2016] [$34 used, $40 new at [Amazon](https://www.amazon.com/Truthful-Art-Data-Charts-Communication/dp/0321934075)]
-- [@Evergreen:2017] [$36 used, $45 new at [Amazon](https://www.amazon.com/Effective-Data-Visualization-Right-Chart/dp/1506303056)]
-- [@Wong:2010] [$13 used, $18 new at [Amazon](https://www.amazon.com/Street-Journal-Guide-Information-Graphics/dp/0393347281)]
+- [@Cairo:2016] [$36 used, $38 new at [Amazon](https://www.amazon.com/Truthful-Art-Data-Charts-Communication/dp/0321934075)]
 
-These books are optional—we'll refer to stuff in them and they're useful for reference, but they're not absolutely necessary:
+We'll rely heavily on these other books, which are all available online.^[*R for Data Science* exists in print, and both *Data Visualization: A practical introduction* and *Fundamentals of Data Visualization* will be released in print during the semester.]
 
-- [@WickhamGrolemund:2017] [**FREE** [online](http://r4ds.had.co.nz/); $25 used, $33 new at [Amazon](https://www.amazon.com/R-Data-Science-Hadley-Wickham/dp/1491910399/)]
-- [@Cairo:2013] [$26 used, $37 new at [Amazon](https://www.amazon.com/Functional-Art-introduction-information-visualization/dp/0321834739)]
-- [@Williams:2008] [$15 used at [Amazon](https://www.amazon.com/Non-Designers-Design-Type-Books-Deluxe/dp/0321534050)]
+- [@Healy:2018] [**FREE** online; $40 new at [Amazon](https://www.amazon.com/Data-Visualization-Introduction-Kieran-Healy/dp/0691181624/) in December]
+- [@Wilke:2018] [**FREE** online; $50 new at [Amazon](https://www.amazon.com/Fundamentals-Data-Visualization-Informative-Compelling/dp/1492031089) in December]
+- [@WickhamGrolemund:2017] [**FREE** online; $16 used, $18 new at [Amazon](https://www.amazon.com/R-Data-Science-Hadley-Wickham/dp/1491910399/)]
+
+There will also occasionally be additional articles and videos to read and watch. When this happens, links to these other resources will be included on the reading page for that week.
+
+I also highly recommend subscribing to the [R Weekly newsletter](https://rweekly.org/). This e-mail is sent every Monday and is full of helpful tutorials about how to do stuff with R.
+
+## R and RStudio
+
+You will do all of your visualization work in this class with the open source (and free!) programming language [R](https://cran.r-project.org/). You will use [RStudio](https://www.rstudio.com/) as the main program to access R. Think of R as an engine and RStudio as a car dashboard—R handles all the calculations and the actual statistics, while RStudio provides a nice interface for running R code.
+
+R is free, but it can sometimes be a pain to install and configure. To make life easier, you can (and should!) use the free [RStudio.cloud](http://rstudio.cloud/) service, which lets you run a full instance of RStudio in your web browser. This means you won't have to install anything on your computer to get started with R! We will have a shared class workspace in RStudio.cloud that will let you quickly copy templates for labs and problem sets.
+
+RStudio.cloud is convenient, but it can be slow and it is not designed to be able to handle larger datasets, more complicated analysis, or fancier graphics. Over the course of the semester, you'll probably want to get around to installing R, RStudio, and other R packages on your computer and wean yourself off of RStudio.cloud.
+
+You can find instructions for installing R, RStudio, and all the tidyverse packages here.
+
+## Online help and Gitter
+
+Computer programming can be difficult. Computers are stupid and little errors in your code can cause hours of headache (even if you've been doing this stuff for years!).
+
+Fortunately there are tons of online resources to help you with this. Two of the most important are [StackOverflow](https://stackoverflow.com/) (a Q&A site with hundreds of thousands of answers to all sorts of programming questions) and [RStudio Community](https://community.rstudio.com/) (a forum specifically designed for people using RStudio and the tidyverse (i.e. you)). 
+
+Searching for help with R on Google can be tricky because the program is, um, a single letter. Try searching for "rstats" instead. If you use Twitter, post R-related questions and content with [#rstats](https://twitter.com/search?q=%23rstats).
+
+Additionally, we have a class chatroom at [Gitter](https://gitter.im/byudatavizf18/) where anyone in the class can ask questions and anyone can answer. Ask questions about the readings, problem sets, and projects [in the class Gitter](https://gitter.im/byudatavizf18/). I will monitor the chatroom regularly, and you should also all do so as well. You'll likely have similar questions as your peers, and you'll likely be able to answer other peoples' questions too.
 
 
 # Course policies
 
-**Be nice. Be honest. Don't cheat.**
+<span class="newthought">Be nice. Be honest. Don't cheat.</span>
 
 We will also follow the [full list of Marriott School and BYU classroom policies](https://marriottschool.byu.edu/policies/classroom/).
 
-
 ## Counseling and Psychological Services (CAPS)
 
-Life at BYU can be complicated and challenging. You might feel overwhelmed, experience anxiety or depression, or struggle with relationships or family responsibilities. [Counseling and Psychological Services (CAPS)](https://caps.byu.edu/) provides free, *confidential* support for students who are struggling with mental health and emotional challenges. The CAPS office is staffed by professional psychologists who are attuned to the needs of all types of college students. Please do not hesitate to contact CAPS for assistance—getting help is a smart and courageous thing to do.
-
+Life at BYU can be complicated and challenging. You might feel overwhelmed, experience anxiety or depression, or struggle with relationships or family responsibilities. [Counseling and Psychological Services (CAPS)](https://caps.byu.edu/) provides free, *confidential* support for students who are struggling with mental health and emotional challenges. The CAPS office is staffed by professional psychologists who are attuned to the needs of all types of college and professional students. Please do not hesitate to contact CAPS for assistance—getting help is a smart and courageous thing to do.
 
 ## Basic needs security
 
 If you have difficulty affording groceries or accessing sufficient food to eat every day, or if you lack a safe and stable place to live, and you believe this may affect your performance in this course, please contact the [Dean of Students](https://deanofstudents.byu.edu/) for support. Please also consider speaking with your local LDS bishop regarding Church welfare assistance *regardless of whether or not you are LDS*. Additionally, please talk to me if you are comfortable in doing so. This will enable me to provide any resources that I might possess.
 
-
 ## Class conduct and expectations
 
-On the first day of class we came up with rules, expectations, and policies for things like technology in the classroom, attendance, participation, late work, etc.
+On the first day of class, we will come up with rules, expectations, and policies for things like technology in the classroom, attendance, participation, late work, etc. I will put what we decide here once we decide it.
 
-- We decided that laptops and phones won't be banned (since they're kind of necessary for the class), and that they can be used responsibly (if you're dealing with family or other concerns, since we're an evening class). But you still need to pay attention and participate.
-- Late work is acceptable(ish) but discouraged. If you have to miss a lecture, it is your responsibility to catch up. Meet with your classmates or with me to make sure you cover everything you missed.
-- Above all, *be a responsible adult*.
+## Laptops
+
+This is a computer-heavy course and each class session will require extensive laptop use. Occasionally I may ask that laptops be closed for some in-class activities, you will be expected to use your computer. Please note that this is different from the laptop policy in other Romney Institute and Marriott School classes. Use your computer responsibly in class.
 
 
 # Assignments and grades
 
-You can find descriptions and instructions of all assignments on the [assignments page](/assignments/).
+<span class="newthought">You can find descriptions</span> for all the assignments on the [assignments page](/assignments/).
 
 ```{r assignments-grades, include=FALSE}
 assignments <- tribble(
-  ~Points, ~Assignment,
-  80     , "Weekly memos (8)",
-  80     , "Homework assignments (8)",
-  30     , "Redesign 1",
-  30     , "Redesign 2",
-  30     , "Redesign 3",
-  40     , "Rubric draft",
-  40     , "Rubric test run",
-  80     , "Final rubric",
-  100    , "Final project"
-)
+  ~Points,  ~Assignment,
+  15 * 14 , "Reflection memos (≈ 15 × 14)",
+  5 * 40  , "Problem sets (5 × 40)",
+  50      , "Code-through",
+  75     , "Mini project 1",
+  75     , "Mini project 2",
+  200     , "Final project"
+) %>%
+  mutate(Percent = Points / sum(Points),
+         Percent = scales::percent(Percent))
 
 grading <- tribble(
-  ~Grade, ~Range,
-  "A",  "93–100%",
-  "A−", "90–92%",
-  "B+", "87–89%",
-  "B",  "83–86%",
-  "B−", "80–82%",
-  "C+", "77–79%",
-  "C",  "73–76%",
-  "C−", "70–72%",
-  "D+", "67–69%",
-  "D",  "63–66%",
-  "D−", "60–62%",
-  "F",  "< 60%"
+  ~Grade, ~Range, ~Grade1, ~Range1,
+  "A",  "93–100%", "C",  "73–76%",
+  "A−", "90–92%", "C−", "70–72%",
+  "B+", "87–89%", "D+", "67–69%",
+  "B",  "83–86%", "D",  "63–66%",
+  "B−", "80–82%", "D−", "60–62%",
+  "C+", "77–79%", "F",  "< 60%"
 )
 ```
 
 ```{r show-assignments-table, echo=FALSE, results="asis"}
-assignments %>% 
-  select(Assignment, Points) %>% 
-  pandoc.table(justify = "lc")
+assignments_total <- data_frame(Assignment = "Total",
+                                Points = sum(assignments$Points),
+                                Percent = NA)
+
+bind_rows(assignments, assignments_total) %>% 
+  select(Assignment, Points, Percent) %>% 
+  pandoc.table(justify = "lcc", missing = "—")
 ```
 
-## Grades
+\
 
 ```{r show-grades-table, echo=FALSE, results="asis"}
 grading %>%
-  pandoc.table(justify = "rc")
+  pandoc.table(justify = "lclc", 
+               col.names = c("Grade", "Range", "Grade", "Range"))
 ```
 
 
-# Dinosaurs
+# Red pandas
 
-[^dinosaurs] Once you have read this entire syllabus and [the assignments page](/assignments/), please [click here](mailto:andrew_heiss@byu.edu) and e-mail me a picture of a dinosaur. For real. Brownie points if you send a picture of a cat or dog dressed as a dinosaur.
+[^panda] <span class="newthought">Once you have read</span> this entire syllabus and [the assignments page](/assignments/), please [click here](mailto:andrew_heiss@byu.edu) and e-mail me a picture of a red panda. For real. Brownie points if it's animated.
 
-[^dinosaurs]: {-}
-  ![Dinosaurs](/images/dinosaurs.jpg) Velociraptor and Protoceratops locked in a mortal combat, by [Raul Martin](https://dx.doi.org/10.1371/journal.pbio.0000040)
+[^panda]: {-}
+  ![Hungry red panda](https://media.giphy.com/media/HUeE6FU2Ih0LC/giphy.gif)

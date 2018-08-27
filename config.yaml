@@ -1,7 +1,7 @@
 baseURL: "https://datavizf18.classes.andrewheiss.com/"
 languageCode: en-us
 title: Data visualization
-theme: ath-tufte-hugo
+theme: "ath-tufte-hugo_18-19"
 googleAnalytics: ""
 ignoreFiles:
   - \.Rmd$
@@ -26,9 +26,12 @@ menu:
     - name: Reference
       url: /reference/
       weight: 4
-    - name: Final projects
-      url: /final-projects/
+    - name: RStudio.cloud
+      url: "https://rstudio.cloud"
       weight: 5
+    - name: Class chat
+      url: "https://gitter.im/byudatavizf18/"
+      weight: 6
 # Disable taxonomies
 taxonomies:
   tag: ""
@@ -43,31 +46,30 @@ params:
     url: "https://www.andrewheiss.com"
     twitter: andrewheiss
     github: andrewheiss
-    office: 773 TNRB
+    office: 639 TNRB
   course:
     number: MPA 635
-    semester: Fall 2017
-    days: Tuesdays
-    time: "6:30–8:45 PM"
-    location: 270 TNRB
+    semester: Fall 2018
+    days: "Tuesdays"
+    time: "3:30–4:45 PM"
+    location: "W110 TNRB"
     twitter: andrewheiss
-    slack: "https://mpa635fall2017.slack.com/"
-    dates: "September 5–October 24, 2017"
-    github: "andrewheiss/dataviz.andrewheiss.com"
-    copyrightYear: "2017"
+    dates: "September 4–December 11, 2018"
+    github: "andrewheiss/datavizf18.classes.andrewheiss.com"
+    copyrightYear: "2018"
     contactDetails: >-
-      Office hours: Mondays from 10:30–11:30. [Sign up for other times here.](https://calendly.com/andrewheiss/meeting/)<br><br>E-mail is the best way to get in contact with me—I will respond to all course-related e-mails within 24 hours (*really*).
+      Office hours: TBD. [Sign up for other times here.](https://calendly.com/andrewheiss/meeting/)<br><br>E-mail is the best way to get in contact with me—I will respond to all course-related e-mails within 24 hours (*really*).
   university: 
     name: Brigham Young University
     url: "https://www.byu.edu"
   school:
-    name: Romney Institute of Public Management
+    name: Romney Institute of Public Service and Ethics
     url: "https://marriottschool.byu.edu/mpa/"
-  description: "Communicate science with beautiful graphics"
-  primaryColor: "#A5452B"
-  secondaryColor: "#ECAD49"
+  description: "Communicate science and statistics with beautiful graphics"
+  primaryColor: "#DA5B69"
+  secondaryColor: "#F9983E"
   credits: >-
-    "bar graph" icon by [severino ribecca](https://thenounproject.com/r.severino/collection/data-visualisation-catalogue-icons/?i=115543) from the [noun project](https://thenounproject.com).<br>[obi-wan kenobi color scheme](http://www.colourlovers.com/palette/4506232/Obi-Wan_Kenobi) from [colourlovers](http://www.colourlovers.com/).
+    Hex icon by Andrew Heiss, with a stylized version of [Hans Rosling's health+wealth plot](https://www.youtube.com/watch?v=jbkSRLYSojo).<br>Color scheme adapted from the [viridis plasma map](https://github.com/sjmgarnier/viridis).
   logo:
     url: /images/dataviz_hires.png
     alt: Data visualization

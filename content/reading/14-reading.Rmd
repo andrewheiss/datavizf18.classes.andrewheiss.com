@@ -1,0 +1,21 @@
+---
+title: "Truth, beauty, and data revisited"
+date: "2018-12-11"
+citeproc: false
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-fullnote-bibliography-no-bib.csl
+---
+
+# Required
+
+- <i class="fas fa-book"></i> Chapter 12 in Alberto Cairo, *The Truthful Art* [@Cairo:2016]
+- <i class="fas fa-book"></i> [Chapter 24](https://serialmentor.com/dataviz/telling-a-story.html) in Claus Wilke, *Fundamentals of Data Visualization* [@Wilke:2018]
+- <i class="fab fa-youtube"></i> Ben Wellington, ["Making data mean more through storytelling"](https://www.youtube.com/watch?v=6xsvGYIxJok)
+- <i class="fab fa-vimeo"></i> Jonathan Schwabish, ["Better Data Communication,"](https://vimeo.com/230757062) National Bureau of Economic Research
+- <i class="fas fa-external-link-square-alt"></i> [Why People Make Bad Charts (and What to Do When it Happens)](https://flowingdata.com/2018/06/28/why-people-make-bad-charts-and-what-to-do-when-it-happens/)
+- <i class="fas fa-external-link-square-alt"></i> [Treasuring All Truth](http://www.mormonnewsroom.org/article/treasuring-all-truth)
+
+
+# Questions to reflect on
+
+- Questions TBD

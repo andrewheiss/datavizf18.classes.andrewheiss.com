@@ -5,7 +5,9 @@ slug: assignments
 
 # Weekly reflection memo
 
-You'll need to submit a one-page (500 words) reflection memo **before midnight each Monday** (the day before class). You can do a lot of different things with this memo: discuss something you learned from the readings, write about the best or worst data visualization you saw that week, connect the readings or projects from that week to your own work, etc. These memos essentially let you explore and answer some of the key questions of this course, including:
+<span class="newthought">You will get the most out of this class</span> if you (1) attend class, (2) complete all the readings, and (3) engage^[Take detailed notes, work through the example code and try to understand it, have vivid dreams about graphs, etc.]  with the readings.^[Also (4) ask for help!]
+
+To encourage engagement with the readings, you'll need to submit a 250–500 word reflection memo **by 11:59 PM each Monday** (the day before class). You can do a lot of different things with this memo: discuss something you learned from the readings, write about the best or worst data visualization you saw that week, connect the readings or projects from that week to your own work, etc. These memos essentially let you explore and answer some of the key questions of this course, including:
 
 - What is truth? How is truth related to visualization?
 - Why do we visualize data?
@@ -16,34 +18,64 @@ You'll need to submit a one-page (500 words) reflection memo **before midnight e
 - How can you lie with statistics? How do you tell the truth with statistics?
 - How do you make sure people don’t think you’re lying with statistics?
 
-These memos are also to help me see what you glean from each week's reading so I can prepare class discussions to be most useful and interesting to you. These memos will only be graded for completion. Instructions for submitting the memo will be in the assignment page for that week.
+The readings for each week will also include a set of questions specific to that week. *You do not have to answer all of these questions*. That would be impossible. They exist to guide your thinking, that's all.
+
+These memos are also to help me see what you glean from each week's reading so I can prepare class discussions to be most useful and interesting to you. I will grade these memos using a check system:
+
+- ✔+: ^[{-} *110% in gradebook*] Memo shows phenomenal thought and engagement with the readings. I will not assign these often.
+- ✔: ^[{-} *90% in gradebook*] Memo is thoughtful, well-written, and shows engagement with the readings. This is the expected level of performance.
+- ✔−: ^[{-} *50% in gradebook*] Memo is hastily composed, too short, and only cursorily engages with the readings. This grade signals that you need to improve next time. I will hopefully not asisgn these often.
+
+I will rescale everyone's memo grades at the end of the semester.
 
 
-# Homework assignments
+# Problem sets
 
-Every week, you will have a short homework assignment to give you practice using Excel and R. Instructions for each assignment will be given on the assignment page for that week. As with the reflection memo, homework is due **before midnight each Monday**.
+<span class="newthought">To practice working with ggplot</span> and making data-based graphics, you will complete a series of 5 problem sets. You need to show that you made a good faith effort to work each question. The problem sets will also be graded using a check system:
+
+- ✔+: ^[{-} *110% in gradebook*] Problem set is 100% completed. Every question was attempted and answered, and most answers are correct. Document is clean and easy to follow. Work is exceptional. I will not assign these often.
+- ✔: ^[{-} *90% in gradebook*] Problem set is 70–99% complete and most answers are correct. This is the expected level of performance.
+- ✔−: ^[{-} *50% in gradebook*] Problem set is less than 70% complete and/or most answers are incorrect. This indicates that you need to improve next time. I will hopefully not asisgn these often.
+
+I will rescale everyone's problem set grades at the end of the semester.
+
+You may (and should!) work together on the problem sets, but you must turn in your own answers. You cannot work in groups of more than **three** people, and you must note who participated in the group in your assignment.
 
 
-# Redesigns
+# Code-through
 
-In order to give you practice with the data and design principles you'll learn in this class, I will give you three existing data visualizations to redesign. 
+<span class="newthought">The objectives of this class include</span> "Share data and graphics in open forums" and "Be curious and confident in consuming and producing data." To help you with this, you will write a short code-through tutorial of some data visualization principle, technique, or example.
+
+One of the reasons R is so popular is because the R community is exceptionally generous and open and sharing.^[So are Python and other modern open source languages too.] The internet is full of tutorials and code-throughs where people explain how to do something interesting with R.
+
+You will write one code-through or tutorial during the semester on a topic of your choice. Complete details for the assignment (along with a lot of examples to look at) will be given later. You will complete this on your own, but you can get help from others (but you can't all write about the same topic).
+
+The [R-Weekly e-mail newsletter](https://rweekly.org/) includes dozens of these every week, and [Mara Averick](https://twitter.com/dataandme) (chief tidyverse advocate at RStudio) regularly tweets out links to different posts as well. Here are some others examples to give you a jist of what you'll be doing:^[{-} Yours won't be nearly as complicated as these, by the way. Nor do they need to be. You'll illustrate and explain something simple.]
+
+- [The Greatest Twitter Scheme of All Time?](https://www.garrickadenbuie.com/blog/2018/08/24/greatest-twitter-scheme/)
+- [Mapping Fall Foliage with sf](https://rud.is/b/2017/09/18/mapping-fall-foliage-with-sf/)
+- [Exploring Minard's 1812 plot with ggplot2](https://www.andrewheiss.com/blog/2017/08/10/exploring-minards-1812-plot-with-ggplot2/)
+- [Animations in R](https://www.infoworld.com/video/89987/r-tip-animations-in-r)
+- [Drone sightings in the US, visualized](https://www.andrewheiss.com/blog/2016/04/03/drone-sightings-in-the-us-visualized/)
+- [Quickly play with Polity IV and OECD data (and see the danger of US democracy)](https://www.andrewheiss.com/blog/2017/08/26/quickly-play-with-polity-iv-and-oecd-data-and-see-the-danger-of-us-democracy/)
+
+This assignment will also be graded with a check system.
 
 
-# Visualization rubric
+# Mini projects
 
-Evaluating data graphics is hard, especially since so much of the work that goes into creating excellent visualizations is subjective. How do you know if a figure follows graphic and data design principles and communicates truth?
+<span class="newthought">Too give you practice</span> with the data and design principles you'll learn in this class, you will complete two smaller projects. I will provide you with real-world data and pose one or more questions—you will make a pretty picture to answer those questions.
 
-Over the course of the term, you will develop your own rubric for evaluating the design, aesthetics, correctness, and truth of data visualizations, based on the readings, assignments, and classroom activities you'll do. These rubrics can take any form you want, as long as they include some approach for scoring performance and some method for quickly identifying specific areas of improvement. Where possible, try to cite the materials you draw from to create the rubric items.
-
-## Draft rubric
-
-Draft rubrics will be due in the middle of the term (conveniently indicated in the course schedule). You'll get feedback about these drafts from your peers and me, but they will only be graded for completion. I will grade your final rubric according to a rubric I will provide you.
-
-## Rubric test run
-
-Before you turn in your final rubric, you'll need to make sure it actually works. Use your improved draft rubric to evaluate any visualization. You'll only be graded for completion.
+I will also grade these with a check system, and I will provide substantial feedback on your design and code.
 
 
 # Final project
 
-To evaluate how well you've learned the course materials, you will create a visualization based on data I will provide you. I will grade these final graphics according to both your rubric and my own rubric, with equal weight (i.e. your rubric score consists of 50% of the total grade).
+<span class="newthought">At the end of the course,</span> you will demonstrate your data visualization skills by completing a final project.
+
+Project details will be posted later once I settle on the best form for it. This much is certain so far:
+
+- You will use some sort of real-world, public management-related data to explore some sort of research question with multiple graphics
+- It will be so much fun!
+
+There is no final exam. This project is your final exam.

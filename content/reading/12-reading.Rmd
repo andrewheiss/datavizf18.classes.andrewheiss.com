@@ -1,0 +1,18 @@
+---
+title: "Annotating and grouping"
+date: "2018-11-27"
+citeproc: false
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-fullnote-bibliography-no-bib.csl
+---
+
+# Required
+
+- <i class="fas fa-book"></i> [Chapter 17](https://serialmentor.com/dataviz/multi-panel-figures.html) and [Chapter 19](https://serialmentor.com/dataviz/small-axis-labels.html) in Claus Wilke, *Fundamentals of Data Visualization* [@Wilke:2018]
+- <i class="fas fa-book"></i> [Chapter 5](http://socviz.co/workgeoms.html) in Kieran Healy, *Data Visualization* [@Healy:2018]
+- Other readings TBD
+
+
+# Questions to reflect on
+
+- Questions TBD

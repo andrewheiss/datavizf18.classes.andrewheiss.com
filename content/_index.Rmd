@@ -1,14 +1,12 @@
 ---
-title: "Let's visualize data!"
+title: "Data visualization"
 author: "Andrew Heiss"
-date: "2017-08-28"
 ---
 
-^[{-} `r blogdown::shortcode("courseinfo")`] <span class="newthought">This site contains</span> the syllabus, schedule, and assignments for MPA 635: Data Visualization, held in the first term of Fall 2017 at Brigham Young University.
+^[{-} `r blogdown::shortcode("courseinfo")`] <span class="newthought">This site contains</span> the syllabus, schedule, and assignments for MPA 635: Data Visualization, held during Fall 2018 at Brigham Young University.
 
 By the end of this course, you will become (1) literate in data and graphic design principles, (2) an ethical data communicator, and (3) a collaborative sharer by producing beautiful, powerful, and clear visualizations of your own data.
 
 <figure>
-![Figurative map of the successive losses of the French Army in the Russian
-campaign, 1812-1813](/images/minard.png)
+[![](/images/dataviz-flowchart.png)](/images/dataviz-flowchart.png)
 </figure>

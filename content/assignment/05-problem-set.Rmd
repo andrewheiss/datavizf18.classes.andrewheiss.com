@@ -1,0 +1,10 @@
+---
+title: "Problem set 5"
+date: "2018-11-13"
+due_date: "2018-11-13"
+due_time: "11:59 PM"
+editor_options: 
+  chunk_output_type: console
+---
+
+The instructions for this problem set will be posted at least one week before it is due.

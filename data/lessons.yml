@@ -1,53 +1,104 @@
 lessons:
+  - title: '<span class="fake-header-table">Foundations</span>'
+    header: True
+
   - title: "Truth, beauty, and data"
-    date: "September 5"
+    date: "September 4"
     reading: "01-reading"
-    assignment: "01-assignment"
-    class: "01-class"
-  - title: "Single numbers and parts of a whole"
-    date: "September 12"
+
+  - title: "Graphic design"
+    date: "September 11"
     reading: "02-reading"
-    assignment: "02-assignment"
-    class: "02-class"
-  - title: "Distributions and uncertainty"
-    date: "September 19"
+
+  - title: "Mapping data to graphics"
+    date: "September 18"
     reading: "03-reading"
-    assignment: "03-assignment"
-    class: "03-class"
-  - title: "⊞ *Redesign 1 due*"
-    assignment: "01-redesign"
-  - title: "Relationships"
-    date: "September 26"
+
+  - title: "**Problem set 1**"
+    date: "September 18"
+    assignment: "01-problem-set"
+
+  - title: '<span class="fake-header-table">Visualizing</span>'
+    header: True
+
+  - title: "Amounts"
+    date: "September 25"
     reading: "04-reading"
-    assignment: "04-assignment"
-    class: "04-class"
-  - title: "⊞ *Draft rubric due*"
-    assignment: "rubric-draft"
-  - title: "Comparisons"
-    date: "October 3"
+
+  - title: "Proportions"
+    date: "October 2"
     reading: "05-reading"
-    assignment: "05-assignment"
-    class: "05-class"
-  - title: "⊞ *Redesign 2 due*"
-    assignment: "02-redesign"
-  - title: "Change over time"
-    date: "October 10"
+  
+  - title: "**Problem set 2**"
+    date: "October 2"
+    assignment: "02-problem-set"
+
+  - title: "Uncertainty"
+    date: "October 9"
     reading: "06-reading"
-    assignment: "06-assignment"
-    class: "06-class"
-  - title: "⊞ *Rubric test run due*"
-    assignment: "rubric-test"
-  - title: "Geography"
-    date: "October 17"
+
+  - title: "Relationships"
+    date: "October 16"
     reading: "07-reading"
-    assignment: "07-assignment"
-    class: "07-class"
-  - title: "⊞ *Redesign 3 due*"
-    assignment: "03-redesign"
-  - title: "Surveys and qualitative data"
-    date: "October 24"
+  
+  - title: "**Problem set 3**"
+    date: "October 16"
+    assignment: "03-problem-set"
+
+  - title: "Comparisons"
+    date: "October 23"
     reading: "08-reading"
-    assignment: "08-assignment"
-    class: "08-class"
-  - title: "⊞ **Final project due**"
+  
+  - title: "**Mini project 1** (*this is a Friday*)"
+    date: "October 26"
+    assignment: "01-project"
+
+  - title: "Time"
+    date: "October 30"
+    reading: "09-reading"
+  
+  - title: "**Problem set 4**"
+    date: "October 30"
+    assignment: "04-problem-set"
+
+  - title: "Space"
+    date: "November 6"
+    reading: "10-reading"
+
+  - title: "Text"
+    date: "November 13"
+    reading: "11-reading"
+  
+  - title: "**Problem set 5**"
+    date: "November 13"
+    assignment: "05-problem-set"
+
+  - title: '<span class="fake-header-table">Communicating</span>'
+    header: True
+
+  - title: "Annotating and grouping"
+    date: "November 27"
+    reading: "12-reading"
+  
+  - title: "**Mini project 2**"
+    date: "November 27"
+    assignment: "02-project"
+
+  - title: "Enhancing graphics"
+    date: "December 4"
+    reading: "13-reading"
+
+  - title: "**Code-through due** (*this is a Friday*)"
+    date: "December 7"
+    assignment: "code-through"
+
+  - title: "Truth, beauty, and data revisited"
+    date: "December 11"
+    reading: "14-reading"
+
+  - title: '<span class="fake-header-table">Final</span>'
+    header: True
+
+  - title: "**Final project due** (submit online by 11:59 PM)"
+    date: "December 18"
     assignment: "final-project"

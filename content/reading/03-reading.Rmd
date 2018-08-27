@@ -1,6 +1,6 @@
 ---
-title: "Distributions and uncertainty"
-date: "2017-09-19"
+title: "Mapping data to graphics"
+date: "2018-09-18"
 citeproc: false
 bibliography: ../../static/bib/references.bib
 csl: ../../static/bib/chicago-fullnote-bibliography-no-bib.csl
@@ -8,16 +8,18 @@ csl: ../../static/bib/chicago-fullnote-bibliography-no-bib.csl
 
 # Required
 
-- Chapters 4, 7, and 11 in Alberto Cairo, *The Truthful Art* [@Cairo:2016]
-- [Why It's So Hard for Us to Visualize Uncertainty](https://hbr.org/2016/11/why-its-so-hard-for-us-to-visualize-uncertainty)
-- [Amanda Cox's keynote address at the 2017 OpenVis Conf](https://www.youtube.com/watch?v=0L1tGo-DvD0)
-- [Communicating Uncertainty When Lives Are on the Line](https://eagereyes.org/blog/2017/communicating-uncertainty-when-lives-are-on-the-line)
-- [Showing uncertainty during the live election forecast](https://flowingdata.com/2016/11/15/showing-uncertainty-during-the-live-election-forecast/) & [Trolling the uncertainty dial](https://flowingdata.com/2017/06/27/trolling-the-uncertainty-dial/)
+- <i class="fab fa-youtube"></i> Hans Rosling, ["200 Countries, 200 Years, 4 Minutes"](https://www.youtube.com/watch?v=jbkSRLYSojo)
+- <i class="fas fa-book"></i> [Chapter 2](https://serialmentor.com/dataviz/aesthetic-mapping.html) in Claus Wilke, *Fundamentals of Data Visualization* [@Wilke:2018]
+- <i class="fas fa-book"></i> [Chapter 3](http://socviz.co/makeplot.html) in Kieran Healy, *Data Visualization* [@Healy:2018]
+
+
+# Recommended
+
+Walking through this chapter here and working through all the code will be immensely helpful.
+
+- <i class="fas fa-book"></i> [3.1–3.9 in *ModernDive*](https://moderndive.com/3-viz.html) [@IsmayKim:2018]
 
 
 # Questions to reflect on
 
-- Why is it important to deal with uncertainty in data?
-- What was good or bad about the New York Times' 2016 live election guage?
-- Why is it so hard to visualize uncertainty?
-- Why is it so hard to communicate uncertainty to others?
+- Questions TBD

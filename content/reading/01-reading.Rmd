@@ -1,31 +1,17 @@
 ---
 title: "Truth, Beauty, and Data"
-date: "2017-09-05"
+date: "2018-09-04"
 citeproc: false
 bibliography: ../../static/bib/references.bib
 csl: ../../static/bib/chicago-fullnote-bibliography-no-bib.csl
 ---
 
-*Note:* [^sorry] Typically, you need to finish the readings *before* class, but since you didn't receive the syllabus until the first session of the course, you couldn't do any of the readings for today.
-
-This stuff is really, really important and foundational, though, so you'll need to read it after class. This means that you'll also have to do the readings and reflection for next week at the same time. I'm so sorry. 
-
-[^sorry]: {-}
-  ![Sorry!](https://media.giphy.com/media/3oEdv5okG3TzMJ9pQY/giphy.gif)
-
 # Required
 
-- Chapters 2, 3, and 5 in Alberto Cairo, *The Truthful Art* [@Cairo:2016] (*skim the introduction and chapter 1*)
-- Chapter 1 in Stephanie Evergreen, *Effective Data Visualization* [@Evergreen:2017]
-- [Summary of CRAP graphic design principles](http://www.presentationzen.com/chapter6_spread.pdf) from Garr Reynolds, *Presentation Zen* [@Reynolds:2008]
-- ["What's the Difference Between JPG, PNG, and GIF?"](https://gizmodo.com/5656669/whats-the-difference-between-jpg-png-and-gif)
-- ["The File Guide: Differences Between JPG, PNG, EPS, PDF, PSD, AI, GIF, TIFF"](https://builtbytophat.com/file-guide-differences-between-jpg-png-eps-pdf-psd-ai-gif-tiff/)
-
-
-# Recommended
-
-- President Dieter F. Uchtdorf's 2013 CES devotional "What is Truth?" [@Uchtdorf:2013].&emsp;[<i class="fa fa-file-pdf-o" aria-hidden="true"></i>](/readings/Uchtdorf_Dieter_2013-01-13.pdf)&ensp;[<i class="fa fa-youtube" aria-hidden="true"></i>](https://youtu.be/sgRR9WZPp5c?t=12m50s)
-- If you have access to Robin Williams, *The Non-Designer's Design Book*, read through chapters 2–5 [@Williams:2008]
+- <i class="fas fa-book"></i> [Chapter 1](http://socviz.co/lookatdata.html) in Kieran Healy, *Data Visualization* [@Healy:2018]
+- <i class="fas fa-book"></i> Chapters 2 and 3 in Alberto Cairo, *The Truthful Art* [@Cairo:2016] (*skim the introduction and chapter 1*)
+- <i class="fas fa-external-link-square-alt"></i> [Study: Charts change hearts and minds better than words do](https://www.washingtonpost.com/news/wonk/wp/2018/06/15/study-charts-change-hearts-and-minds-better-than-words-do/?utm_term=.4474599c0d5e)
+- <i class="fab fa-youtube"></i> President Dieter F. Uchtdorf's 2013 CES devotional ["What is Truth?"](https://youtu.be/sgRR9WZPp5c?t=12m50s) [@Uchtdorf:2013].&ensp;[<i class="far fa-file-pdf"></i>](/readings/Uchtdorf_Dieter_2013-01-13.pdf)
 
 
 # Questions to reflect on

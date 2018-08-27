@@ -1,6 +1,6 @@
 ---
-title: "Comparisons"
-date: "2017-10-03"
+title: "Proportions"
+date: "2018-10-02"
 citeproc: false
 bibliography: ../../static/bib/references.bib
 csl: ../../static/bib/chicago-fullnote-bibliography-no-bib.csl
@@ -8,14 +8,20 @@ csl: ../../static/bib/chicago-fullnote-bibliography-no-bib.csl
 
 # Required
 
-- Chapters 3 and 4 in Stephanie Evergreen, *Effective Data Visualization* [@Evergreen:2017]
-- [Sparkline theory and practice](https://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0001OR)^[{-} This is a collection of posts by Edward Tufte about sparklines—scroll down a ways and check out his examples, analysis, and critiques.]
-- [Time series sparklines](https://flowingdata.com/2017/01/24/one-dataset-visualized-25-ways/02-time-series-sparklines-2/)
-- [The bullet graph](http://www.storytellingwithdata.com/blog/2017/5/25/the-bullet-graph)
-- [Lollipop charts](https://uc-r.github.io/lollipop)^[{-} If you're feeling adventurous (and you should!), do this tutorial as you read it.]
+- <i class="fas fa-book"></i> [Chapter 10](https://serialmentor.com/dataviz/visualizing-proportions.html) in Claus Wilke, *Fundamentals of Data Visualization* [@Wilke:2018]
+- <i class="fas fa-external-link-square-alt"></i> [Engaging Readers with Square Pie/Waffle Charts](https://eagereyes.org/blog/2008/engaging-readers-with-square-pie-waffle-charts)
+- <i class="fas fa-external-link-square-alt"></i> [Understanding Pie Charts](https://eagereyes.org/techniques/pie-charts) [^pie]
+- <i class="fas fa-external-link-square-alt"></i> [Square pie chart beats out the rest in perception study](https://flowingdata.com/2016/07/15/square-pie-chart-beats-out-the-rest-in-perception-study/)
+
+[^pie]: {-} ![Software pie chart](/images/class/software-pie-chart.png) Figure 2 from @MomchevaTollerud:2015.
+
+
+# Recommended
+
+- <i class="far fa-file-pdf"></i> Ian Spence, ["No Humble Pie: The Origins and Usage of a Statistical Chart"](http://www.psych.utoronto.ca/users/spence/Spence%202005.pdf) [@Spence:2005]
+- <i class="far fa-file-pdf"></i> Jeffrey Heer and Michael Bostock, ["Crowdsourcing Graphical Perception: Using Mechanical Turk to Assess Visualization Design"](http://vis.stanford.edu/papers/crowdsourcing-graphical-perception) [@HeerBostock:2010]
 
 
 # Questions to reflect on
 
-- In chapter 3, Evergreen provides a ton of new ways to present comparisons. Which ones are your favorite? Which ones didn't quite click with you? In what situations are some more appropriate than others?
-- Do combo charts and bullet graphs break the rule against double y-axes? Why or why not?
+- Questions TBD
