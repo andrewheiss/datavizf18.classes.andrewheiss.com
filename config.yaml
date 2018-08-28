@@ -12,6 +12,7 @@ ignoreFiles:
   - \.csl$
 permalinks:
   post: "/:year/:month/:day/:slug/"
+buildFuture: true
 menu:
   main:
     - name: Syllabus
