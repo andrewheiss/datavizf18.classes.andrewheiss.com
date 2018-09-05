@@ -5,6 +5,7 @@ lessons:
   - title: "Truth, beauty, and data"
     date: "September 4"
     reading: "01-reading"
+    class: "01-class"
 
   - title: "Graphic design"
     date: "September 11"

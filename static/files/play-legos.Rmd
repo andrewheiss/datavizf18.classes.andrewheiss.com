@@ -1,0 +1,151 @@
+---
+title: "Playing with LEGO"
+author: "Andrew Heiss"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+Let's look at some interesting patterns in the history of LEGO! We'll be using data from the [**lego** package](https://github.com/seankross/lego), along with functions in **tidyverse** packages (specifically **ggplot2** and **dplyr**).
+
+
+```{r load-packages, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(lego)  # Installed from https://github.com/seankross/lego
+library(ggstance)
+```
+
+# Look at the raw data
+
+The **lego** package provides a helpful dataset with dozens of interesting variables. 
+
+```{r view-data}
+legosets
+```
+
+Or, alternatively, use `View()`
+
+```{r eval=FALSE}
+View(legosets)
+```
+
+
+# Analyze and visualize the data
+
+## Price per year
+
+First, let's look at the average cost of LEGO sets over time. The main variable of interest here is `USD_MSRP`, or the manufacturer's suggested retail price in constant dollars (i.e. not adjusted for inflation).
+
+Things to try out:
+
+- Use the median instead of the mean.
+- Change the line color, line size, point color, and point size.
+- Run `?theme_minimal` and see what other themes are available. Try some of those.
+
+
+```{r price-over-time}
+avg_price_per_year <- legosets %>% 
+  filter(!is.na(USD_MSRP)) %>% 
+  group_by(Year) %>% 
+  summarize(Price = mean(USD_MSRP))
+
+ggplot(avg_price_per_year, 
+       mapping = aes(x = Year, y = Price)) +
+  geom_line(color = "#666666", size = 0.5) +
+  geom_point(size = 0.5) +
+  labs(x = "Year", 
+       y = "Price (USD)", 
+       title = "Average price of LEGO sets",
+       subtitle = "Amounts are reported in current USD",
+       caption = "Source: LEGO") +
+  theme_minimal()
+```
+
+## Pieces per year
+
+Next, let's look at how the number of pieces per set has changed over time. Because Duplo sets are much smaller (since they're designed for toddlers), we'll make a special indicator variable for them.
+
+Things to try:
+
+- Change the line color and size.
+- Make the line for Duplos different from the line for LEGOs.
+- Plot the number of sets over time instead of the average number of pieces.
+
+```{r pieces-over-time}
+pieces_per_year <- legosets %>% 
+  filter(!is.na(USD_MSRP)) %>% 
+  filter(Year > 1975) %>% 
+  mutate(Duplo = ifelse(Theme == "Duplo", "Duplo", "Lego")) %>% 
+  group_by(Year, Duplo) %>% 
+  summarize(Pieces = mean(Pieces, na.rm = TRUE),
+            num_sets = n())
+
+ggplot(pieces_per_year,
+       mapping = aes(x = Year, y = Pieces)) +
+  geom_line() +
+  labs(x = "Year", 
+       y = "Number of pieces", 
+       title = "Average number of pieces in LEGO sets",
+       caption = "Source: LEGO") +
+  theme_minimal() +
+  facet_wrap(~ Duplo)
+```
+
+## LEGO set themes
+
+In the 1990s, [LEGO began partnering with famous brands and franchises](https://www.cnbc.com/2018/04/27/lego-marketing-strategy-made-it-world-favorite-toy-brand.html) to boost its own sales. First, let's see how many different "themes" LEGO now offers:
+
+```{r view-themes}
+legosets %>% 
+  distinct(Theme)
+```
+
+There are 115 different themes! Are some more popular than others?
+
+```{r view-theme-counts}
+theme_counts <- legosets %>% 
+  count(Theme, sort = TRUE) %>% 
+  mutate(Theme = fct_inorder(Theme, ordered = TRUE))
+theme_counts
+```
+
+Duplo is the most common "theme," which makes sense since it's like a subbrand of LEGO. But Star Wars is incredibly common! Moreso than the generic "town," "city," and "castle" themes.
+
+Let's look at the most common themes.
+
+Stuff to try:
+
+- Change the threshold for what themes are included
+- Change the color of the bars
+
+```{r plot-top-themes}
+ggplot(data = filter(theme_counts, n > 150), 
+       mapping = aes(y = fct_rev(Theme), x = n)) +
+  geom_barh(stat = "identity") + 
+  labs(x = "Number of sets",
+       y = NULL) +
+  theme_minimal()
+```
+
+Let's compare two of the more popular franchises, Harry Potter and Star Wars. Do you see any trends over time?
+
+Stuff to try:
+
+- Change the smoothing method from `lm` to `gam` or `loess`. What is the difference between these?
+- Compare two other LEGO themes (or 3 at a time or 4 at a time)
+- Add nicer axis labels and plot titles
+
+```{r hp-sw-only, warning=FALSE}
+legosets_filtered <- legosets %>% 
+  filter(Theme %in% c("Harry Potter", "Star Wars")) %>% 
+  group_by(Year, Theme) %>% 
+  summarize(num_sets = n())
+
+ggplot(data = legosets_filtered,
+       mapping = aes(x = Year, y = num_sets, color = Theme)) +
+  geom_point(size = 0.5, alpha = 0.5) +
+  geom_smooth(method = "lm") + 
+  theme_minimal()
+```

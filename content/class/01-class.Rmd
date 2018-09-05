@@ -1,0 +1,38 @@
+---
+title: "Truth, beauty, and data"
+date: "2018-09-04"
+citeproc: false
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+editor_options: 
+  chunk_output_type: console
+stuff-to-add: >-
+  https://twitter.com/jent103/status/1033481434072317957?s=12
+---
+
+# Slides
+
+[Download the slides from today's lecture](/slides/MPA-635_2018-09-04.pdf).
+
+<figure>
+[![First slide](/images/slides/slides_2018-09-04.png)](/slides/MPA-635_2018-09-04.pdf)
+</figure>
+
+
+# Playing with LEGO
+
+The R Markdown file we (briefly) played with [is here](/files/play-legos.Rmd).
+
+
+# Clearest and muddiest things
+
+Go to [this form](https://goo.gl/forms/rSIbw1voOV2vWKMD2) and answer these two questions:
+
+1. What was the muddiest thing from class today? What are you still wondering about?
+2. What was the clearest thing from class today? What was the most exciting thing you learned?
+
+I'll compile the questions and send out answers after class.
