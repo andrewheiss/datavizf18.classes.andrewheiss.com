@@ -63,7 +63,7 @@ RStudio.cloud is convenient, but it can be slow and it is not designed to be abl
 
 You can [find instructions for installing R, RStudio, and all the tidyverse packages here.](/install/)
 
-## Online help and Gitter
+## Online help and Slack
 
 Computer programming can be difficult. Computers are stupid and little errors in your code can cause hours of headache (even if you've been doing this stuff for years!).
 
@@ -71,7 +71,7 @@ Fortunately there are tons of online resources to help you with this. Two of the
 
 Searching for help with R on Google can be tricky because the program is, um, a single letter. Try searching for "rstats" instead. If you use Twitter, post R-related questions and content with [#rstats](https://twitter.com/search?q=%23rstats).
 
-Additionally, we have a class chatroom at [Gitter](https://gitter.im/byudatavizf18/) where anyone in the class can ask questions and anyone can answer. Ask questions about the readings, problem sets, and projects [in the class Gitter](https://gitter.im/byudatavizf18/). I will monitor the chatroom regularly, and you should also all do so as well. You'll likely have similar questions as your peers, and you'll likely be able to answer other peoples' questions too.
+Additionally, we have a class chatroom at [Slack](https://byudatavizf2018.slack.com) where anyone in the class can ask questions and anyone can answer. Ask questions about the readings, problem sets, and projects [in the class Slack workspace](https://byudatavizf2018.slack.com). I will monitor Slack regularly, and you should also all do so as well. You'll likely have similar questions as your peers, and you'll likely be able to answer other peoples' questions too.
 
 
 # Course policies

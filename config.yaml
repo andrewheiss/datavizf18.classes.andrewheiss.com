@@ -30,8 +30,8 @@ menu:
     - name: RStudio.cloud
       url: "https://rstudio.cloud"
       weight: 5
-    - name: Class chat
-      url: "https://gitter.im/byudatavizf18/"
+    - name: Class Slack
+      url: "https://byudatavizf2018.slack.com"
       weight: 6
 # Disable taxonomies
 taxonomies:
@@ -57,6 +57,7 @@ params:
     twitter: andrewheiss
     dates: "September 4–December 11, 2018"
     github: "andrewheiss/datavizf18.classes.andrewheiss.com"
+    slack: "https://byudatavizf2018.slack.com"
     copyrightYear: "2018"
     contactDetails: >-
       Office hours: TBD. [Sign up for other times here.](https://calendly.com/andrewheiss/meeting/)<br><br>E-mail is the best way to get in contact with me—I will respond to all course-related e-mails within 24 hours (*really*).
