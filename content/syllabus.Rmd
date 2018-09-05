@@ -61,7 +61,7 @@ R is free, but it can sometimes be a pain to install and configure. To make life
 
 RStudio.cloud is convenient, but it can be slow and it is not designed to be able to handle larger datasets, more complicated analysis, or fancier graphics. Over the course of the semester, you'll probably want to get around to installing R, RStudio, and other R packages on your computer and wean yourself off of RStudio.cloud.
 
-You can find instructions for installing R, RStudio, and all the tidyverse packages here.
+You can [find instructions for installing R, RStudio, and all the tidyverse packages here.](/install/)
 
 ## Online help and Gitter
 
