@@ -10,6 +10,7 @@ lessons:
   - title: "Graphic design"
     date: "September 11"
     reading: "02-reading"
+    class: "02-class"
 
   - title: "Mapping data to graphics"
     date: "September 18"

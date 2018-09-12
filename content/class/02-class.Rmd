@@ -1,0 +1,72 @@
+---
+title: "Graphic Design"
+date: "2018-09-11"
+citeproc: false
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+editor_options: 
+  chunk_output_type: console
+---
+
+# Slides
+
+[Download the slides from today's lecture](/slides/MPA-635_2018-09-11.pdf).
+
+<figure>
+[![First slide](/images/slides/slides_2018-09-11.png)](/slides/MPA-635_2018-09-11.pdf)
+</figure>
+
+
+# Quick redesign
+
+Choose one of these on-campus fliers and redesign it in a small group:
+
+- BYU Student Wellness: [<i class="fas fa-file-archive"></i> All assets](/files/byu-student-wellness.zip)
+- Safe Kids Utah County: [<i class="fas fa-file-archive"></i> All assets](/files/safe-kids.zip)
+
+
+# Clearest and muddiest things
+
+Go to [this form](https://goo.gl/forms/rSIbw1voOV2vWKMD2) and answer these two questions:
+
+1. What was the muddiest thing from class today? What are you still wondering about?
+2. What was the clearest thing from class today? What was the most exciting thing you learned?
+
+I'll compile the questions and send out answers after class.
+
+
+```{r class-stuff, include=FALSE, eval=FALSE}
+library(tidyverse)
+library(gapminder)
+library(here)
+
+source(here("lib", "graphics.R"))
+
+just_2007 <- gapminder %>% 
+  filter(year == 2007)
+
+main_plot <- ggplot(just_2007, 
+                    aes(y = lifeExp, x = gdpPercap, size = pop, fill = continent)) +
+  geom_point(pch = 21, color = "white") + 
+  scale_x_log10(labels = scales::dollar_format(accuracy = 1)) +
+  scale_fill_manual(values = as.character(dv_colors[2:6]), guide = FALSE) +
+  scale_size_continuous(range = c(2, 15), guide = FALSE) +
+  labs(x = "GDP per capita", y = "Life expectancy",
+       title = "Global health and wealth in 2007",
+       caption = "Source: Hans Rosling and the Gapminder Project") +
+  theme_dv()
+main_plot
+
+ggsave(main_plot, filename = "~/Desktop/main-plot.pdf",
+       height = 3, width = 4, units = "in", device = cairo_pdf)
+ggsave(main_plot, filename = "~/Desktop/main-plot.png",
+       height = 3, width = 4, units = "in", type = "cairo")
+ggsave(main_plot, filename = "~/Desktop/main-plot.svg",
+       height = 3, width = 4, units = "in")
+ggsave(main_plot, filename = "~/Desktop/main-plot.jpg",
+       height = 3, width = 4, units = "in", quality = 75)
+```
