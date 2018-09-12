@@ -1,0 +1,182 @@
+---
+title: "Problem set 1"
+author: "YOUR NAME HERE"
+date: "DATE HERE"
+---
+
+# Task 1
+
+Tell me that you watched the short videos and completed the series of R Markdown tutorials.
+
+
+# Task 2
+
+## Life expectancy in 2007
+
+```{r load-packages, warning=FALSE, message=FALSE}
+# Notice the warning=FALSE and message=FALSE in the chunk options. R spits out 
+# a lot of messages when you load tidyverse and we don't want those in the 
+# final document.
+
+library(tidyverse)  # This loads ggplot2, dplyr, and other packages you'll need
+library(gapminder)  # This loads the gapminder data
+```
+
+Let's first look at the first few rows of data:
+
+```{r view-data}
+head(gapminder)
+```
+
+Right now, the `gapminder` data frame contains rows for all years for all countries. We want to only look at 2007, so we create a new data frame that filters only rows for 2007.
+
+Note how there's a weird sequence of characters: `%>%`. This is called a *pipe* and lets you chain functions together. We could have also written this as `gapminder_2007 <- filter(gapminder, year == 2007)`.
+
+```{r filter-2007}
+gapminder_2007 <- gapminder %>%
+  filter(year == 2007)
+
+head(gapminder_2007)
+```
+
+Now we can plot a histogram of 2007 life expectancies with the default settings:
+
+```{r plot-2007-1}
+ggplot(data = gapminder_2007, 
+       mapping = aes(x = lifeExp)) +
+  geom_histogram()
+```
+
+R will use 30 histogram bins by default, but that's not always appropriate, and it will yell at you for doing so. **Adjust the number of bins to 2, then 40, then 100.** **What's a good number for this data? Why?**
+
+TYPE YOUR ANSWER HERE.
+
+```{r plot-2007-2}
+ggplot(data = gapminder_2007, 
+       mapping = aes(x = lifeExp)) +
+  geom_histogram(bins = 2)
+```
+
+## Average life expectancy in 2007 by continent
+
+We're also interested in the differences of life expectancy across continents. First, we can group all rows by continent and calculate the mean
+
+This is where the `%>%` function is actually super useful. Remember that it lets you chain functions together—this means we can read these commands as a set of instructions: take the `gapminder` data frame, filter it, group it by continent, and summarize each group by calculating the mean. Without using the `%>%`, we could write this same chain like this: `summarize(group_by(filter(gapminder, year == 2007), continent), avg_life_exp = mean(lifeExp))`. But that's *awful* and impossible to read and full of parentheses that can easily be mismatched.
+
+```{r calc-mean}
+gapminder_cont_2007 <- gapminder %>%
+  filter(year == 2007) %>% 
+  group_by(continent) %>%
+  summarize(avg_life_exp = mean(lifeExp))
+
+head(gapminder_cont_2007)
+```
+
+Let's plot these averages as a bar chart:
+
+```{r plot-2007-bar}
+ggplot(data = gapminder_cont_2007, 
+       mapping = aes(x = continent, y = avg_life_exp, fill = continent)) + 
+  geom_col()
+```
+
+Then, let's plot them as density distributions. We don't need to use the summarized data frame for this, just the original filtered `gapminder_2007` data frame:
+
+```{r plot-2007-density}
+ggplot(data = gapminder_2007, 
+       mapping = aes(x = lifeExp, fill = continent)) + 
+  geom_density()
+```
+
+Now let's plot life expectancies as violin charts. These are the density distributions turned sideways:
+
+```{r plot-2007-violin}
+ggplot(data = gapminder_2007, 
+       mapping = aes(x = continent, y = lifeExp, fill = continent)) + 
+  geom_violin()
+```
+
+Finally, we can add actual points of data for each country to the violin chart:
+
+```{r plot-2007-violin-points}
+ggplot(data = gapminder_2007, 
+       mapping = aes(x = continent, y = lifeExp, fill = continent)) + 
+  geom_violin() +
+  geom_point()
+```
+
+The bar chart, density plot, violin plot, and violin plot + points each show different ways of looking at a single number—the average life expectancy in each continent. **Answer these questions:**
+
+- Which plot is most helpful? TYPE YOUR ANSWER HERE.
+- Which ones show variability? TYPE YOUR ANSWER HERE.
+- What's going on with Oceania? TYPE YOUR ANSWER HERE.
+
+
+# Task 3: R and ggplot
+
+```{r load-libraries-1, warning=FALSE, message=FALSE}
+# Technically you don't need to run this because we loaded tidyverse earlier in Task 2
+library(tidyverse)
+```
+
+## 3.2.4
+
+**1: Run `ggplot(data = mpg)`. What do you see?**
+
+```{r blank-plot, fig.width=2, fig.height=2}
+ggplot(data = mpg)
+```
+
+TYPE YOUR ANSWER HERE. (hint: I gave you the answer in the chunk name)
+
+(Notice how I used `fig.width` and `fig.height` in the chunk options. You can click on the little gear icon in the far left of the chunk to change other options.)
+
+**2: How many rows are in `mpg`? How many columns?**
+
+```{r mpg-details}
+nrow(mpg)
+ncol(mpg)
+
+# Or
+dim(mpg)
+
+# Or
+mpg
+```
+
+**3: What does the `drv` variable describe? Read the help for `?mpg` to find out.**
+
+TYPE YOUR ANSWER HERE.
+
+**4: Make a scatterplot of `hwy` vs `cyl`.**
+
+```{r hwy-cyl-scatterplot}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = cyl, y = hwy))
+```
+
+**5: What happens if you make a scatterplot of `class` vs `drv`? Why is the plot not useful?**
+
+```{r class-drv-scatterplot}
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = class, y = drv))
+```
+
+TYPE YOUR ANSWER HERE.
+
+
+## 3.3.1
+
+Add your own chunks here and answer the questions.
+
+## 3.5.1
+
+Add your own chunks here and answer the questions.
+
+## 3.6.1
+
+Add your own chunks here and answer the questions.
+
+## 3.8.1
+
+Add your own chunks here and answer the questions.
