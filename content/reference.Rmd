@@ -32,7 +32,8 @@ library(emo)
 
 - [**The Data Visualisation Catalogue**](http://www.datavizcatalogue.com/): Descriptions, explanations, examples, and tools for creating 60 different types of visualizations.
 - [**The Data Viz Project**](http://datavizproject.com/): Descriptions and examples for 150 different types of visualizations. Also allows you to search by data shape and chart function (comparison, correlation, distribution, geographical, part to whole, trend over time, etc.).
-- [**The Chartmaker Directory**](http://chartmaker.visualisingdata.com/): xamples of how to create 51 different types of visualizations in 31 different software packages, including Excel, Tableau, and R.
+- [**From Data to Viz**](https://www.data-to-viz.com/): A decision tree for dozens of chart types with links to R and Python code.
+- [**The Chartmaker Directory**](http://chartmaker.visualisingdata.com/): Examples of how to create 51 different types of visualizations in 31 different software packages, including Excel, Tableau, and R.
 - [**R Graph Catalog**](http://shinyapps.stat.ubc.ca/r-graph-catalog/): R code for 124 ggplot graphs.
 - [**Emery's Essentials**](http://annkemery.com/essentials/): Descriptions and examples of 26 different chart types.
 
@@ -106,6 +107,7 @@ Here are some of the best examples I've come across:
 
 # Data
 
+- [**Google Dataset Search**](https://toolbox.google.com/datasetsearch): Google indexes thousands of public datasets; search for them here
 - [**Kaggle**](https://www.kaggle.com/datasets): Kaggle hosts machine learning competitions where people compete to create the fastest, most efficient, most predictive algorithms. A byproduct of these competitions is a host of fascinating datasets that are generally free and open to the public. See, for example, [the European Soccer Database](https://www.kaggle.com/hugomathien/soccer), the [Salem Witchcraft Dataset](https://www.kaggle.com/rtatman/salem-witchcraft-dataset) or results from an [Oreo flavors taste test](https://www.kaggle.com/rtatman/oreo-flavors-tastetest-ratings).
 - [**360Giving**](http://www.threesixtygiving.org/data/data-registry/): Dozens of British foundations follow a standard file format for sharing grant data and have made that data available online.
 - [**US City Open Data Census**](http://us-city.census.okfn.org/): More than 100 US cities have committed to sharing dozens of types of data, including data about crime, budgets, campaign finance, lobbying, transit, and zoning. This site from the [Sunlight Foundation](http://sunlightfoundation.com/) and [Code for America](http://www.codeforamerica.org//) collects this data and rates cities by how well they're doing.
@@ -117,7 +119,10 @@ Here are some of the best examples I've come across:
 
 # Colors
 
+- [**PolicyViz Design Color Tools**](https://policyviz.com/better-presentations/design-resources/design-color-tools/): Large collection of useful color resources
 - [^adobe-color] [**Adobe Color**](https://color.adobe.com): Create, share, and explore rule-based and custom color palettes.
+- [**viridis**](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html): Percetually uniform color scales.
+- [**Scientific Colour-Maps**](http://www.fabiocrameri.ch/colourmaps.php): Perceptually uniform color scales like viridis. Use them in R with [**scico**](https://github.com/thomasp85/scico).
 - [**ColorBrewer**](http://colorbrewer2.org/): Sequential, diverging, and qualitative color palettes that take accessibility into account.
 - [**Colorgorical**](http://vrl.cs.brown.edu/color): Create color palettes based on fancy mathematical rules for perceptual distance.
 - [**Colorpicker for data**](http://tristen.ca/hcl-picker/): More fancy mathematical rules for color palettes ([explanation](https://www.vis4.net/blog/posts/avoid-equidistant-hsv-colors/)).
@@ -125,7 +130,7 @@ Here are some of the best examples I've come across:
 - [**ColourLovers**](http://www.colourlovers.com/): Like Facebook for color palettes.
 - [**Photochrome**](https://photochrome.io/): Word-based color pallettes.
 
-[^adobe-color]: {-} ![Adobe Color](/images/reference/adobe-color.png) *Adboe Color*
+[^adobe-color]: {-} ![Adobe Color](/images/reference/adobe-color.png) *Adobe Color*
 
 
 # Fonts
