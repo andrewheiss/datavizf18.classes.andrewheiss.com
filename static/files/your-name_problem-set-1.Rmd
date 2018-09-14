@@ -4,6 +4,13 @@ author: "YOUR NAME HERE"
 date: "DATE HERE"
 ---
 
+# Details
+
+- Who did you collaborate with: TYPE NAMES HERE
+- Approximately how much time did you spend on this problem set: ANSWER HERE
+- What, if anything, gave you the most trouble: ANSWER HERE
+
+
 # Task 1
 
 Tell me that you watched the short videos and completed the series of R Markdown tutorials.
