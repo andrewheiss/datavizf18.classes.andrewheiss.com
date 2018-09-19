@@ -1,0 +1,86 @@
+---
+title: "Mapping data to graphics"
+date: "2018-09-18"
+citeproc: false
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+editor_options: 
+  chunk_output_type: console
+---
+
+# Slides
+
+[Download the slides from today's lecture](/slides/MPA-635_2018-09-18.pdf).
+
+<figure>
+[![First slide](/images/slides/slides_2018-09-18.png)](/slides/MPA-635_2018-09-18.pdf)
+</figure>
+
+
+# Extra-dimensional aesthetics
+
+- [Make your own animated plots with `gganimate`](https://github.com/thomasp85/gganimate)
+- [Video of simulated Hurricane Florence storm surge](https://twitter.com/weatherchannel/status/1040305773664980993)
+- [The Wall Street Journal's audio-based visualization of *Hamilton*'s internal rhymes](http://graphics.wsj.com/hamilton/)
+
+
+# Guessing the identity of the Trump resistance op-ed writer with R
+
+- [David Robinson's approach](http://varianceexplained.org/r/op-ed-text-analysis/)
+- Mike Kearney's approach: [his code](https://github.com/mkearney/resist_oped) and [his short article](https://www.rjionline.org/stories/we-put-data-science-to-the-test-to-try-to-uncover-the-mystery-author-of-the)
+
+
+# Workhouses and star movies
+
+Download this zip file, *extract it*, and open the file named `week3.Rproj`: 
+
+- [<i class="fas fa-file-archive"></i> `week3.zip`](/files/week3.zip)
+
+
+# Clearest and muddiest things
+
+Go to [this form](https://goo.gl/forms/rSIbw1voOV2vWKMD2) and answer these two questions:
+
+1. What was the muddiest thing from class today? What are you still wondering about?
+2. What was the clearest thing from class today? What was the most exciting thing you learned?
+
+I'll compile the questions and send out answers after class.
+
+
+```{r class-stuff, include=FALSE, eval=FALSE}
+library(tidyverse)
+
+untidy <- tribble(
+             ~Office, ~`2015`, ~`2016`, ~`2017`,
+       "Utah County",   134L,     145L,    167L,
+  "Salt Lake County",   302L,     334L,    331L,
+      "Davis County",   254L,     288L,    299L,
+       "Juab County",    78L,      82L,     87L
+  )
+
+tidied <- untidy %>% 
+  gather(Year, Incidents, -Office)
+
+write_csv(tidied, "~/Desktop/blah.csv")
+
+# Animated stuff
+animated <- ggplot(data = gapminder,
+       mapping = aes(x = gdpPercap,
+                     y = lifeExp,
+                     color = continent,
+                     size = pop)) +
+  geom_point() + 
+  scale_x_log10() +
+  labs(title = 'Year: {frame_time}') +
+  transition_time(year) +
+  ease_aes('linear')
+
+actual_animated <- animate(animated)
+actual_animated_movie <- animate(animated, renderer = ffmpeg_renderer())
+anim_save(actual_animated, filename = "~/Desktop/gapminder.gif")
+anim_save(actual_animated_movie, filename = "~/Desktop/gapminder.mp4")
+```

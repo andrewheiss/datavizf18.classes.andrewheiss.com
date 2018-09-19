@@ -15,6 +15,7 @@ lessons:
   - title: "Mapping data to graphics"
     date: "September 18"
     reading: "03-reading"
+    class: "03-class"
 
   - title: "**Problem set 1**"
     date: "September 18"
