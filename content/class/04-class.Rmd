@@ -1,0 +1,73 @@
+---
+title: "Amounts"
+date: "2018-09-25"
+citeproc: false
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+editor_options: 
+  chunk_output_type: console
+---
+
+# Slides
+
+[Download the slides from today's lecture](/slides/MPA-635_2018-09-25.pdf).
+
+<figure>
+[![First slide](/images/slides/slides_2018-09-25.png)](/slides/MPA-635_2018-09-25.pdf)
+</figure>
+
+
+# US birth data
+
+Here's the data I used:
+
+- <i class="fas fa-table"></i> [Data from the CDC and SSA (via FiveThirtyEight)](https://github.com/fivethirtyeight/data/tree/master/births)
+
+Here's a more complete version of the code I wrote in class:
+
+- <i class="fas fa-code"></i> [`birth-plots.Rmd`](/files/birth-plots.Rmd)
+- <i class="fab fa-r-project"></i> [The complete RStudio project](/files/birth-plots.zip)
+- <i class="fas fa-globe"></i> The knitted [`birth-plots.html`](/files/birth-plots.html)
+
+
+# Clearest and muddiest things
+
+Go to [this form](https://goo.gl/forms/rSIbw1voOV2vWKMD2) and answer these two questions:
+
+1. What was the muddiest thing from class today? What are you still wondering about?
+2. What was the clearest thing from class today? What was the most exciting thing you learned?
+
+I'll compile the questions and send out answers after class.
+
+
+```{r class-stuff, include=FALSE, eval=FALSE}
+library(tidyverse)
+
+dogs <- rnorm(1000, mean = 40, sd = 10)
+hist(dogs)
+
+cats_house <- rnorm(500, mean = 20, sd = 5)
+cats_wild <- rnorm(500, mean = 60, sd = 5)
+animals <- tribble(
+  ~animal, ~weight,
+  "Dogs",  rnorm(1000, mean = 40, sd = 10),
+  "Cats",  c(rnorm(500, mean = 20, sd = 5), rnorm(500, mean = 60, sd = 5))
+) %>% 
+  unnest(weight)
+
+animals_plot <- animals %>% 
+  group_by(animal) %>% 
+  summarize(weight = mean(weight))
+
+ggplot(animals_plot, aes(x = animal, y = weight)) +
+  geom_col()
+
+ggplot(animals, aes(x = animal, y = weight)) +
+  geom_point(position = "jitter", size = 0.5) +
+  stat_summary(fun.y = mean, geom = "point", size = 5, color = "darkred") #+ 
+  # stat_summary(fun.data = mean_cl_boot, geom = "errorbar", width = 0.2)
+```

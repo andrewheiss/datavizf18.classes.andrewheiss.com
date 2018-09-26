@@ -27,6 +27,7 @@ lessons:
   - title: "Amounts"
     date: "September 25"
     reading: "04-reading"
+    class: "04-class"
 
   - title: "Proportions"
     date: "October 2"

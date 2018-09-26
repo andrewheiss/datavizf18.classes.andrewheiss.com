@@ -1,0 +1,167 @@
+---
+title: "Visualizing births in the US between 1994-2014"
+author: "Andrew Heiss"
+date: "September 25, 2018"
+output: html_document
+---
+
+# Load data
+
+We downloaded birth data that [FiveThirtyEight collected for us](https://github.com/fivethirtyeight/data/tree/master/births). There are two CSV files:
+
+- `US_births_1994-2003_CDC_NCHS.csv` contains U.S. births data for the years 1994 to 2003, as provided by the Centers for Disease Control and Prevention's National Center for Health Statistics.
+- `US_births_2000-2014_SSA.csv` contains U.S. births data for the years 2000 to 2014, as provided by the Social Security Administration.
+
+Since the two datasets overlap in 2000-2003, we use Social Security data for those years.
+
+```{r load-packages-libraries, warning=FALSE, message=FALSE}
+library(tidyverse)
+
+# Load data
+births_2000_2014 <- read_csv("data/US_births_2000-2014_SSA.csv")
+births_1994_1999 <- read_csv("data/US_births_1994-2003_CDC_NCHS.csv") %>% 
+  filter(year < 2000)
+```
+
+
+# Wrangle data
+
+Next, we combine the two datasets and clean up some of the columns. We add actual month and weekday names, and we add a column indicating if the day is a holiday (since that matters for birth patterns)
+
+```{r clean-data}
+# Names of stuff
+month_names <- c("January", "February", "March", "April", "May", "June", "July",
+                 "August", "September", "October", "November", "December")
+day_names <- c("Monday", "Tuesday", "Wednesday", 
+               "Thursday", "Friday", "Saturday", "Sunday")
+
+# Make a small dataset of holidays
+holidays <- tribble(
+  ~month, ~date_of_month, ~holiday,
+  1, 1, "New Year's",
+  2, 29, "Leap day",
+  4, 1, "April Fool's",
+  5, 25, "Memorial Day-ish",
+  5, 26, "Memorial Day-ish",
+  5, 27, "Memorial Day-ish",
+  5, 28, "Memorial Day-ish",
+  5, 29, "Memorial Day-ish",
+  5, 30, "Memorial Day-ish",
+  5, 31, "Memorial Day-ish",
+  7, 4, "July 4th",
+  9, 1, "Labor Day-ish",
+  9, 2, "Labor Day-ish",
+  9, 3, "Labor Day-ish",
+  9, 4, "Labor Day-ish",
+  9, 5, "Labor Day-ish",
+  10, 31, "Halloween",
+  11, 23, "Thanksgiving-ish",
+  11, 24, "Thanksgiving-ish",
+  11, 25, "Thanksgiving-ish",
+  11, 26, "Thanksgiving-ish",
+  11, 27, "Thanksgiving-ish",
+  11, 28, "Thanksgiving-ish",
+  11, 29, "Thanksgiving-ish",
+  11, 30, "Thanksgiving-ish",
+  12, 24, "Christmas Eve",
+  12, 25, "Christmas",
+  12, 31, "New Year's"
+)
+
+# Join the holiday data, add some clean columns
+births_clean <- bind_rows(births_1994_1999, births_2000_2014) %>% 
+  left_join(holidays, by = c("month", "date_of_month")) %>% 
+  mutate(month = factor(month, labels = month_names, ordered = TRUE),
+         date_of_month = factor(date_of_month),
+         day_of_week = factor(day_of_week, labels = day_names, ordered = TRUE)) %>% 
+  mutate(holiday_flag = ifelse(is.na(holiday), FALSE, TRUE))
+```
+
+
+# Plot data
+
+## Strip chart of births by weekday
+
+Because we want to #barbarplots, we can plot each individual day:
+
+```{r strip-chart-weekday}
+ggplot(births_clean, aes(x = day_of_week, y = births, 
+                         color = holiday_flag)) +
+  geom_point(size = 0.5, position = "jitter") +
+  guides(color = FALSE)
+```
+
+## Bar chart of births by weekday
+
+We can also do a bar chart, but it requires a little extra work
+
+```{r bar-chart-weekday}
+births_week_day <- births_clean %>% 
+  group_by(day_of_week) %>% 
+  summarize(avg_per_day = mean(births)) %>% 
+  ungroup() %>% 
+  mutate(weekend = ifelse(day_of_week %in% c("Saturday", "Sunday"), TRUE, FALSE))
+
+ggplot(births_week_day, aes(x = day_of_week, y = avg_per_day, fill = weekend)) +
+  geom_col() +
+  scale_fill_manual(values = c("grey70", "darkorange"), guide = FALSE) +
+  scale_y_continuous(labels = scales::comma) +
+  labs(x = NULL, y = "Average daily births")
+```
+
+
+## Lollipop chart of births by weekday
+
+```{r lollipop-chart-weekday}
+ggplot(births_week_day, aes(x = day_of_week, y = avg_per_day, color = weekend)) +
+  geom_pointrange(aes(ymin = 0, ymax = avg_per_day), fatten = 5, size = 2) +
+  scale_color_manual(values = c("grey70", "darkorange"), guide = FALSE) +
+  scale_y_continuous(labels = scales::comma) +
+  labs(x = NULL, y = "Average daily births") +
+  coord_flip()
+```
+
+## Changes in weekday trends over time
+
+```{r changes-weekday-time}
+births_week_day_time <- births_clean %>% 
+  filter(year %in% c(1994, 2004, 2014)) %>% 
+  group_by(year, day_of_week) %>% 
+  summarize(avg_per_day = mean(births))
+
+ggplot(births_week_day_time, aes(x = day_of_week, y = avg_per_day, fill = factor(year))) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = c("darkgreen", "yellow", "darkred")) +
+  facet_wrap(~ year)
+```
+
+## Heatmap of births per day
+
+```{r heatmap-births-day}
+births_month_day <- births_clean %>% 
+  group_by(month, date_of_month) %>% 
+  summarize(avg_daily_births = mean(births))
+
+heatmap <- ggplot(births_month_day, aes(x = date_of_month, y = fct_rev(month), 
+                             fill = avg_daily_births)) +
+  geom_tile() + 
+  scale_fill_viridis_c(option = "plasma", name = "Average births") +
+  # scale_fill_gradient(low = "blue", high = "red") +
+  labs(x = "Day of the month", y = NULL,
+       title = "Average births per day",
+       subtitle = "1994-2014") +
+  coord_equal() +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.key.width = unit(3, "lines"),
+        legend.key.height = unit(0.5, "lines"))
+
+heatmap
+```
+
+## Interactive heat map!
+
+```{r interactive-heatmap, results="asis", warning=FALSE, message=FALSE}
+library(plotly)
+ggplotly(heatmap)
+```
