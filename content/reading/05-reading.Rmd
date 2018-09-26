@@ -24,4 +24,6 @@ csl: ../../static/bib/chicago-fullnote-bibliography-no-bib.csl
 
 # Questions to reflect on
 
-- Questions TBD
+- How do these types of visualizations help or hinder or search for truth in data?
+- What's the best way to visualize proportional data?
+- What did you think about pie charts before this class? What do you think about them now? What do you think about Claus Wilke's ecumenical approach to them?
