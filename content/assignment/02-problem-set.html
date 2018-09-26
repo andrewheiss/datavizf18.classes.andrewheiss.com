@@ -9,4 +9,52 @@ editor_options:
 
 
 
-<p>The instructions for this problem set will be posted at least one week before it is due.</p>
+<h2 id="task-0-getting-started">Task 0: Getting started</h2>
+<p>Create a new RStudio project somewhere on your computer. Open that new folder in Windows Explorer or macOS Finder (however you navigate around the files on your computer), and create a subfolder there named <code>data</code>.</p>
+<p>Download all these files and place them in your new <code>data/</code> folder.<span><label for="sn-1" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-1" class="margin-toggle"/><span class="marginnote"> You’ll probably need to right click on each and choose “Save link as…”.<br />
+<br />
+</span></span></p>
+<ul>
+<li><i class="fas fa-table"></i> <a href="https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Fellowship_Of_The_Ring.csv">The_Fellowship_Of_The_Ring.csv</a></li>
+<li><i class="fas fa-table"></i> <a href="https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Two_Towers.csv">The_Two_Towers.csv</a></li>
+<li><i class="fas fa-table"></i> <a href="https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Return_Of_The_King.csv">The_Return_Of_The_King.csv</a></li>
+</ul>
+<p><a href="/files/your-name_problem-set-2.Rmd">Download this R Markdown file</a> and place it in your newly-created project<span><label for="sn-2" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-2" class="margin-toggle"/><span class="marginnote"> Again, you might have to right click on the link and choose “Save linke as…”.<br />
+<br />
+</span></span> It contains an outline/skeleton of the two tasks you’ll need to do in this problem set. Lots of the code is pre-written again!</p>
+<p>In the end, the structure of your new project directory should look something like this:</p>
+<pre><code>your-project-name\
+  your-name_problem-set-2.Rmd
+  your-project-name.Rproj
+  data\
+    The_Fellowship_Of_The_Ring.csv
+    The_Two_Towers.csv
+    The_Return_Of_The_King.csv</code></pre>
+<h2 id="tasks-1-and-2-lord-of-the-rings">Tasks 1 and 2: Lord of the Rings</h2>
+<p><span><label for="sn-3" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-3" class="margin-toggle"/><span class="marginnote"> <img src="https://media.giphy.com/media/vAPR1EHM4a0GA/giphy.gif" /><br />
+<br />
+</span></span> Follow the instructions in the <a href="/files/your-name_problem-set-2.Rmd">R Markdown file you downloaded</a>.</p>
+<p>When you’re done, submit a knitted PDF or Word file of your analysis on Learning Suite.</p>
+<p>It’s best if the final knitted document is clean and free of warnings and messages (so if a chunk is creating messages, like wherever you run <code>library(tidyverse)</code>, add <code>message=FALSE, warning=FALSE</code> to the chunk options).</p>
+<p>Also, feel free to remove and replace the placeholder text I’ve given you. Try treating this R Markdown file as something you’ve written.<span><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle"/><span class="sidenote">So, instead of keeping the instructions and hints, remove those and make it more narrative, like “I first tidy the data so that I can plot it. I use <code>gather()</code> to make the data set long, and then I…”<br />
+<br />
+</span></span></p>
+<h2 id="quick-refresher-on-tidy-data">Quick refresher on tidy data</h2>
+<p><code>ggplot</code> works best when your data is <em>tidy</em>. This doesn’t just mean that the data is clean and free of errors—it refers to data that meets three specific criteria:</p>
+<ol style="list-style-type: decimal">
+<li>Each variable must have its own column.</li>
+<li>Each observation must have its own row.</li>
+<li>Each value must have its own cell.</li>
+</ol>
+<p>Data you come across in the real world is often not tidy—not because it’s wrong, but because it’s structured in a way that makes it easier for humans to read. For instance, look at this table of words spoken in Peter Jackson’s <em>Lord of the Rings</em> trilogy:<span><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle"/><span class="sidenote">Data from <a href="https://github.com/jennybc/lotr-tidy/">Jenny Bryan’s lesson on tidy data</a>.<br />
+<br />
+</span></span></p>
+<figure>
+<img src="/images/assignment/lotr_not_tidy.png" alt="LOTR not tidy" />
+</figure>
+<p>Tidy data makes these kinds of calculations far easier. Here’s that same data in tidy format:</p>
+<figure>
+<img src="/images/assignment/lotr_tidy.png" alt="LOTR tidy" />
+</figure>
+<p>This is longer and more repetitive (and perhaps ugly), but far, far easier for computers to work with. Each varaible has its own column now (<code>Film</code>, <code>Gender</code>, <code>Race</code>, and <code>Words</code>), each observation has its own row, and each value is in its own cell.</p>
+<p>Untidy data comes in lots of different forms, but the R package <code>tidyr</code> (which is part of the <code>tidyverse</code> and is loaded when you run <code>library(tidyverse)</code>), can tidyify pretty much anything. You can see full details in <a href="https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html">this vignette for <code>tidyr</code></a>.</p>
