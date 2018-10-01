@@ -13,8 +13,9 @@ csl: ../../static/bib/chicago-fullnote-bibliography-no-bib.csl
 - <i class="fab fa-youtube"></i> [Why all world maps are wrong](https://www.youtube.com/watch?v=kIID5FDi2JQ)
 - <i class="fas fa-external-link-square-alt"></i> [Map projections](https://xkcd.com/977/)
 - <i class="fab fa-youtube"></i> [Gall-Peters Projection](https://www.youtube.com/watch?v=vVX-PrBRtTY)
-- <i class="fas fa-external-link-square-alt"></i> [When Maps Lie](https://www.citylab.com/design/2015/06/when-maps-lie/396761/)
-- <i class="fas fa-external-link-square-alt"></i> [These Twisted Maps Prove That America Isn't a Red Country](https://newrepublic.com/article/115550/cartograms-are-important-inforgraphic-tool)
+- <i class="fas fa-external-link-square-alt"></i> ["When Maps Lie"](https://www.citylab.com/design/2015/06/when-maps-lie/396761/)
+- <i class="fas fa-external-link-square-alt"></i> ["These Twisted Maps Prove That America Isn't a Red Country"](https://newrepublic.com/article/115550/cartograms-are-important-inforgraphic-tool)
+- <i class="fas fa-external-link-square-alt"></i> ["The next great fake news threat? Bot-designed maps"](https://www.fastcompany.com/90230916/the-next-great-fake-news-threat-bot-designed-maps)
 
 
 # Questions to reflect on
