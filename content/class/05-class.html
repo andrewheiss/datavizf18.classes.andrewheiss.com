@@ -1,0 +1,323 @@
+---
+title: "Proportions"
+date: "2018-10-02"
+citeproc: false
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+    toc_depth: 4
+editor_options: 
+  chunk_output_type: console
+---
+
+<!-- BLOGDOWN-HEAD -->
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span. { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+</style>
+<!-- /BLOGDOWN-HEAD -->
+
+<h2>Contents</h2>
+<div id="TOC">
+<ul>
+<li><a href="#slides">Slides</a></li>
+<li><a href="#using-custom-fonts-in-ggplot">Using custom fonts in ggplot</a></li>
+<li><a href="#live-code">Live code</a></li>
+<li><a href="#code-from-today">Code from today</a><ul>
+<li><a href="#massive-coefficient-plot">Massive coefficient plot</a></li>
+<li><a href="#proportion-plots">Proportion plots</a><ul>
+<li><a href="#bar-plot">Bar plot</a></li>
+<li><a href="#saving-ggplot-plots">Saving ggplot plots</a></li>
+<li><a href="#pie-chart">Pie chart</a></li>
+<li><a href="#waffle-plots">Waffle plots</a></li>
+<li><a href="#treemaps">Treemaps</a></li>
+<li><a href="#parliaments">Parliaments</a></li>
+<li><a href="#pyramids-and-beaches">Pyramids and beaches</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#clearest-and-muddiest-things">Clearest and muddiest things</a></li>
+</ul>
+</div>
+
+<h2 id="slides">Slides</h2>
+<p><a href="/slides/MPA-635_2018-10-2.pdf">Download the slides from today’s lecture</a>.</p>
+<figure>
+<a href="/slides/MPA-635_2018-10-02.pdf"><img src="/images/slides/slides_2018-10-02.png" alt="First slide" /></a>
+</figure>
+<h2 id="using-custom-fonts-in-ggplot">Using custom fonts in ggplot</h2>
+<p>Using your own fonts in ggplot is relatively easy once you set up a couple things. <a href="https://www.andrewheiss.com/blog/2017/09/27/working-with-r-cairo-graphics-custom-fonts-and-ggplot/">Follow the instructions here</a> for either macOS or Windows.</p>
+<h2 id="live-code">Live code</h2>
+<p>Use this link to see the code that I’m actually typing:</p>
+<ul>
+<li><i class="fas fa-globe"></i> <a href="https://andhs.co/live-code" class="uri">https://andhs.co/live-code</a></li>
+</ul>
+<p>I’ve saved the R script to Dropbox, and that link goes to a live version of that file. Refresh or re-open the link as needed to copy/paste code I type up on the screen.</p>
+<h2 id="code-from-today">Code from today</h2>
+<p>Here’s the code that was in the live code script, but that I moved here to be more permanent.</p>
+<h3 id="massive-coefficient-plot">Massive coefficient plot</h3>
+<p>To show that <code>group_by()</code> can do more powerful things than just calculating group means, here’s how you can run 142 linear regression models simultaneously and plot the results from one of the coefficients.</p>
+<p>Here, we explain variation in life expectancy with the log GDP per capita, using data from the Gapminder Project. We fit the following simple linear regression model for each country in the dataset:</p>
+<p><span class="math display">\[
+\text{lifeExp}_{\text{country}} =  \beta_0 + \beta_1 \log( \text{gdpPercap}_{\text{country}}) + \epsilon
+\]</span></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(gapminder)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(broom)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co"># Create a table of all the countries in the dataset and their continents</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">gapminder_continents &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="st">  </span><span class="kw">distinct</span>(country, continent)</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co"># DO SOME MAGIC</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">gapminder_models &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="st">  </span><span class="kw">group_by</span>(country) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="st">  </span><span class="co"># Put all the columns for each country in a cell (MAGIC)</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="st">  </span><span class="kw">nest</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="st">  </span><span class="co"># Run the same regression model on each country group</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">model =</span> data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(lifeExp <span class="op">~</span><span class="st"> </span><span class="kw">log</span>(gdpPercap), <span class="dt">data =</span> .))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="st">  </span><span class="co"># Extract the model coefficients</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">coefs =</span> model <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="st"> </span><span class="kw">tidy</span>(., <span class="dt">conf.int =</span> <span class="ot">TRUE</span>))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="st">  </span><span class="kw">unnest</span>(coefs) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="st">  </span><span class="co"># Only look at the term for GDP per capita</span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">str_detect</span>(term, <span class="st">&quot;gdpPercap&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="st">  </span><span class="co"># Make an indicator variable for statistical significance</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">significant =</span> <span class="kw">ifelse</span>(p.value <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-23" data-line-number="23"><span class="st">  </span><span class="co"># Bring continents back in</span></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="st">  </span><span class="kw">left_join</span>(gapminder_continents, <span class="dt">by =</span> <span class="st">&quot;country&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="st">  </span><span class="co"># Sort the countries</span></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(estimate)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">country =</span> <span class="kw">fct_inorder</span>(country))</a>
+<a class="sourceLine" id="cb1-28" data-line-number="28"></a>
+<a class="sourceLine" id="cb1-29" data-line-number="29"><span class="co"># The gapminder_models data frame now contains the beta1 coefficient for each</span></a>
+<a class="sourceLine" id="cb1-30" data-line-number="30"><span class="co"># country-based model that we ran. We can plot these with geom_pointrange()</span></a></code></pre></div>
+<figure class="fullwidth">
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">ggplot</span>(gapminder_models) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, <span class="dt">color =</span> <span class="st">&quot;darkred&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="kw">aes</span>(<span class="dt">x =</span> country, <span class="dt">y =</span> estimate, </a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">                      <span class="dt">ymin =</span> conf.low, <span class="dt">ymax =</span> conf.high, </a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">                      <span class="dt">color =</span> significant)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>continent, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>, <span class="dt">ncol =</span> <span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="st">  </span><span class="kw">theme_light</span>(<span class="dt">base_size =</span> <span class="dv">8</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</a></code></pre></div>
+<p><img src="/class/05-class_files/figure-html/show-models-1.png" width="960" /></p>
+</figure>
+<h3 id="proportion-plots">Proportion plots</h3>
+<p>First we have to load and wrangle the data:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">fake_survey &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://andhs.co/fakesurvey&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">fake_survey &lt;-<span class="st"> </span><span class="kw">read_csv</span>(here<span class="op">::</span><span class="kw">here</span>(<span class="st">&quot;static&quot;</span>, <span class="st">&quot;data&quot;</span>, <span class="st">&quot;fake_survey.csv&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">survey_summarized &lt;-<span class="st"> </span>fake_survey <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw">count</span>(response) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">response =</span> <span class="kw">factor</span>(response, </a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">                           <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;Strongly disagree&quot;</span>, <span class="st">&quot;Disagree&quot;</span>,</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">                                      <span class="st">&quot;Neither agree nor disagree&quot;</span>,</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">                                      <span class="st">&quot;Agree&quot;</span>, <span class="st">&quot;Strongly agree&quot;</span>),</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">                           <span class="dt">ordered =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="st">  </span><span class="kw">arrange</span>(response) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prop =</span> n <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(n))</a></code></pre></div>
+<h4 id="bar-plot">Bar plot</h4>
+<p>Here’s how to make a bar plot. In this example, I’ve assigned the plot as an object named <code>my_super_cool_plot</code> so that I can use it later on with <code>ggsave()</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Bar plot</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">my_super_cool_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(survey_summarized, </a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">                             <span class="kw">aes</span>(<span class="dt">x =</span> response, <span class="dt">y =</span> prop, <span class="dt">fill =</span> response)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_label</span>(<span class="kw">aes</span>(<span class="dt">label =</span> n), <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="st">&quot;Percent&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Some really cool title&quot;</span>,</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">       <span class="dt">subtitle =</span> <span class="st">&quot;Stuff goes here&quot;</span>, <span class="dt">caption =</span> <span class="st">&quot;By me; source: my head&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;grey13&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;#dc2178&quot;</span>, <span class="st">&quot;yellow&quot;</span>, <span class="st">&quot;orange&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="st">  </span><span class="kw">theme_minimal</span>(<span class="dt">base_size =</span> <span class="dv">11</span>, <span class="dt">base_family =</span> <span class="st">&quot;Papyrus&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.grid.major.x =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb6-12" data-line-number="12">        <span class="dt">panel.grid.minor.y =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb6-13" data-line-number="13">        <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">family =</span> <span class="st">&quot;Comic Sans MS&quot;</span>))</a>
+<a class="sourceLine" id="cb6-14" data-line-number="14">my_super_cool_plot</a></code></pre></div>
+<p><img src="/class/05-class_files/figure-html/bar-lot-1.png" width="576" /></p>
+<h4 id="saving-ggplot-plots">Saving ggplot plots</h4>
+<p>We can use <code>ggsave()</code> to save plots:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">ggsave</span>(<span class="st">&quot;plot.pdf&quot;</span>, my_super_cool_plot,</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">       <span class="dt">width =</span> <span class="dv">6</span>, <span class="dt">height =</span> <span class="dv">3</span>, <span class="dt">units =</span> <span class="st">&quot;in&quot;</span>)</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw">ggsave</span>(<span class="st">&quot;plot.png&quot;</span>, my_super_cool_plot,</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">       <span class="dt">width =</span> <span class="dv">6</span>, <span class="dt">height =</span> <span class="dv">3</span>, <span class="dt">units =</span> <span class="st">&quot;in&quot;</span>)</a></code></pre></div>
+<h4 id="pie-chart">Pie chart</h4>
+<p>Here we condense the responses into a single stacked bar (this is generally a bad idea, but it’s essentially a straightened out pie chart)</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">ggplot</span>(survey_summarized, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> prop, <span class="dt">fill =</span> response)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw">theme_void</span>()</a></code></pre></div>
+<p><img src="/class/05-class_files/figure-html/single-bar-1.png" width="672" /></p>
+<p>If we add <code>coord_polar()</code> to it, it’ll turn into a pie (you need to set the <code>theta</code> to “y”):</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">ggplot</span>(survey_summarized, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> prop, <span class="dt">fill =</span> response)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw">coord_polar</span>(<span class="dt">theta =</span> <span class="st">&quot;y&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="st">  </span><span class="kw">theme_void</span>()</a></code></pre></div>
+<p><img src="/class/05-class_files/figure-html/pie-chart-1.png" width="672" /></p>
+<h4 id="waffle-plots">Waffle plots</h4>
+<p>The <code>waffle()</code> function from the <a href="https://github.com/hrbrmstr/waffle">waffle library</a> doesn’t work well with data frames. Instead, you need to feed it a named vector of numbers.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">library</span>(waffle)  <span class="co"># https://github.com/hrbrmstr/waffle</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co"># Extract just the counts</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">data_for_waffle &lt;-<span class="st"> </span>survey_summarized<span class="op">$</span>n</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co"># Add response names to the counts</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="kw">names</span>(data_for_waffle) &lt;-<span class="st"> </span>survey_summarized<span class="op">$</span>response</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co"># Plot!</span></a>
+<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="kw">waffle</span>(data_for_waffle, <span class="dt">rows =</span> <span class="dv">5</span>, <span class="dt">size =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb10-11" data-line-number="11">       <span class="dt">colors =</span> <span class="kw">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;yellow&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;green&quot;</span>),</a>
+<a class="sourceLine" id="cb10-12" data-line-number="12">       <span class="dt">xlab =</span> <span class="st">&quot;1 square = 1 response&quot;</span>)</a></code></pre></div>
+<p><img src="/class/05-class_files/figure-html/waffle-1.png" width="672" /></p>
+<h4 id="treemaps">Treemaps</h4>
+<p>Treemaps, on the other hand (at least the ones made with the <a href="https://github.com/wilkox/treemapify">treemapify library</a>), <em>do</em> work well with data frames, so you can keep using the same <code>survey_summarized</code> data:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">library</span>(treemapify)  <span class="co"># https://github.com/wilkox/treemapify</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw">ggplot</span>(survey_summarized, <span class="kw">aes</span>(<span class="dt">area =</span> n, <span class="dt">fill =</span> response)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_treemap</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_treemap_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> response), </a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">                    <span class="dt">colour =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">place =</span> <span class="st">&quot;center&quot;</span>, <span class="dt">grow =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="/class/05-class_files/figure-html/treemap-1.png" width="672" /></p>
+<h4 id="parliaments">Parliaments</h4>
+<p>Parliament graphs are incredibly easy to make with <a href="https://github.com/RobWHickman/ggparliament">ggparliament</a>, and <a href="https://github.com/RobWHickman/ggparliament">their website has a ton of examples</a>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">library</span>(ggparliament)  <span class="co"># https://github.com/RobWHickman/ggparliament</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">us_house &lt;-<span class="st"> </span>election_data <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(country <span class="op">==</span><span class="st"> &quot;USA&quot;</span> <span class="op">&amp;</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">           </span>year <span class="op">==</span><span class="st"> </span><span class="dv">2016</span> <span class="op">&amp;</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="st">           </span>house <span class="op">==</span><span class="st"> &quot;Representatives&quot;</span>)</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co"># Make the data long and figure out all the x/y coordinates</span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">plot_house &lt;-<span class="st"> </span><span class="kw">parliament_data</span>(<span class="dt">election_data =</span> us_house, </a>
+<a class="sourceLine" id="cb12-10" data-line-number="10">                              <span class="dt">type =</span> <span class="st">&quot;semicircle&quot;</span>, </a>
+<a class="sourceLine" id="cb12-11" data-line-number="11">                              <span class="dt">parl_rows =</span> <span class="dv">10</span>,</a>
+<a class="sourceLine" id="cb12-12" data-line-number="12">                              <span class="dt">party_seats =</span> us_house<span class="op">$</span>seats)</a>
+<a class="sourceLine" id="cb12-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="kw">ggplot</span>(plot_house, <span class="kw">aes</span>(x, y, <span class="dt">color =</span> party_short)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="st">  </span><span class="co"># Add the actual seats</span></a>
+<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="st">  </span><span class="kw">geom_parliament_seats</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="st">  </span><span class="co"># Highlight the party in power with a black line</span></a>
+<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="st">  </span><span class="kw">geom_highlight_government</span>(government <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="st">  </span><span class="co"># Add majority threshold</span></a>
+<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="st">  </span><span class="kw">draw_majoritythreshold</span>(<span class="dt">n =</span> <span class="dv">218</span>, <span class="dt">label =</span> <span class="ot">TRUE</span>, <span class="dt">type =</span> <span class="st">&quot;semicircle&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-21" data-line-number="21"><span class="st">  </span><span class="co"># Use theme_ggparliament</span></a>
+<a class="sourceLine" id="cb12-22" data-line-number="22"><span class="st">  </span><span class="kw">theme_ggparliament</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-23" data-line-number="23"><span class="st">  </span><span class="co"># Maintain proportions</span></a>
+<a class="sourceLine" id="cb12-24" data-line-number="24"><span class="st">  </span><span class="kw">coord_equal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-25" data-line-number="25"><span class="st">  </span><span class="co">#other aesthetics</span></a>
+<a class="sourceLine" id="cb12-26" data-line-number="26"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">colour =</span> <span class="ot">NULL</span>, </a>
+<a class="sourceLine" id="cb12-27" data-line-number="27">       <span class="dt">title =</span> <span class="st">&quot;United States House of Representatives&quot;</span>,</a>
+<a class="sourceLine" id="cb12-28" data-line-number="28">       <span class="dt">subtitle =</span> <span class="st">&quot;Party that controls the House highlighted.&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-29" data-line-number="29"><span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">rev</span>(us_house<span class="op">$</span>colour))</a></code></pre></div>
+<p><img src="/class/05-class_files/figure-html/parliaments-1.png" width="672" /></p>
+<h4 id="pyramids-and-beaches">Pyramids and beaches</h4>
+<p>Finally, here’s some code to generate the joke graphs. Notice the use of <code>tribble()</code>, which lets you manually type out and create a data frame.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">pyramid_picture &lt;-<span class="st"> </span><span class="kw">tribble</span>(</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">  <span class="op">~</span>slice, <span class="op">~</span>angle,</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">  <span class="st">&quot;Sky&quot;</span>, <span class="dv">280</span>,</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">  <span class="st">&quot;Sunny side of pyramid&quot;</span>, <span class="dv">60</span>,</a>
+<a class="sourceLine" id="cb13-5" data-line-number="5">  <span class="st">&quot;Shady side of pyramid&quot;</span>, <span class="dv">20</span></a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">slice =</span> <span class="kw">fct_inorder</span>(slice),</a>
+<a class="sourceLine" id="cb13-8" data-line-number="8">         <span class="dt">angle =</span> angle <span class="op">/</span><span class="st"> </span><span class="dv">360</span>)</a>
+<a class="sourceLine" id="cb13-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="kw">ggplot</span>(pyramid_picture, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> angle, <span class="dt">fill =</span> slice)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb13-11" data-line-number="11"><span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb13-12" data-line-number="12"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#1C94D2&quot;</span>, <span class="st">&quot;#F4E734&quot;</span>, <span class="st">&quot;#C5B731&quot;</span>),</a>
+<a class="sourceLine" id="cb13-13" data-line-number="13">                    <span class="dt">name =</span> <span class="ot">NULL</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb13-14" data-line-number="14"><span class="st">  </span><span class="co"># I got pi/1.3 by trial and error :)</span></a>
+<a class="sourceLine" id="cb13-15" data-line-number="15"><span class="st">  </span><span class="kw">coord_polar</span>(<span class="dt">theta =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">start =</span> pi <span class="op">/</span><span class="st"> </span><span class="fl">1.3</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb13-16" data-line-number="16"><span class="st">  </span><span class="kw">theme_void</span>()</a></code></pre></div>
+<p><img src="/class/05-class_files/figure-html/pyramid-1.png" width="672" /></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">beach_picture &lt;-<span class="st"> </span><span class="kw">tribble</span>(</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">  <span class="op">~</span>slice, <span class="op">~</span>angle,</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3">  <span class="st">&quot;Sky&quot;</span>, <span class="dv">160</span>,</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">  <span class="st">&quot;Mountains&quot;</span>, <span class="dv">20</span>,</a>
+<a class="sourceLine" id="cb14-5" data-line-number="5">  <span class="st">&quot;Grass&quot;</span>, <span class="dv">25</span>,</a>
+<a class="sourceLine" id="cb14-6" data-line-number="6">  <span class="st">&quot;Road&quot;</span>, <span class="dv">50</span>,</a>
+<a class="sourceLine" id="cb14-7" data-line-number="7">  <span class="st">&quot;Sidewalk&quot;</span>, <span class="dv">20</span>,</a>
+<a class="sourceLine" id="cb14-8" data-line-number="8">  <span class="st">&quot;Beach&quot;</span>, <span class="dv">60</span>,</a>
+<a class="sourceLine" id="cb14-9" data-line-number="9">  <span class="st">&quot;Ocean&quot;</span>, <span class="dv">25</span></a>
+<a class="sourceLine" id="cb14-10" data-line-number="10">) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">slice =</span> <span class="kw">fct_inorder</span>(slice),</a>
+<a class="sourceLine" id="cb14-12" data-line-number="12">         <span class="dt">angle =</span> angle <span class="op">/</span><span class="st"> </span><span class="dv">360</span>)</a>
+<a class="sourceLine" id="cb14-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="kw">ggplot</span>(beach_picture, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="st">&quot;&quot;</span>, <span class="dt">y =</span> angle, <span class="dt">fill =</span> slice)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb14-15" data-line-number="15"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">width =</span> <span class="dv">1</span>, <span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb14-16" data-line-number="16"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#7292CB&quot;</span>, <span class="st">&quot;#168A46&quot;</span>, <span class="st">&quot;#22B34A&quot;</span>,</a>
+<a class="sourceLine" id="cb14-17" data-line-number="17">                               <span class="st">&quot;grey20&quot;</span>, <span class="st">&quot;grey80&quot;</span>, <span class="st">&quot;#FFCE05&quot;</span>, <span class="st">&quot;#3E69B2&quot;</span>),</a>
+<a class="sourceLine" id="cb14-18" data-line-number="18">                    <span class="dt">name =</span> <span class="ot">NULL</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb14-19" data-line-number="19"><span class="st">  </span><span class="co"># start rotates the plot by 90 degrees; direction makes it go counterclockwise</span></a>
+<a class="sourceLine" id="cb14-20" data-line-number="20"><span class="st">  </span><span class="kw">coord_polar</span>(<span class="dt">theta =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">start =</span> pi <span class="op">/</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">direction =</span> <span class="dv">-1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb14-21" data-line-number="21"><span class="st">  </span><span class="kw">theme_void</span>()</a></code></pre></div>
+<p><img src="/class/05-class_files/figure-html/beach-1.png" width="672" /></p>
+<h2 id="clearest-and-muddiest-things">Clearest and muddiest things</h2>
+<p>Go to <a href="https://goo.gl/forms/rSIbw1voOV2vWKMD2">this form</a> and answer these two questions:</p>
+<ol style="list-style-type: decimal">
+<li>What was the muddiest thing from class today? What are you still wondering about?</li>
+<li>What was the clearest thing from class today? What was the most exciting thing you learned?</li>
+</ol>
+<p>I’ll compile the questions and send out answers after class.</p>
