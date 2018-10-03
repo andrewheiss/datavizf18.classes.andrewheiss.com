@@ -17,6 +17,7 @@ csl: ../../static/bib/chicago-fullnote-bibliography-no-bib.csl
     - <i class="fas fa-external-link-square-alt"></i> [Word clouds cause death… or something](https://flowingdata.com/2011/10/18/word-clouds-cause-death-or-something/)
     - <i class="fas fa-external-link-square-alt"></i> [When It's Ok to Use Word Clouds](https://www.vis4.net/blog/2015/01/when-its-ok-to-use-word-clouds/)
     - <i class="fas fa-external-link-square-alt"></i> [The Class of 2011](http://www.nytimes.com/interactive/2011/06/10/education/commencement-speeches-graphic.html)
+    - <i class="fas fa-external-link-square-alt"></i> [Every time Ford and Kavanaugh dodged a question, in one chart](https://www.vox.com/policy-and-politics/2018/9/28/17914308/kavanaugh-ford-question-dodge-hearing-chart)
     - <i class="fas fa-external-link-square-alt"></i> [Sentiment Analysis of The Book of Mormon](https://www.sixteensmallstones.org/the-book-of-mormon-for-geeks-sentiment-analysis-of-the-book-of-mormon/)
     - <i class="fab fa-twitter-square"></i> [Tweet by \@s_soroka](https://twitter.com/s_soroka/status/907941270735278085)
 

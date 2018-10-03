@@ -1,0 +1,52 @@
+---
+title: "Space"
+date: "2018-11-06"
+citeproc: false
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+editor_options: 
+  chunk_output_type: console
+---
+
+# Slides
+
+The slides from today will go here.
+
+
+# Clearest and muddiest things
+
+Go to [this form](https://goo.gl/forms/rSIbw1voOV2vWKMD2) and answer these two questions:
+
+1. What was the muddiest thing from class today? What are you still wondering about?
+2. What was the clearest thing from class today? What was the most exciting thing you learned?
+
+I'll compile the questions and send out answers after class.
+
+
+```{r class-stuff, include=FALSE, eval=FALSE}
+# https://rud.is/b/2018/09/28/quick-hit-using-the-new-equal-earth-projection-in-r/
+library(ggalt) # git[la|hu]b/hrbrmstr/hrbrthemes
+library(hrbrthemes) # git[la|hu]b/hrbrmstr/hrbrthemes
+library(ggplot2)
+
+world <- map_data("world")
+
+ggplot() +
+  geom_map(
+    map = world, data = world,
+    aes(long, lat, map_id = region), 
+    # color = ft_cols$white, fill = ft_cols$slate,
+    size = 0.125
+  ) +
+  coord_proj("+proj=eqearth") +
+  labs(
+    x = NULL, y = NULL,
+    title = "Equal Earth Projection (+proj=eqearth)"
+  ) +
+  # theme_ft_rc(grid="") +
+  theme(axis.text=element_blank())
+```
