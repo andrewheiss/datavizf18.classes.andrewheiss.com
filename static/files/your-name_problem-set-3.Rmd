@@ -1,0 +1,226 @@
+---
+title: "Problem set 3"
+author: "Your name here"
+date: "Date here"
+---
+
+# Details
+
+- Who did you collaborate with: xxxxx
+- Approximately how much time did you spend on this problem set: xxxxx
+- What, if anything, gave you the most trouble: xxxxx
+
+
+# Hans Rosling redux
+
+```{r load-packages-data, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(scales)
+library(gapminder)
+
+# Load the gapminder data from the gapminder package with data()
+data(gapminder)
+
+# Create a data frame with only rows from 1997
+gapminder_1997 <- gapminder %>%
+  filter(year == 1997)
+```
+
+
+## Univariate analysis
+
+Plot a histogram of life expectancy in 1997 (`lifeExp`). Choose an appropriate number of bins. (You get some code to help start you off):
+
+```{r lifeexp-hist}
+ggplot(gapminder_1997, aes(x = lifeExp)) +
+  geom_histogram()
+```
+
+Plot a density plot of life expectancy in 1997. Fill it with some color so it doesn't look sad and empty.
+
+```{r lifeexp-density}
+
+```
+
+Plot a histogram of GDP per capita in 1997 (`gdpPercap`). Choose an appropriate number of bins.
+
+```{r gdp-hist}
+
+```
+
+Plot a density plot of GDP per capita in 1997.
+
+```{r gdp-density}
+
+```
+
+## Univariate analysis by groups
+
+Plot multiple violin plots of GDP per capita in 1997 by continent. Fill the continents with different colors. Add points at 50% transparency. (You get some code to help start you off):
+
+```{r gdp-continent}
+ggplot(gapminder_1997, aes(x = continent, y = gdpPercap)) +
+  geom_boxplot()
+```
+
+Plot multiple boxplots of GDP per capita in 1997 by continent. Fill the continents with different colors.
+
+```{r gdp-continent-box}
+
+```
+
+Plot multiple violin plots of life expectancy in 1997 by continent, also with filled continents and semi-transparent points (hint: do basically what you did above, but with `lifeExp` instead of `gdpPercap`)
+
+```{r lifeexp-continent}
+
+```
+
+Plot overlapping density plots of life expectancy in 1997 across continents. Oceania has very few observations, so omit it from the data (I create a filtered data frame for you below). Fill each continent with a color and make each density plot 50% transparent.
+
+```{r continent-densities}
+gapminder_1997_sans_oceania <- gapminder_1997 %>%
+  filter(continent != "Oceania")
+
+ggplot(gapminder_1997_sans_oceania, aes(STUFF HERE))
+```
+
+## Bivariate analysis
+
+Plot health (`lifeExp`) vs. wealth (`gdpPercap`) in 1997. Color each point by continent. (You get some code to help start you off):
+
+```{r health-wealth-basic}
+ggplot(gapminder_1997, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point()
+```
+
+Make that same plot, but add `coord_trans(x = "log10")` as a layer.
+
+```{r health-wealth-transformed}
+
+```
+
+What's different?
+
+Plot health vs. wealth again (without a logged x-axis), and add a `geom_smooth()` layer.
+
+```{r health-wealth-smooth}
+
+```
+
+By default, R will choose `method = "loess"` to plot the line. What is "loess"? (hint: see pages 240-41 in Cairo). Change the smoothing method to `method = "lm"` (`lm` here stands for "linear model")
+
+```{r health-wealth-lm}
+
+```
+
+What's different?
+
+Plot health vs. wealth *with* a logged x-axis *and* with a loess smooth.
+
+```{r health-wealth-log-loess}
+
+```
+
+Plot health vs. wealth *with* a logged x-axis *and* a linear smooth (`lm`). 
+
+```{r health-wealth-log-lm}
+
+```
+
+
+## Fancy stuff
+
+Here's a fancy, production-quality version of the health-wealth plot. Explain what each of these layers are doing:
+
+- `ggplot(gapminder_1997, aes(...))`: 
+- `geom_point()`: 
+- `guides()`: 
+- `labs()`: 
+- `scale_x_continuous()`: 
+- `scale_size_continuous()`: 
+- `scale_color_viridis_d()`:
+- `coord_trans()`: 
+- `theme_light()`: 
+- `theme()`: (what are each of the options doing in `theme()`?)
+- `ggsave()`
+
+```{r health-wealth-fancy}
+nice_health_wealth <- ggplot(gapminder_1997, aes(x = gdpPercap, y = lifeExp, 
+                                                 size = pop, color = continent)) +
+  geom_point() + 
+  guides(size = FALSE, color = guide_legend(title = NULL)) +
+  labs(x = "GDP per capita", y = "Life expectancy",
+       title = "Global health and wealth",
+       subtitle = "142 countries in 1997",
+       caption = "Source: The Gapminder Project") +
+  scale_x_continuous(labels = dollar) +
+  scale_size_continuous(range = c(1, 10)) +
+  scale_color_viridis_d(option = "inferno", begin = 0.2, end = 0.9) +
+  coord_trans(x = "log10") + 
+  theme_light() + 
+  theme(legend.position = "bottom",
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.title = element_text(face = "bold", size = rel(1.5)),
+        plot.subtitle = element_text(color = "grey60"),
+        plot.caption = element_text(color = "grey60"))
+nice_health_wealth
+
+ggsave(nice_health_wealth, filename = "output/nice_health_wealth.pdf",
+       width = 7, height = 5, units = "in")
+ggsave(nice_health_wealth, filename = "output/nice_health_wealth.png",
+       width = 7, height = 5, units = "in")
+```
+
+
+## Multiple years
+
+Look at the relationship between health and wealth in 1992, 1997, 2002, and 2007 all in one plot. To do this, you can't use the `gapminder_1997` data frame anymore, since that's just 1997—you'll need to create a new data frame. 
+
+Color each point by continent and resize each point by population. Place each of the four years in a separate facet (hint: look at the documentation for `facet_wrap()`). (You get some code to help start you off):
+
+```{r health-wealth-post-1992}
+gapminder_after_1992 <- gapminder %>%
+  filter(year >= 1992)
+
+ggplot(gapminder_after_1992, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point() + 
+  coord_trans(x = "log10")
+```
+
+Create a similar plot to show the relationship between health and wealth in 1952, 1957, 1962, and 1967. Again, you won't be able to use either the `gapminder_1997` or the `gapminder_after_1992` data frames—you'll have to create a new data frame. And I won't give you code for that.
+
+```{r health-wealth-early-cold-war}
+
+```
+
+## Bonus fun times: ridge plots
+
+Using your newfound visualization skills (and referencing [the `ggridges` vignette](https://cran.r-project.org/web/packages/ggridges/vignettes/introduction.html)), make a ridge plot showing the distribution of either life expectancy or GDP per capita over time (or over each of the continents). Save this plot as both a PDF and a PNG in your output folder with `ggsave()`
+
+(You don't have to do this, but it'd be a great learning experience if you did)
+
+```{r gapminder-ridgeplot}
+
+```
+
+
+## Extra bonus fun times: interactivity
+
+For even more fun, try making an interactive HTML plot. The easiest way to do this is to use the `plotly` package (install it with the "Packages" panel in RStudio), and then to use its `ggplotly()` function.
+
+I've given you some commented-out code below (commented out so that R doesn't yell at you about the code not working when you knit). 
+
+Also, check out [the documentation](https://plot.ly/ggplot2/), especially [this page](https://plot.ly/ggplot2/interactive-tooltip/) about customizing the tooltips that show up when you hover over points or areas.
+
+(Again, you definitely don't have to do this, but this kind of interactivity is fun, relatively easy, and super impressive for future employers)
+
+```{r interactive, message=FALSE}
+# library(plotly)
+# 
+# my_cool_plot <- ggplot(...)
+#
+# my_cool_plot
+# 
+# ggplotly(my_cool_plot)
+```

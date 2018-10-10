@@ -7,4 +7,30 @@ editor_options:
   chunk_output_type: console
 ---
 
-The instructions for this problem set will be posted at least one week before it is due.
+# Task 0: Getting started
+
+Create a new RStudio project somewhere on your computer. Open that new folder in Windows File Explorer or macOS Finder (however you navigate around the files on your computer), and create a subfolder there named `output`.
+
+[Download this R Markdown file](/files/your-name_problem-set-3.Rmd) and place it in your newly-created project^[You'll probably have to right click on the link and choose "Save link as…".] It contains an outline/skeleton of the one task you'll need to do in this problem set. Some of the code is pre-written once again!
+
+In the end, the structure of your new project directory should look something like this:
+
+```
+your-project-name/
+  your-name_problem-set-3.Rmd
+  your-project-name.Rproj
+  output/
+    NOTHING
+```
+
+# Task 1: Hans Rosling Redux
+
+^[{-} ![Gapminder](https://media.giphy.com/media/18LVVD0nUOn8A/giphy.gif)] For this problem set, you get to be just like [Hans Rosling](https://www.youtube.com/watch?v=jbkSRLYSojo) and play with data on health (life expectancy) and wealth (GDP per capita). 
+
+The data originally comes from World Bank statistics, but to make life easier, there's an R package called [`gapminder`](https://github.com/jennybc/gapminder) that includes the data, so you don't have to download and clean any CSV or Excel files. If you don't have the package installed, run `install.packages("gapminder")` or use the "Packages" panel in RStudio.
+
+This time around, **please remove and replace the placeholder text I've given you**. Treat this R Markdown file as something you've written.
+
+When you're done, submit a knitted PDF or Word file of your analysis on Learning Suite. 
+
+Once again, it's best if the final knitted document is clean and free of warnings and messages (so if a chunk is creating messages, like wherever you run `library(tidyverse)`, add `message=FALSE, warning=FALSE` to the chunk options).
