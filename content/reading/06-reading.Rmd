@@ -18,4 +18,8 @@ csl: ../../static/bib/chicago-fullnote-bibliography-no-bib.csl
 
 # Questions to reflect on
 
-- Questions TBD
+- Why is it important to deal with uncertainty in data?
+- What was good or bad about the New York Times' 2016 live election guage?
+- Why is it so hard to visualize uncertainty?
+- Why is it so hard to communicate uncertainty to others?
+
