@@ -17,7 +17,7 @@ Download all these files and place them in your new `data/` folder.^[{-} You'll 
 - <i class="fas fa-table"></i> [The_Two_Towers.csv](https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Two_Towers.csv)
 - <i class="fas fa-table"></i> [The_Return_Of_The_King.csv](https://raw.githubusercontent.com/jennybc/lotr-tidy/master/data/The_Return_Of_The_King.csv)
 
-[Download this R Markdown file](/files/your-name_problem-set-2.Rmd) and place it in your newly-created project^[{-} Again, you might have to right click on the link and choose "Save linke as…".] It contains an outline/skeleton of the two tasks you'll need to do in this problem set. Lots of the code is pre-written again!
+[Download this R Markdown file](/files/your-name_problem-set-2.Rmd) and place it in your newly-created project^[{-} Again, you might have to right click on the link and choose "Save link as…".] It contains an outline/skeleton of the two tasks you'll need to do in this problem set. Lots of the code is pre-written again!
 
 In the end, the structure of your new project directory should look something like this:
 
