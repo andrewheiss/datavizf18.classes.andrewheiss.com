@@ -1,5 +1,5 @@
 ---
-title: "Mini project 1"
+title: "Mini project 1: Rats of New York"
 date: "2018-10-26"
 due_date: "2018-10-26"
 due_time: "11:59 PM"
@@ -7,6 +7,187 @@ editor_options:
   chunk_output_type: console
 ---
 
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span. { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+</style>
 
 
-<p>The instructions for this mini project will be posted at least three weeks before it is due.</p>
+<p><span class="newthought">New York City is full of urban wildlife,</span> and rats are one of the city’s most infamous animal mascots. Rats in NYC are plentiful, but they also deliver food, so they’re useful too.</p>
+<figure>
+{{% youtube "PeJUqcbool4" %}}
+</figure>
+<p>NYC keeps incredibly detailed data regarding animal sightings, including rats, and <a href="https://www.kaggle.com/new-york-city/nyc-rat-sightings/data">it makes this data publicly available</a>.</p>
+<p>For this first mini project, you will use <strong>R and <code>ggplot</code></strong> to tell an interesting story hidden in the data. You can recreate one of these ugly, less-than-helpful graphs, or create a new story by looking at other variables in the data:</p>
+<figure class="fullwidth">
+<img src="/images/assignment/rat_examples.png" alt="Bad example 1" />
+</figure>
+<p>Here’s what you need to do:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Create</strong> a new RStudio project and place it on your computer somewhere. Open that new folder in Windows File Explorer or macOS Finder (however you navigate around the files on your computer), and create two subfolders there named <code>data</code> and <code>output</code>.</p></li>
+<li><p><strong>Download</strong> New York City’s database of rat sightings since 2010:<span><label for="sn-1" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-1" class="margin-toggle"/><span class="marginnote"> <img src="https://media.giphy.com/media/3rgXBqQT75uvb1V8Os/giphy.gif" alt="Shredder" /><br />
+<br />
+</span></span></p>
+<p><a href="/data/Rat_Sightings.csv"><i class="fas fa-table"></i> NYC Rat Sightings</a></p>
+<p>Place this in the <code>data</code> subfolder you created in step 1.<span><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"/><span class="sidenote">As always, you’ll probably need to right click on this link and choose “Save link as…”, since your browser will want to display it as text. The data was originally <a href="https://www.kaggle.com/new-york-city/nyc-rat-sightings/data">uploaded by the City of New York to Kaggle</a>, and is provided with a public domain license.<br />
+<br />
+</span></span></p></li>
+<li><p><strong>Create</strong> a new R Markdown file and save it in your project. In RStudio go to File &gt; New File &gt; R Markdown…, choose the default options, and delete all the placeholder text in the new file except for the metadata at the top, which is between <code>---</code> and <code>---</code>.</p></li>
+<li><p><strong>Verify</strong> that your project folder is structured like this:</p>
+<pre><code>your-project-name/
+  your-analysis.Rmd
+  your-project-name.Rproj
+  data/
+    Rat_Sightings.csv
+  output/
+    NOTHING</code></pre></li>
+<li><p><strong>Summarize</strong> the data somehow. The raw data has more than 100,000 rows, which means you’ll need to aggregate the data. Consider looking at the number of sightings per borough, per year, per dwelling type, etc., or a combination of these, like the change in the number sightings across the 5 boroughs between 2010 and 2016.</p></li>
+<li><p><strong>Create</strong> an appropriate visualization based on the data you summarized.</p></li>
+<li><strong>Write</strong> a memo (no word limit) explaining your process. I’m specifically looking for a discussion of the following:
+<ul>
+<li>What was wrong with the original graphic (if you’re fixing one of the original figures)?</li>
+<li>What story are you telling with your new graphic?</li>
+<li>How did you apply the principles of CRAP?</li>
+<li>How did you apply Alberto Cairo’s five qualities of great visualizations?</li>
+</ul></li>
+<li><strong>Upload</strong> the following outputs to Learning Suite:
+<ul>
+<li>A PDF or Word file of your memo with your final code and graphic embedded in it.<span><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle"/><span class="sidenote">You can approach this in a couple different ways—you can write the memo and then include the full figure and code at the end, <a href="https://rud.is/b/2017/09/18/mapping-fall-foliage-with-sf/">similar to this blog post</a>, or you can write the memo in an incremental way, describing the different steps of creating the figure, ultimately arriving at a clean final figure, <a href="https://rudeboybert.github.io/fivethirtyeight/articles/bechdel.html">like this blog post</a>.<br />
+<br />
+</span></span> This means you’ll need to do all your coding in an R Markdown file and embed your code in chunks.</li>
+<li>A standalone PNG version of your graphic<span><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle"/><span class="sidenote">Use <code>ggsave(plot_name, filename = &quot;output/blah.png&quot;, width = XX, height = XX)</code><br />
+<br />
+</span></span></li>
+<li>A standalone PDF version of your graphic<span><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle"/><span class="sidenote">Use <code>ggsave(plot_name, filename = &quot;output/blah.pdf&quot;, width = XX, height = XX)</code><br />
+<br />
+</span></span></li>
+</ul></li>
+</ol>
+<p>You will be graded based on how you use R and <code>ggplot</code>, how well you apply the principles of CRAP, <em>The Truthful Art</em>, and <em>Effective Data Visualization</em>, and how appropriate the graph is for the data and the story you’re telling. I will use <a href="/files/mini-project-1-rubric.pdf">this rubric</a> to grade the final product.<span><label for="sn-6" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-6" class="margin-toggle"/><span class="marginnote"> <a href="/assignment/rubrics/mini-project-1-rubric.pdf"><img src="/images/rubrics/mini-project-1-rubric.png" alt="Example rubric for redesign 2" /></a><br />
+<br />
+</span></span></p>
+<p>For this assignment, I am less concerned with detailed graphic design principles—select appropriate colors, change fonts if you’re brave, and choose a nice <code>ggplot</code> theme and perhaps make a few adjustments like moving the legend around (<code>theme(legend.position = &quot;bottom&quot;)</code>) or other things you find with <code>ggThemeAssist</code>.</p>
+<p><strong>The assignment is due by 11:59 PM on Friday, October 26</strong>.</p>
+<p><strong>Please seek out help when you need it!</strong> You know enough R (and have enough examples of code from class and your readings) to be able to do this. Your project has to be turned in individually, and your visualization should be your own (i.e. if you work with others, don’t all turn in the same graph), but you should work with others! Meet with me for help too—I’m here to help!</p>
+<p><em>You can do this,</em> and you’ll feel like a budding dataviz witch/wizard when you’re done.</p>
+<p>I’ve provided some starter code below. A couple comments about it:</p>
+<ul>
+<li>By default, <code>read_csv()</code> treats cells that are empty or “NA” as missing values. This rat dataset uses “N/A” to mark missing values, so we need to add that as a possible marker of missingness (hence <code>na = c(&quot;&quot;, &quot;NA&quot;, &quot;N/A&quot;)</code>)</li>
+<li>To make life easier, I’ve renamed some of the key variables you might work with. You can rename others if you want.</li>
+<li>I’ve also created a few date-related variables (<code>sighting_year</code>, <code>sighting_month</code>, <code>sighting_day</code>, and <code>sighting_weekday</code>). You don’t have to use them, but they’re there if you need them.<span><label for="sn-7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-7" class="margin-toggle"/><span class="sidenote">The functions that create these, like <code>year()</code> and <code>wday()</code> are part of the <code>lubridate</code> library.<br />
+<br />
+</span></span></li>
+<li>The date/time variables are formatted like <code>04/03/2017 12:00:00 AM</code>, which R is not able to automatically parse as a date when reading the CSV file. You can use the <code>mdy_hms()</code> function in the <code>lubridate</code> library to parse dates that are structured as “month-day-year-hour-minute.”<span><label for="sn-8" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-8" class="margin-toggle"/><span class="sidenote">There are also a bunch of other iterations of this function, like <code>ymd()</code>, <code>dmy()</code>, etc., for other date formats.<br />
+<br />
+</span></span></li>
+<li>There’s one row with an unspecified borough, so I filter that out.</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">rats_raw &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/Rat_Sightings.csv&quot;</span>, <span class="dt">na =</span> <span class="kw">c</span>(<span class="st">&quot;&quot;</span>, <span class="st">&quot;NA&quot;</span>, <span class="st">&quot;N/A&quot;</span>))</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co"># If you get an error that says &quot;All formats failed to parse. No formats</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co"># found&quot;, it&#39;s because the mdy_hms function couldn&#39;t parse the date. The date</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co"># variable *should* be in this format: &quot;04/03/2017 12:00:00 AM&quot;, but in some</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co"># rare instances, it might load without the seconds as &quot;04/03/2017 12:00 AM&quot;.</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co"># If there are no seconds, use mdy_hm() instead of mdy_hms().</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">rats_clean &lt;-<span class="st"> </span>rats_raw <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">created_date =</span> <span class="st">`</span><span class="dt">Created Date</span><span class="st">`</span>,</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">         <span class="dt">location_type =</span> <span class="st">`</span><span class="dt">Location Type</span><span class="st">`</span>,</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">         <span class="dt">borough =</span> Borough) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">created_date =</span> <span class="kw">mdy_hms</span>(created_date)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">sighting_year =</span> <span class="kw">year</span>(created_date),</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">         <span class="dt">sighting_month =</span> <span class="kw">month</span>(created_date),</a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">         <span class="dt">sighting_day =</span> <span class="kw">day</span>(created_date),</a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">         <span class="dt">sighting_weekday =</span> <span class="kw">wday</span>(created_date, <span class="dt">label =</span> <span class="ot">TRUE</span>, <span class="dt">abbr =</span> <span class="ot">FALSE</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="st">  </span><span class="kw">filter</span>(borough <span class="op">!=</span><span class="st"> &quot;Unspecified&quot;</span>)</a></code></pre></div>
+<p>You’ll summarize the data with functions from <code>dplyr</code>, including stuff like <code>count()</code>, <code>arrange()</code>, <code>filter()</code>, <code>group_by()</code>, <code>summarize()</code>, and <code>mutate()</code>. Here are some examples of ways to summarize the data:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># See the count of rat sightings by weekday</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">rats_clean <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="st">  </span><span class="kw">count</span>(sighting_weekday)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co"># Assign a table to an object to use it in a plot</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">rats_by_weekday &lt;-<span class="st"> </span>rats_clean <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="st">  </span><span class="kw">count</span>(sighting_weekday, sighting_year)</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="kw">ggplot</span>(rats_by_weekday, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_rev</span>(sighting_weekday), <span class="dt">y =</span> n)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>sighting_year)</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co"># See the count of rat sightings by weekday and borough</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">rats_clean <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="st">  </span><span class="kw">count</span>(sighting_weekday, borough, sighting_year)</a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co"># An alternative to count() is to specify the groups with group_by() and then</span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co"># be explicit about how you&#39;re summarizing the groups, such as calculating the</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co"># mean, standard deviation, or number of observations (we do that here with</span></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co"># `n()`).</span></a>
+<a class="sourceLine" id="cb3-22" data-line-number="22">rats_clean <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-23" data-line-number="23"><span class="st">  </span><span class="kw">group_by</span>(sighting_weekday, borough) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-24" data-line-number="24"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">n =</span> <span class="kw">n</span>())</a></code></pre></div>
