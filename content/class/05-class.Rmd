@@ -15,7 +15,7 @@ editor_options:
 
 # Slides
 
-[Download the slides from today's lecture](/slides/MPA-635_2018-10-2.pdf).
+[Download the slides from today's lecture](/slides/MPA-635_2018-10-02.pdf).
 
 <figure>
 [![First slide](/images/slides/slides_2018-10-02.png)](/slides/MPA-635_2018-10-02.pdf)
