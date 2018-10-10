@@ -1,0 +1,284 @@
+---
+title: "Uncertainty"
+date: "2018-10-09"
+citeproc: false
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+    toc_depth: 4
+editor_options: 
+  chunk_output_type: console
+---
+
+<!-- BLOGDOWN-HEAD -->
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span. { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+</style>
+<!-- /BLOGDOWN-HEAD -->
+
+<h2>Contents</h2>
+<div id="TOC">
+<ul>
+<li><a href="#slides">Slides</a></li>
+<li><a href="#live-code">Live code</a></li>
+<li><a href="#code-from-today">Code from today</a><ul>
+<li><a href="#histograms">Histograms</a></li>
+<li><a href="#density-plots">Density plots</a></li>
+<li><a href="#box-plots">Box plots</a></li>
+<li><a href="#violin-plots">Violin plots</a></li>
+<li><a href="#ridge-plots">Ridge plots</a></li>
+<li><a href="#subjective-probabilities">Subjective probabilities</a></li>
+</ul></li>
+<li><a href="#clearest-and-muddiest-things">Clearest and muddiest things</a></li>
+</ul>
+</div>
+
+<h2 id="slides">Slides</h2>
+<p><a href="/slides/MPA-635_2018-10-09.pdf">Download the slides from today’s lecture</a>.</p>
+<figure>
+<a href="/slides/MPA-635_2018-10-09.pdf"><img src="/images/slides/slides_2018-10-09.png" alt="First slide" /></a>
+</figure>
+<h2 id="live-code">Live code</h2>
+<p>Use this link to see the code that I’m actually typing:</p>
+<ul>
+<li><i class="fas fa-globe"></i> <a href="https://andhs.co/live-code" class="uri">https://andhs.co/live-code</a></li>
+</ul>
+<p>I’ve saved the R script to Dropbox, and that link goes to a live version of that file. Refresh or re-open the link as needed to copy/paste code I type up on the screen.</p>
+<h2 id="code-from-today">Code from today</h2>
+<p>In class we looked at the uncertainty in weather patterns in Provo <a href="https://www.google.com/maps/place/40%C2%B014&#39;55.5%22N+111%C2%B038&#39;57.2%22W/@40.248752,-111.6514047,17z/">(specifically <code>40.248752, -111.649216</code>)</a> for 2017.</p>
+<p>First, we load the libraries we’ll be using:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(ggridges)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">library</span>(scales)</a></code></pre></div>
+<p>Then we load the data. I used the <a href="https://github.com/hrbrmstr/darksky"><code>darksky</code> R package</a> to download this historical data from <a href="https://darksky.net">Dark Sky</a>, and then I <a href="https://gist.githubusercontent.com/andrewheiss/3eb9ef6186915711b44789767a1e434e/raw/be36336130546dd674332208eef5bac345bbf225/weather_provo_2017.csv">saved the CSV file online</a>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">weather_provo_raw &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://andhs.co/provoweather&quot;</span>)</a></code></pre></div>
+<p>Then we wrangle the data, or make adjustments to it so that it’s easier to use and plot. Here we extract the month and weekday of each row as new columns:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Wrangle data</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">weather_provo_<span class="dv">2017</span> &lt;-<span class="st"> </span>weather_provo_raw <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Month =</span> <span class="kw">month</span>(date, <span class="dt">label =</span> <span class="ot">TRUE</span>, <span class="dt">abbr =</span> <span class="ot">FALSE</span>),</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">         <span class="dt">Day =</span> <span class="kw">wday</span>(date, <span class="dt">label =</span> <span class="ot">TRUE</span>, <span class="dt">abbr =</span> <span class="ot">FALSE</span>))</a></code></pre></div>
+<p>Now we can do stuff with it!</p>
+<h3 id="histograms">Histograms</h3>
+<p>With histograms, you don’t need to specify the <code>y</code> aesthetic, since ggplot will calculate the frequency for you.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">ggplot</span>(weather_provo_<span class="dv">2017</span>, <span class="kw">aes</span>(<span class="dt">x =</span> windSpeed)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1</span>)</a></code></pre></div>
+<p><img src="/class/06-class_files/figure-html/windspeed-hist-1.png" width="672" /></p>
+<p>We can look at monthly histograms by using <code>fill</code>, but this is horrendous:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">ggplot</span>(weather_provo_<span class="dv">2017</span>, <span class="kw">aes</span>(<span class="dt">x =</span> windSpeed, <span class="dt">fill =</span> Month)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1</span>)</a></code></pre></div>
+<p><img src="/class/06-class_files/figure-html/windspeed-hist-fill-1.png" width="672" /></p>
+<p>You can also facet, which is probably better (here I turn off the fill legend, since there’s no reason to keep it—it’s obvious which color goes to which month)</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">ggplot</span>(weather_provo_<span class="dv">2017</span>, <span class="kw">aes</span>(<span class="dt">x =</span> windSpeed, <span class="dt">fill =</span> Month)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>Month)</a></code></pre></div>
+<p><img src="/class/06-class_files/figure-html/windspeed-hist-fill-facet-1.png" width="672" /></p>
+<h3 id="density-plots">Density plots</h3>
+<p>Density plots use the same syntax as histograms (i.e. you don’t need to specify a <code>y</code> aesthetic):</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">ggplot</span>(weather_provo_<span class="dv">2017</span>, <span class="kw">aes</span>(<span class="dt">x =</span> windSpeed)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">fill =</span> <span class="st">&quot;#24af53&quot;</span>)</a></code></pre></div>
+<p><img src="/class/06-class_files/figure-html/windspeed-density-1.png" width="672" /></p>
+<p>We can also incorporate months into density plots, with facets…</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">ggplot</span>(weather_provo_<span class="dv">2017</span>, <span class="kw">aes</span>(<span class="dt">x =</span> windSpeed, <span class="dt">fill =</span> Month)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_density</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>Month)</a></code></pre></div>
+<p><img src="/class/06-class_files/figure-html/windspeed-density-facet-1.png" width="672" /></p>
+<p>… or by plotting each density curve on top of the other and adding transparency (here I move the legend to the bottom of the plot):</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">ggplot</span>(weather_provo_<span class="dv">2017</span>, <span class="kw">aes</span>(<span class="dt">x =</span> windSpeed, <span class="dt">fill =</span> Month)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">alpha =</span> <span class="fl">0.4</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</a></code></pre></div>
+<p><img src="/class/06-class_files/figure-html/windspeed-density-fill-1.png" width="672" /></p>
+<h3 id="box-plots">Box plots</h3>
+<p>We can also make box plots. These are plotted vertically, so you need to put the numeric variable you’re interested in along the y-axis:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">ggplot</span>(weather_provo_<span class="dv">2017</span>, <span class="kw">aes</span>(<span class="dt">y =</span> windSpeed)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
+<p><img src="/class/06-class_files/figure-html/boxplot-1.png" width="672" /></p>
+<p>You can also fill or facet or whatever, just like before. Here I use day of the week instead of month, just for fun:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">ggplot</span>(weather_provo_<span class="dv">2017</span>, <span class="kw">aes</span>(<span class="dt">y =</span> windSpeed, <span class="dt">x =</span> Day, <span class="dt">fill =</span> Day)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p><img src="/class/06-class_files/figure-html/boxplot-fill-1.png" width="672" /></p>
+<h3 id="violin-plots">Violin plots</h3>
+<p>Violin plots use the same syntax as box plots, with the numeric variable on the y-axis. You can use all the other aesthetics too, just like density plots and box plots.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">ggplot</span>(weather_provo_<span class="dv">2017</span>, <span class="kw">aes</span>(<span class="dt">y =</span> windSpeed, <span class="dt">x =</span> Day, <span class="dt">fill =</span> Day)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_violin</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p><img src="/class/06-class_files/figure-html/violin-1.png" width="672" /></p>
+<p>With violin plots, it’s often helpful to add additional geoms, like points:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">ggplot</span>(weather_provo_<span class="dv">2017</span>, <span class="kw">aes</span>(<span class="dt">y =</span> windSpeed, <span class="dt">x =</span> Day, <span class="dt">fill =</span> Day)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_violin</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.1</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p><img src="/class/06-class_files/figure-html/violin-points-1.png" width="672" /></p>
+<h3 id="ridge-plots">Ridge plots</h3>
+<p>The <code>ggridges</code> package has a ton of options for plotting stacked density plots. The documentation in R itself is somewhat sparse, but the <a href="https://cran.r-project.org/web/packages/ggridges/vignettes/introduction.html">package’s main webpage has many examples of how to use the different geoms</a>.</p>
+<p>Here’s the density of windspeed by month (<code>scale = x</code> adjusts how much the density plots overlap; <code>fct_rev()</code> reverses the month variable so that January goes on top):</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">ggplot</span>(weather_provo_<span class="dv">2017</span>, <span class="kw">aes</span>(<span class="dt">x =</span> windSpeed, <span class="dt">y =</span> <span class="kw">fct_rev</span>(Month),</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">                               <span class="dt">fill =</span> Month)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_density_ridges</span>(<span class="dt">scale =</span> <span class="dv">5</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Wind speed&quot;</span>, <span class="dt">y =</span> <span class="ot">NULL</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<pre><code>## Picking joint bandwidth of 0.52</code></pre>
+<p><img src="/class/06-class_files/figure-html/ridge-wind-month-1.png" width="672" /></p>
+<p>Here’s temperature over time. You can add quantile lines with <code>quantile_lines</code>. Specifying 2 quantiles will split each density in half (giving you the median):</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">ggplot</span>(weather_provo_<span class="dv">2017</span>, <span class="kw">aes</span>(<span class="dt">x =</span> temperatureHigh, <span class="dt">y =</span> <span class="kw">fct_rev</span>(Month),</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">                               <span class="dt">fill =</span> Month)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_density_ridges</span>(<span class="dt">scale =</span> <span class="dv">5</span>, <span class="dt">quantile_lines =</span> <span class="ot">TRUE</span>, <span class="dt">quantiles =</span> <span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Daily high temperature&quot;</span>, <span class="dt">y =</span> <span class="ot">NULL</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<pre><code>## Picking joint bandwidth of 3.48</code></pre>
+<p><img src="/class/06-class_files/figure-html/ridge-temp-month-1.png" width="672" /></p>
+<p>We can also fill each density with a gradient to look extra cool. The <code>..x..</code> thing in the fill aesthetic is just how <code>geom_density_ridges_gradient()</code> works. The only way you’d know that (and the only way I knew that) was to <a href="https://cran.r-project.org/web/packages/ggridges/vignettes/introduction.html">look at the example page</a>.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">ggplot</span>(weather_provo_<span class="dv">2017</span>, <span class="kw">aes</span>(<span class="dt">x =</span> temperatureHigh, <span class="dt">y =</span> Month, <span class="dt">fill =</span> ..x..)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_density_ridges_gradient</span>(<span class="dt">quantile_lines =</span> <span class="ot">TRUE</span>, <span class="dt">quantiles =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="st">  </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">option =</span> <span class="st">&quot;plasma&quot;</span>, <span class="dt">name =</span> <span class="st">&quot;Temp&quot;</span>)</a></code></pre></div>
+<pre><code>## Picking joint bandwidth of 3.48</code></pre>
+<p><img src="/class/06-class_files/figure-html/ridge-temp-month-gradient-1.png" width="672" /></p>
+<p>We can plot the high and low temperatures at the same time if we manipulate the data a little. Here we use <code>gather()</code> to take the <code>temperatureLow</code> and <code>temperatureHigh</code> columns and rearrange them so that there’s a column for the actual temperature and a column indicating if it’s high or low</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">weather_provo_<span class="dv">2017</span>_plot &lt;-<span class="st"> </span>weather_provo_<span class="dv">2017</span> <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="st">  </span><span class="kw">gather</span>(temperature_type, temperature, temperatureLow, temperatureHigh) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">temperature_type =</span> <span class="kw">recode</span>(temperature_type, </a>
+<a class="sourceLine" id="cb20-4" data-line-number="4">                                   <span class="dt">temperatureHigh =</span> <span class="st">&quot;High&quot;</span>,</a>
+<a class="sourceLine" id="cb20-5" data-line-number="5">                                   <span class="dt">temperatureLow =</span> <span class="st">&quot;Low&quot;</span>))</a>
+<a class="sourceLine" id="cb20-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb20-7" data-line-number="7"><span class="co"># Print out the first few rows</span></a>
+<a class="sourceLine" id="cb20-8" data-line-number="8">weather_provo_<span class="dv">2017</span>_plot <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-9" data-line-number="9"><span class="st">  </span><span class="kw">select</span>(date, temperature_type, temperature) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-10" data-line-number="10"><span class="st">  </span><span class="kw">head</span>()</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 3
+##   date                temperature_type temperature
+##   &lt;dttm&gt;              &lt;chr&gt;                  &lt;dbl&gt;
+## 1 2017-01-01 12:00:00 Low                    25.0 
+## 2 2017-01-02 12:00:00 Low                    24.1 
+## 3 2017-01-03 12:00:00 Low                    31.0 
+## 4 2017-01-04 12:00:00 Low                    19.1 
+## 5 2017-01-05 12:00:00 Low                     3.5 
+## 6 2017-01-06 12:00:00 Low                     9.02</code></pre>
+<p>With the data in this format we can plot both high and low at the same time and show them differently with <code>linetype</code>, which will change the border around each density. There are a bunch of other adjustments here to make the plot more CRAPy.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">ggplot</span>(weather_provo_<span class="dv">2017</span>_plot, </a>
+<a class="sourceLine" id="cb22-2" data-line-number="2">       <span class="kw">aes</span>(<span class="dt">x =</span> temperature, <span class="dt">y =</span> <span class="kw">fct_rev</span>(Month), <span class="dt">fill =</span> ..x.., <span class="dt">linetype =</span> temperature_type)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_density_ridges_gradient</span>(<span class="dt">scale =</span> <span class="dv">3</span>, <span class="dt">rel_min_height =</span> <span class="fl">0.01</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb22-4" data-line-number="4"><span class="st">  </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">option =</span> <span class="st">&quot;plasma&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb22-5" data-line-number="5"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">linetype =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="ot">NULL</span>),</a>
+<a class="sourceLine" id="cb22-6" data-line-number="6">         <span class="dt">fill =</span> <span class="kw">guide_colorbar</span>(<span class="dt">title =</span> <span class="ot">NULL</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb22-7" data-line-number="7"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb22-8" data-line-number="8">       <span class="dt">title =</span> <span class="st">&quot;Low and high temperatures in Provo, Utah&quot;</span>,</a>
+<a class="sourceLine" id="cb22-9" data-line-number="9">       <span class="dt">subtitle =</span> <span class="st">&quot;January 1, 2017-December 31, 2017&quot;</span>,</a>
+<a class="sourceLine" id="cb22-10" data-line-number="10">       <span class="dt">caption =</span> <span class="st">&quot;Source: Dark Sky&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb22-11" data-line-number="11"><span class="st">  </span><span class="kw">theme_minimal</span>(<span class="dt">base_family =</span> <span class="st">&quot;Roboto Condensed&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb22-12" data-line-number="12"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</a>
+<a class="sourceLine" id="cb22-13" data-line-number="13">        <span class="dt">legend.key.width =</span> <span class="kw">unit</span>(<span class="dv">3</span>, <span class="st">&quot;lines&quot;</span>),</a>
+<a class="sourceLine" id="cb22-14" data-line-number="14">        <span class="dt">legend.key.height =</span> <span class="kw">unit</span>(<span class="fl">0.5</span>, <span class="st">&quot;lines&quot;</span>))</a></code></pre></div>
+<pre><code>## Picking joint bandwidth of 3.2</code></pre>
+<p><img src="/class/06-class_files/figure-html/ridge-temp-month-gradient-fancy-1.png" width="672" /></p>
+<h3 id="subjective-probabilities">Subjective probabilities</h3>
+<p>Here’s a full example of another ridgeplot, based on a survey done on Reddit about what each of these subjective probabilities mean in numbers.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">probability_raw &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/zonination/perceptions/master/probly.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="co"># This data is wide; each column is one of the subjective probabilities. </span></a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="co"># Here we make this long.</span></a>
+<a class="sourceLine" id="cb25-3" data-line-number="3">probability &lt;-<span class="st"> </span>probability_raw <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="st">  </span><span class="kw">gather</span>(phrase, value) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">value =</span> value <span class="op">/</span><span class="st"> </span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb25-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb25-7" data-line-number="7"><span class="co"># Here we calculate the media probability for each phrase and put them in order</span></a>
+<a class="sourceLine" id="cb25-8" data-line-number="8">probability_order &lt;-<span class="st"> </span>probability <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-9" data-line-number="9"><span class="st">  </span><span class="kw">group_by</span>(phrase) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-10" data-line-number="10"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">median_prob =</span> <span class="kw">median</span>(value)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-11" data-line-number="11"><span class="st">  </span><span class="kw">arrange</span>(median_prob)</a>
+<a class="sourceLine" id="cb25-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb25-13" data-line-number="13"><span class="co"># This is the data frame that we&#39;ll use to plot. We use the order of the phrases</span></a>
+<a class="sourceLine" id="cb25-14" data-line-number="14"><span class="co"># from `probability_order` and make the phrase column an ordered factor based on</span></a>
+<a class="sourceLine" id="cb25-15" data-line-number="15"><span class="co"># that order. Without this, the phrases will plot in alphabetic order</span></a>
+<a class="sourceLine" id="cb25-16" data-line-number="16">probability_plot &lt;-<span class="st"> </span>probability <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-17" data-line-number="17"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">phrase =</span> <span class="kw">factor</span>(phrase, <span class="dt">levels =</span> probability_order<span class="op">$</span>phrase, <span class="dt">ordered =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb25-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb25-19" data-line-number="19"><span class="kw">ggplot</span>(probability_plot, <span class="kw">aes</span>(<span class="dt">x =</span> value, <span class="dt">y =</span> phrase, <span class="dt">fill =</span> phrase)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb25-20" data-line-number="20"><span class="st">  </span><span class="kw">geom_density_ridges</span>(<span class="dt">scale =</span> <span class="dv">5</span>, <span class="dt">jittered_points =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb25-21" data-line-number="21">                      <span class="dt">quantile_lines =</span> <span class="ot">TRUE</span>, <span class="dt">quantiles =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb25-22" data-line-number="22">                      <span class="dt">point_size =</span> <span class="fl">0.5</span>, <span class="dt">point_alpha =</span> <span class="fl">0.3</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb25-23" data-line-number="23"><span class="st">  </span><span class="kw">scale_fill_viridis_d</span>(<span class="dt">option =</span> <span class="st">&quot;viridis&quot;</span>, <span class="dt">guide =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb25-24" data-line-number="24"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb25-25" data-line-number="25"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">labels =</span> percent) <span class="op">+</span></a>
+<a class="sourceLine" id="cb25-26" data-line-number="26"><span class="st">  </span><span class="kw">theme_minimal</span>(<span class="dt">base_family =</span> <span class="st">&quot;Roboto Condensed&quot;</span>)</a></code></pre></div>
+<pre><code>## Picking joint bandwidth of 0.0343</code></pre>
+<p><img src="/class/06-class_files/figure-html/subjective-probs-1.png" width="672" /></p>
+<p>\(•◡•)/</p>
+<h2 id="clearest-and-muddiest-things">Clearest and muddiest things</h2>
+<p>Go to <a href="https://goo.gl/forms/rSIbw1voOV2vWKMD2">this form</a> and answer these two questions:</p>
+<ol style="list-style-type: decimal">
+<li>What was the muddiest thing from class today? What are you still wondering about?</li>
+<li>What was the clearest thing from class today? What was the most exciting thing you learned?</li>
+</ol>
+<p>I’ll compile the questions and send out answers after class.</p>

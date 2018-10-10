@@ -41,6 +41,7 @@ lessons:
   - title: "Uncertainty"
     date: "October 9"
     reading: "06-reading"
+    class: "06-class"
 
   - title: "Relationships"
     date: "October 16"

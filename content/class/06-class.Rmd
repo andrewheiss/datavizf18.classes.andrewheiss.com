@@ -1,0 +1,396 @@
+---
+title: "Uncertainty"
+date: "2018-10-09"
+citeproc: false
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+    toc_depth: 4
+editor_options: 
+  chunk_output_type: console
+---
+
+# Slides
+
+[Download the slides from today's lecture](/slides/MPA-635_2018-10-09.pdf).
+
+<figure>
+[![First slide](/images/slides/slides_2018-10-09.png)](/slides/MPA-635_2018-10-09.pdf)
+</figure>
+
+
+# Live code
+
+Use this link to see the code that I'm actually typing: 
+
+- <i class="fas fa-globe"></i> <https://andhs.co/live-code>
+
+I've saved the R script to Dropbox, and that link goes to a live version of that file. Refresh or re-open the link as needed to copy/paste code I type up on the screen.
+
+
+# Code from today
+
+In class we looked at the uncertainty in weather patterns in Provo [(specifically `40.248752, -111.649216`)](https://www.google.com/maps/place/40%C2%B014'55.5%22N+111%C2%B038'57.2%22W/@40.248752,-111.6514047,17z/) for 2017. 
+
+First, we load the libraries we'll be using:
+
+```{r load-libraries, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(lubridate)
+library(ggridges)
+library(scales)
+```
+
+Then we load the data. I used the [`darksky` R package](https://github.com/hrbrmstr/darksky) to download this historical data from [Dark Sky](https://darksky.net), and then I [saved the CSV file online](https://gist.githubusercontent.com/andrewheiss/3eb9ef6186915711b44789767a1e434e/raw/be36336130546dd674332208eef5bac345bbf225/weather_provo_2017.csv).
+
+```{r fake-load-data, eval=FALSE}
+weather_provo_raw <- read_csv("https://andhs.co/provoweather")
+```
+
+```{r real-load-data, include=FALSE, warning=FALSE, message=FALSE}
+weather_provo_raw <- read_csv(here::here("static", "data", "weather_provo_2017.csv"))
+```
+
+Then we wrangle the data, or make adjustments to it so that it's easier to use and plot. Here we extract the month and weekday of each row as new columns:
+
+```{r wrangle-data}
+# Wrangle data
+weather_provo_2017 <- weather_provo_raw %>% 
+  mutate(Month = month(date, label = TRUE, abbr = FALSE),
+         Day = wday(date, label = TRUE, abbr = FALSE))
+```
+
+Now we can do stuff with it!
+
+## Histograms
+
+With histograms, you don't need to specify the `y` aesthetic, since ggplot will calculate the frequency for you.
+
+```{r windspeed-hist}
+ggplot(weather_provo_2017, aes(x = windSpeed)) +
+  geom_histogram(binwidth = 1)
+```
+
+We can look at monthly histograms by using `fill`, but this is horrendous:
+
+```{r windspeed-hist-fill}
+ggplot(weather_provo_2017, aes(x = windSpeed, fill = Month)) +
+  geom_histogram(binwidth = 1)
+```
+
+You can also facet, which is probably better (here I turn off the fill legend, since there's no reason to keep it—it's obvious which color goes to which month)
+
+```{r windspeed-hist-fill-facet}
+ggplot(weather_provo_2017, aes(x = windSpeed, fill = Month)) +
+  geom_histogram(binwidth = 1) +
+  guides(fill = FALSE) +
+  facet_wrap(~ Month)
+```
+
+## Density plots
+
+Density plots use the same syntax as histograms (i.e. you don't need to specify a `y` aesthetic):
+
+```{r windspeed-density}
+ggplot(weather_provo_2017, aes(x = windSpeed)) +
+  geom_density(fill = "#24af53")
+```
+
+We can also incorporate months into density plots, with facets…
+
+```{r windspeed-density-facet}
+ggplot(weather_provo_2017, aes(x = windSpeed, fill = Month)) +
+  geom_density() +
+  guides(fill = FALSE) +
+  facet_wrap(~ Month)
+```
+
+… or by plotting each density curve on top of the other and adding transparency (here I move the legend to the bottom of the plot):
+
+```{r windspeed-density-fill}
+ggplot(weather_provo_2017, aes(x = windSpeed, fill = Month)) +
+  geom_density(alpha = 0.4) +
+  theme(legend.position = "bottom")
+```
+
+
+## Box plots
+
+We can also make box plots. These are plotted vertically, so you need to put the numeric variable you're interested in along the y-axis:
+
+```{r boxplot}
+ggplot(weather_provo_2017, aes(y = windSpeed)) +
+  geom_boxplot()
+```
+
+You can also fill or facet or whatever, just like before. Here I use day of the week instead of month, just for fun:
+
+```{r boxplot-fill}
+ggplot(weather_provo_2017, aes(y = windSpeed, x = Day, fill = Day)) +
+  geom_boxplot() +
+  guides(fill = FALSE)
+```
+
+
+## Violin plots
+
+Violin plots use the same syntax as box plots, with the numeric variable on the y-axis. You can use all the other aesthetics too, just like density plots and box plots.
+
+```{r violin}
+ggplot(weather_provo_2017, aes(y = windSpeed, x = Day, fill = Day)) +
+  geom_violin() +
+  guides(fill = FALSE)
+```
+
+With violin plots, it's often helpful to add additional geoms, like points:
+
+```{r violin-points}
+ggplot(weather_provo_2017, aes(y = windSpeed, x = Day, fill = Day)) +
+  geom_violin() +
+  geom_point(size = 0.5, position = position_jitter(width = 0.1)) +
+  guides(fill = FALSE)
+```
+
+
+## Ridge plots
+
+The `ggridges` package has a ton of options for plotting stacked density plots. The documentation in R itself is somewhat sparse, but the [package's main webpage has many examples of how to use the different geoms](https://cran.r-project.org/web/packages/ggridges/vignettes/introduction.html).
+
+Here's the density of windspeed by month (`scale = x` adjusts how much the density plots overlap; `fct_rev()` reverses the month variable so that January goes on top):
+
+```{r ridge-wind-month}
+ggplot(weather_provo_2017, aes(x = windSpeed, y = fct_rev(Month),
+                               fill = Month)) +
+  geom_density_ridges(scale = 5) +
+  guides(fill = FALSE) +
+  labs(x = "Wind speed", y = NULL) +
+  theme_minimal()
+```
+
+Here's temperature over time. You can add quantile lines with `quantile_lines`. Specifying 2 quantiles will split each density in half (giving you the median):
+
+```{r ridge-temp-month}
+ggplot(weather_provo_2017, aes(x = temperatureHigh, y = fct_rev(Month),
+                               fill = Month)) +
+  geom_density_ridges(scale = 5, quantile_lines = TRUE, quantiles = 2) +
+  guides(fill = FALSE) +
+  labs(x = "Daily high temperature", y = NULL) +
+  theme_minimal()
+```
+
+We can also fill each density with a gradient to look extra cool. The `..x..` thing in the fill aesthetic is just how `geom_density_ridges_gradient()` works. The only way you'd know that (and the only way I knew that) was to [look at the example page](https://cran.r-project.org/web/packages/ggridges/vignettes/introduction.html).
+
+```{r ridge-temp-month-gradient}
+ggplot(weather_provo_2017, aes(x = temperatureHigh, y = Month, fill = ..x..)) +
+  geom_density_ridges_gradient(quantile_lines = TRUE, quantiles = 2) + 
+  scale_fill_viridis_c(option = "plasma", name = "Temp")
+```
+
+We can plot the high and low temperatures at the same time if we manipulate the data a little. Here we use `gather()` to take the `temperatureLow` and `temperatureHigh` columns and rearrange them so that there's a column for the actual temperature and a column indicating if it's high or low
+
+```{r tidy-temps}
+weather_provo_2017_plot <- weather_provo_2017 %>% 
+  gather(temperature_type, temperature, temperatureLow, temperatureHigh) %>% 
+  mutate(temperature_type = recode(temperature_type, 
+                                   temperatureHigh = "High",
+                                   temperatureLow = "Low"))
+
+# Print out the first few rows
+weather_provo_2017_plot %>% 
+  select(date, temperature_type, temperature) %>% 
+  head()
+```
+
+With the data in this format we can plot both high and low at the same time and show them differently with `linetype`, which will change the border around each density. There are a bunch of other adjustments here to make the plot more CRAPy.
+
+```{r ridge-temp-month-gradient-fancy}
+ggplot(weather_provo_2017_plot, 
+       aes(x = temperature, y = fct_rev(Month), fill = ..x.., linetype = temperature_type)) +
+  geom_density_ridges_gradient(scale = 3, rel_min_height = 0.01) +
+  scale_fill_viridis_c(option = "plasma") +
+  guides(linetype = guide_legend(title = NULL),
+         fill = guide_colorbar(title = NULL)) +
+  labs(x = NULL, y = NULL,
+       title = "Low and high temperatures in Provo, Utah",
+       subtitle = "January 1, 2017-December 31, 2017",
+       caption = "Source: Dark Sky") +
+  theme_minimal(base_family = "Roboto Condensed") +
+  theme(legend.position = "bottom",
+        legend.key.width = unit(3, "lines"),
+        legend.key.height = unit(0.5, "lines"))
+```
+
+## Subjective probabilities
+
+Here's a full example of another ridgeplot, based on a survey done on Reddit about what each of these subjective probabilities mean in numbers.
+
+```{r fake-load-data-prob, eval=FALSE}
+probability_raw <- read_csv("https://raw.githubusercontent.com/zonination/perceptions/master/probly.csv")
+```
+
+```{r real-load-data-prob, include=FALSE, warning=FALSE, message=FALSE}
+probability_raw <- read_csv(here::here("static", "data", "probly.csv"))
+```
+
+```{r subjective-probs}
+# This data is wide; each column is one of the subjective probabilities. 
+# Here we make this long.
+probability <- probability_raw %>% 
+  gather(phrase, value) %>% 
+  mutate(value = value / 100)
+
+# Here we calculate the media probability for each phrase and put them in order
+probability_order <- probability %>% 
+  group_by(phrase) %>% 
+  summarize(median_prob = median(value)) %>% 
+  arrange(median_prob)
+
+# This is the data frame that we'll use to plot. We use the order of the phrases
+# from `probability_order` and make the phrase column an ordered factor based on
+# that order. Without this, the phrases will plot in alphabetic order
+probability_plot <- probability %>% 
+  mutate(phrase = factor(phrase, levels = probability_order$phrase, ordered = TRUE))
+
+ggplot(probability_plot, aes(x = value, y = phrase, fill = phrase)) +
+  geom_density_ridges(scale = 5, jittered_points = TRUE,
+                      quantile_lines = TRUE, quantiles = 2,
+                      point_size = 0.5, point_alpha = 0.3) +
+  scale_fill_viridis_d(option = "viridis", guide = FALSE) +
+  coord_cartesian(xlim = c(0, 1)) +
+  scale_x_continuous(labels = percent) +
+  theme_minimal(base_family = "Roboto Condensed")
+```
+
+\\(•◡•)/
+
+
+# Clearest and muddiest things
+
+Go to [this form](https://goo.gl/forms/rSIbw1voOV2vWKMD2) and answer these two questions:
+
+1. What was the muddiest thing from class today? What are you still wondering about?
+2. What was the clearest thing from class today? What was the most exciting thing you learned?
+
+I'll compile the questions and send out answers after class.
+
+
+```{r class-stuff, include=FALSE, eval=FALSE}
+library(tidyverse)
+library(lubridate)
+library(scales)
+library(ggridges)
+
+# devtools::install_github("hrbrmstr/darksky")
+library(darksky)
+
+# weather_provo_2017_raw <- data_frame(date = seq(ymd_hms("2017-01-01 12:00:00"), 
+#                                                 ymd_hms("2017-12-31 12:00:00"), "1 day")) %>%
+#   mutate(forecast = date %>% map(~ get_forecast_for(40.248752, -111.649216, .x)))
+# saveRDS(weather_provo_2017_raw, "~/Desktop/weather_provo_2017_raw.rds")
+
+weather_provo_2017 <- weather_provo_2017_raw %>% 
+  mutate(daily = forecast %>% map("daily")) %>%
+  unnest(daily) %>% 
+  select(-forecast, -time) #%>% 
+  mutate(Month = month(date, label = TRUE, abbr = FALSE))
+
+write_csv(weather_provo_2017, "~/Desktop/weather_provo_2017.csv")
+
+
+
+nba_raw <- read_csv("~/Downloads/nba.games.stats.csv")
+nba_teams <- tribble(
+  ~Team, ~TeamName,
+  "ATL", "Atlanta Hawks",
+  "BOS", "Boston Celtics",
+  "BRK", "Brooklyn Nets",
+  "CHA", "Charlotte Hornets",
+  "CHI", "Chicago Bulls",
+  "CLE", "Cleveland Cavaliers",
+  "DAL", "Dallas Mavericks",
+  "DEN", "Denver Nuggets",
+  "DET", "Detroit Pistons",
+  "GSW", "Golden State Warriors",
+  "HOU", "Houston Rockets",
+  "IND", "Indiana Pacers",
+  "LAC", "LA Clippers",
+  "LAL", "LA Lakers",
+  "MEM", "Memphis Grizzlies",
+  "MIA", "Miami Heat",
+  "MIL", "Milwaukee Bucks",
+  "MIN", "Minnesota Timberwolves",
+  "NOP", "New Orleans Hornets",
+  "NYK", "New York Knicks",
+  "OKC", "Oklahoma City Thunder",
+  "ORL", "Orlando Magic",
+  "PHI", "Philadelphia Sixers",
+  "PHO", "Phoenix Suns",
+  "POR", "Portland Trail Blazers",
+  "SAC", "Sacramento Kings",
+  "SAS", "San Antonio Spurs",
+  "TOR", "Toronto Raptors",
+  "UTA", "Utah Jazz",
+  "WAS", "Washington Wizards"
+)
+
+nba <- nba_raw %>% 
+  mutate(Year = year(Date),
+         Month = month(Date)) %>% 
+  mutate(StartYear = ifelse(Month < 7, Year - 1, Year),
+         Season = paste0(StartYear, "-", StartYear + 1)) %>% 
+  mutate(Margin = TeamPoints - OpponentPoints) %>% 
+  mutate(Team = recode(Team, CHO = "CHA")) %>% 
+  left_join(nba_teams, by = "Team")
+
+
+avg_points_all_seasons <- nba %>% 
+  group_by(Season, TeamName) %>% 
+  summarize(avg_points = mean(Margin)) %>% 
+  arrange(desc(avg_points))
+
+avg_points_2017_18 <- nba %>% 
+  filter(Season == "2017-2018") %>% 
+  group_by(TeamName) %>% 
+  summarize(avgMargin = median(Margin)) %>% 
+  arrange(desc(avgMargin))
+
+
+nba_points_plot <- nba %>% 
+  filter(Season == "2017-2018") %>% 
+  mutate(TeamName = factor(TeamName, levels = unique(avg_points_2017_18$TeamName), ordered = TRUE)) %>% 
+  mutate(highlight = ifelse(TeamName == "Utah Jazz", TRUE, FALSE))
+
+ggplot(nba_points_plot, 
+       aes(x = Margin, y = fct_rev(TeamName), fill = highlight)) +
+  geom_density_ridges(rel_min_height = 0.01, quantile_lines = TRUE, quantiles = 2, alpha = 0.5) +
+  coord_cartesian(xlim = c(-30, 30)) +
+  scale_fill_manual(values = c("grey50", "red"), guide = FALSE) +
+  geom_vline(xintercept = 0)
+
+numbers_raw <- read_csv("https://raw.githubusercontent.com/zonination/perceptions/master/numberly.csv")
+
+numbers <- numbers_raw %>% 
+  gather(phrase, value)
+
+numbers_order <- numbers %>% 
+  group_by(phrase) %>% 
+  summarize(mean_value = median(value)) %>% 
+  arrange(desc(mean_value))
+
+numbers_plot <- numbers %>% 
+  mutate(phrase = factor(phrase, levels = numbers_order$phrase, ordered = TRUE))
+
+ggplot(numbers_plot, aes(x = value, y = phrase, fill = phrase)) +
+  geom_density_ridges(scale = 2, alpha = 0.7) +
+  scale_x_log10() +
+  # scale_x_log10(labels = trans_format("log10", math_format(10^.x)),
+  #               breaks = 10^(-2:6)) +
+  scale_fill_viridis_d(option = "viridis", guide = FALSE) +
+  labs(x = "Assigned number", y = NULL, 
+       title = "Perceptions of numbers") +
+  coord_cartesian(xlim = c(0.01, 10000)) +
+  theme_minimal(base_family = "Roboto", base_size = 15)
+```
