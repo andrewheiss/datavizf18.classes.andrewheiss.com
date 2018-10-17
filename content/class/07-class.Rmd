@@ -1,0 +1,367 @@
+---
+title: "Uncertainty"
+date: "2018-10-09"
+citeproc: false
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+    toc_depth: 4
+editor_options: 
+  chunk_output_type: console
+---
+
+# Slides
+
+[Download the slides from today's lecture](/slides/MPA-635_2018-10-16.pdf).
+
+<figure>
+[![First slide](/images/slides/slides_2018-10-16.png)](/slides/MPA-635_2018-10-16.pdf)
+</figure>
+
+
+# Live code
+
+Use this link to see the code that I'm actually typing: 
+
+- <i class="fas fa-globe"></i> <https://andhs.co/live-code>
+
+I've saved the R script to Dropbox, and that link goes to a live version of that file. Refresh or re-open the link as needed to copy/paste code I type up on the screen.
+
+
+# Code from today
+
+In class we looked at the some of the relationships in weather characteristics in Provo [(specifically `40.248752, -111.649216`)](https://www.google.com/maps/place/40%C2%B014'55.5%22N+111%C2%B038'57.2%22W/@40.248752,-111.6514047,17z/) for 2017. 
+
+First, we load the libraries we'll be using:
+
+```{r load-libraries, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(lubridate)
+library(scales)
+```
+
+Then we load the data. I used the [`darksky` R package](https://github.com/hrbrmstr/darksky) to download this historical data from [Dark Sky](https://darksky.net), and then I [saved the CSV file online](https://gist.githubusercontent.com/andrewheiss/3eb9ef6186915711b44789767a1e434e/raw/be36336130546dd674332208eef5bac345bbf225/weather_provo_2017.csv).
+
+```{r fake-load-data, eval=FALSE}
+weather_provo_raw <- read_csv("https://andhs.co/provoweather")
+```
+
+```{r real-load-data, include=FALSE, warning=FALSE, message=FALSE}
+weather_provo_raw <- read_csv(here::here("static", "data", "weather_provo_2017.csv"))
+```
+
+Then we wrangle the data, or make adjustments to it so that it's easier to use and plot. Here we extract the month and weekday of each row as new columns:
+
+```{r wrangle-data}
+# Wrangle data
+weather_provo_2017 <- weather_provo_raw %>% 
+  mutate(Month = month(date, label = TRUE, abbr = FALSE),
+         Day = wday(date, label = TRUE, abbr = FALSE))
+```
+
+## Correlation matrix
+
+First we look at the correlation between a bunch of the columns in the weather data, like the probability of precipitation, the high and low temperature, humidity, and wind speed. We use `select()` to only choose those columns, and then we use `cor()` to calculate the correlation. Ordinarily, `cor()` takes two arguments—x and y—and it will return a single correlation number. If you feed a data frame into `cor()`, though, it will calculate the correlation between each pair of columns, automatically.
+
+```{r calculate-correlation}
+# Correlation matrix
+things_to_correlate <- weather_provo_2017 %>% 
+  select(precipProbability, temperatureHigh, temperatureLow, humidity, windSpeed) %>% 
+  cor()
+things_to_correlate
+```
+
+The two halves of this matrix (split along the diagonal line) are identical, so we can remove the lower triangle with this code (which will set all the cells in the lower triangle to `NA`):
+
+```{r clean-cor-matrix}
+# Get rid of the lower triangle
+things_to_correlate[lower.tri(things_to_correlate)] <- NA
+things_to_correlate
+```
+
+Finally, in order to plot this, the data needs to be in tidy (or long) format. Here we convert the `things_to_correlate` matrix into a data frame, add a column of the row names, take all the columns and put them into a single column named `measure1`, and take all the correlation numbers and put them in a column named `value`. In the end, we make sure the measure variables are ordered by their order of appearance (otherwise they plot alphabetically and don't make a triangle)
+
+```{r tidy-correlation}
+things_to_correlate_long <- things_to_correlate %>% 
+  as.data.frame() %>% 
+  rownames_to_column("measure2") %>% 
+  gather(measure1, value, -measure2) %>% 
+  mutate(nice_value = round(value, 2)) %>% 
+  mutate(measure1 = fct_inorder(measure1),
+         measure2 = fct_inorder(measure2)) %>% 
+  filter(!is.na(value))
+
+head(things_to_correlate_long)
+```
+
+With the data in this shape, we can make a heatmap with `geom_tile()`:
+
+```{r correlation-heatmap}
+ggplot(things_to_correlate_long, aes(x = measure2, y = measure1, fill = value)) +
+  geom_tile() +
+  geom_text(aes(label = nice_value)) +
+  scale_fill_gradient2(low = "#5e3c99", mid = "white", high = "#e66101", 
+                       na.value = "grey95", name = "Correlation") +
+  labs(x = NULL, y = NULL) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+Not surprisingly, high and low temperatures are highly positively correlated, while humidity and the probability of precipitation are highly negatively correlated.
+
+
+## Dual y-axes
+
+Adding a second y-axis is legal as long as the second axis is some mathematical version of the first axis (like count + percent, or fahrenheit + celsius). We can add a second axis with the `sec.axis = sec_axis()` argument in `scale_y_continuous()`^[You can add a second x-axis doing the same thing inside `scale_x_continuous()`]. The `trans` argument is a mathemtical formula you use to transform the y values, and the `.` is a placeholder for y. In this case, ggplot will use the following formula to convert fahrenheit to celsius:
+
+$$
+\text{C} = (32 - \text{F}) \times -\frac{5}{9}
+$$
+
+```{r dual-y-axis}
+# Dual y axes
+ggplot(weather_provo_2017, aes(x = date, y = temperatureHigh)) +
+  geom_line() +
+  scale_y_continuous(sec.axis = sec_axis(trans = ~ (32 - .) * -5/9,
+                                         name = "Celsius", labels = degree_format()),
+                     labels = degree_format()) +
+  labs(x = NULL, y = "Fahrenheit") +
+  theme_minimal()
+```
+
+
+## Multiple panels
+
+We can use the [patchwork](https://github.com/thomasp85/patchwork) library (not yet on CRAN: install from GitHub [following the instructions there](https://github.com/thomasp85/patchwork)) to lay out plots in a single plot. It's magic.
+
+If you save the output of a plot to an object, you can manipulate it later (with `ggsave()` or `ggplotly()`, for instance). You can also add it to another plot with patchwork.
+
+First we make two plots, one of temperature and one of humidity:
+
+```{r make-multiple-plots}
+temp_plot <- ggplot(weather_provo_2017, aes(x = date, y = temperatureHigh)) +
+  geom_line() +
+  geom_smooth(method = "loess") +
+  scale_y_continuous(sec.axis = sec_axis(trans = ~ (32 - .) * -5/9,
+                                         name = "Celsius", labels = degree_format()),
+                     labels = degree_format()) +
+  labs(x = NULL, y = "Fahrenheit") + 
+  theme_minimal()
+temp_plot
+
+humid_plot <- ggplot(weather_provo_2017, aes(x = date, y = humidity)) +
+  geom_line() +
+  geom_smooth(method = "loess") +
+  scale_y_continuous(labels = percent_format(accuracy = 1)) +
+  labs(x = NULL, y = "Humidity") +
+  theme_minimal()
+humid_plot
+```
+
+Now we can add them together:
+
+```{r multiple-plots-1}
+library(patchwork)
+temp_plot + humid_plot
+```
+
+By default it'll place them side by side in multiple columns in a single row, but we can specify layout options with `plot_layout()`. Here `ncol` specifies that the plots will go in a single column, while `heights` specifies the relative heights for the two plots (70% for the first one, 30% for the second).
+
+```{r multiple-plots-2}
+temp_plot + humid_plot +
+  plot_layout(ncol = 1, heights = c(0.7, 0.3))
+```
+
+Patchwork comes with a billion other neat plot layout options. [See the documentation at GitHub for examples.](https://github.com/thomasp85/patchwork)
+
+
+## Regression models
+
+Finally, we plotted regression output. Here, we explain variation in daily temperature with humidity, the phase of the moon, the probability of precipitation, wind speed, air pressure, and cloud cover.
+
+The first model we run is accurate, but the coefficients are a little hard to interpret. Recall that each slope is interpreted as "a one unit change in X is associated with a \<slope of X\> change in Y". The values of humidity, moon phase, and others range from 0 to 1 (i.e. they're percentages), so a 1 unit change means going from 0 to 1 (or no cloud cover at all to 100% cloud cover). To make these coefficients easier to interpret, we can multiply these columns by 100 (so that 50% cloud coverage is 50 instead of 0.5).
+
+```{r build-model-1}
+model1 <- lm(temperatureHigh ~ humidity + moonPhase + 
+               precipProbability + windSpeed + pressure + cloudCover,
+             data = weather_provo_2017)
+summary(model1)
+```
+
+We can make these adjustments directly in the formula, but we have to wrap the math with the `I()` function, otherwise R will think that "100" is the name of a variable. 
+
+```{r build-model-2}
+model2 <- lm(temperatureHigh ~ I(humidity * 100) + I(moonPhase * 100) + 
+               I(precipProbability * 100) + windSpeed + pressure + I(cloudCover * 100),
+             data = weather_provo_2017)
+summary(model2)
+```
+
+Alternatively, you can adjust the columns in the data frame you're using (this is what I prefer to do):
+
+```{r build-model-3}
+weather_provo_2017_fixed <- weather_provo_2017 %>% 
+  mutate(humidity_scaled = humidity * 100,
+         moonPhase_scaled = moonPhase * 100,
+         precipProbability_scaled = precipProbability * 100,
+         cloudCover_scaled = cloudCover * 100)
+
+model3 <- lm(temperatureHigh ~ humidity_scaled + moonPhase_scaled + 
+               precipProbability_scaled + windSpeed + pressure + cloudCover_scaled,
+             data = weather_provo_2017_fixed)
+summary(model3)
+```
+
+We can interpret these coefficients thusly:
+
+- A one percent increase in humidity is associated with a 0.899˚ decrease in a day's high temperature, on average, controlling for a host of other factors
+- A one percent increase in the percent of the moon that is visible is not significantly associated with changes in temperature (surprise!)
+- A one percent increase in the probability of precipitation is associated with a 0.136˚ increase in a day's high temperature, on average, controlling for a bunch of stuff
+- A 1 mph increase in wind speed is associated with a 3.5˚ decrease in a day's high temperature, on average, controlling for stuff
+- A 1 unit increase in barometic pressure is associated with a 1.08˚ decrease in a day's high temperature, on average, controlling for stuff
+- A one percent increase in the amount of cloud cover is associated with a 0.09˚ decrease in a day's high temperature, on average, controlling for stuff
+
+We can show these coefficients visually in a coefficient plot. Right now, the `model3` object is not in a nice plottable format. We can use the `tidy()` function in the broom library to convert model objects into manipulatable and plottable data frames. We then filter out the row for the intercept, because we don't care about that for this plot (it's just the baseline temperature when not controlling for any of the explanatory variables we included in the model)
+
+```{r tidy-model}
+library(broom)
+
+model_tidied <- tidy(model3, conf.int = TRUE) %>% 
+  filter(term != "(Intercept)")
+
+model_tidied
+```
+
+Finally, with this tidy model data, we can plot the coefficients and confidence intervals with `geom_pointrange()`. We actually use the `geom_pointrangeh()` function from the ggstance library to plot horizontal point ranges. We could have also used regular vertical point ranges with `geom_pointrange()` and then added a `coord_flip()` to rotate the plot, but then you have to remember that x and y are switched and it gets confusing.
+
+```{r plot-coefs, message=FALSE, warning=FALSE}
+library(ggstance)
+
+ggplot(model_tidied, aes(x = estimate, y = term)) +
+  geom_vline(xintercept = 0, color = "red", linetype = "dotted") +
+  geom_pointrangeh(aes(xmin = conf.low, xmax = conf.high)) +
+  labs(x = "Coefficient", y = NULL) +
+  theme_minimal()
+```
+
+## Regression predictions
+
+(We didn't cover this in class, but this kind of model visualization is incredibly powerful and important and valuable.)
+
+Remember that regression coefficients allow us to build actual mathematical formulas that predict the value of Y. The coefficients from `model3` yield the following big hairy ugly equation:
+
+$$
+\begin{aligned}
+\hat{\text{High temperature}} =& 1213.9 - 0.899 \times \text{humidity_scaled } \\
+& - 0.009 \times \text{moonPhase_scaled } + 0.136 \times \text{precipProbability_scaled } \\
+& - 3.5 \times \text{windSpeed} - 1.08 \times \text{pressure} - 0.086 \times \text{cloudCover_scaled}
+\end{aligned}
+$$
+
+If we plug in values for each of the explanatory variables, we can get the predicted value of high temperature, or $\hat{y}$. 
+
+The `augment()` function in the broom library allows us to take a data frame of explanatory variable values, plug them into the model equation, and get predictions out. For example, let's set each of the variables to some arbitrary values (50% for humidity, moon phase, chance of rain, and cloud cover; 1000 for pressure, and 1 MPH for wind speed). 
+
+```{r example-newdata}
+newdata_example <- data_frame(humidity_scaled = 50, moonPhase_scaled = 50, 
+                              precipProbability_scaled = 50, windSpeed = 1, 
+                              pressure = 1000, cloudCover_scaled = 50)
+newdata_example
+```
+
+We can then plug these values into the model with `augment()`:
+
+```{r example-predictions}
+# I use select() here because augment() returns columns for all the explanatory
+# variables, and the .fitted column with the predicted value is on the far right
+# and gets cut off
+augment(model3, newdata = newdata_example) %>% 
+  select(.fitted, .se.fit)
+```
+
+Given these weather conditions, the predicted high temperature is 83.2˚. Magic!
+
+We can follow the same pattern to show how the predicted temperature changes as specific variables change across a whole range. Here, we create a data frame of possible wind speeds and keep all the other explanatory variables at their means:
+
+```{r newdata-speed}
+newdata <- data_frame(windSpeed = seq(0, 8, 0.5),
+                      pressure = mean(weather_provo_2017_fixed$pressure),
+                      precipProbability_scaled = mean(weather_provo_2017_fixed$precipProbability_scaled),
+                      moonPhase_scaled = mean(weather_provo_2017_fixed$moonPhase_scaled),
+                      humidity_scaled = mean(weather_provo_2017_fixed$humidity_scaled),
+                      cloudCover_scaled = mean(weather_provo_2017_fixed$cloudCover_scaled))
+
+# Show the first few rows
+head(newdata)
+```
+
+If we feed this big data frame into `augment()`, we can get the predicted high temperature for each row. We can also use the `.se.fit` column to calculate the 95% confidence interval for each predicted value. We take the standard error, multiply it by -1.96 and 1.96 (or the quantile of the normal distribution at 2.5% and 97.5%), and add that value to the estimate.
+
+```{r predict-with-wind}
+predicted_values <- augment(model3, newdata = newdata) %>% 
+  mutate(conf.low = .fitted + (-1.96 * .se.fit),
+         conf.high = .fitted + (1.96 * .se.fit))
+
+predicted_values %>% 
+  select(windSpeed, .fitted, .se.fit, conf.low, conf.high)
+```
+
+Neat! Now we can plot this:
+
+```{r plot-predict-with-wind}
+ggplot(predicted_values, aes(x = windSpeed, y = .fitted)) +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high),
+              fill = "grey80", alpha = 0.5) + 
+  geom_line(size = 1) +
+  scale_y_continuous(labels = degree_format()) +
+  labs(x = "Wind speed (MPH)", y = "Predicted high temperature (F)") +
+  theme_minimal()
+```
+
+We can follow the same process to check the marginal effects of other variables, like cloud cover:
+
+```{r full-example-cloud-cover}
+# Cloud cover
+newdata_clouds <- data_frame(windSpeed = mean(weather_provo_2017_fixed$windSpeed),
+                             pressure = mean(weather_provo_2017_fixed$pressure),
+                             precipProbability_scaled = mean(weather_provo_2017_fixed$precipProbability_scaled),
+                             moonPhase_scaled = mean(weather_provo_2017_fixed$moonPhase_scaled),
+                             humidity_scaled = mean(weather_provo_2017_fixed$humidity_scaled),
+                             cloudCover_scaled = seq(0, 100, by = 1))
+
+# Calculate confidence intervals and scale cloud cover back down to 0-1 instead
+# of 0-100 so we can use scale_x_continuous(labels = percent)
+predicted_highs_clouds <- augment(model3, newdata = newdata_clouds) %>% 
+  mutate(conf.low = .fitted + (-1.96 * .se.fit),
+         conf.high = .fitted + (1.96 * .se.fit)) %>% 
+  mutate(cloudCover = cloudCover_scaled / 100)
+
+ggplot(predicted_highs_clouds, aes(x = cloudCover, y = .fitted)) +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high),
+              fill = "grey80", alpha = 0.5) + 
+  geom_line(size = 1) +
+  scale_x_continuous(labels = percent) +
+  scale_y_continuous(labels = degree_format()) +
+  labs(x = "Cloud cover", y = "Predicted high temperature (F)") +
+  theme_minimal()
+```
+
+Super magic! These plots show the predicted high temperature across a range of possible cloud cover conditions (or wind speeds in the previous example), with all other explanatory variables held at their mean values.
+
+
+# Clearest and muddiest things
+
+Go to [this form](https://goo.gl/forms/rSIbw1voOV2vWKMD2) and answer these two questions:
+
+1. What was the muddiest thing from class today? What are you still wondering about?
+2. What was the clearest thing from class today? What was the most exciting thing you learned?
+
+I'll compile the questions and send out answers after class.
+
+
+```{r class-stuff, include=FALSE, eval=FALSE}
+
+```

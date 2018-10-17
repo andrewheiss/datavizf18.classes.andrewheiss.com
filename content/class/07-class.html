@@ -1,0 +1,489 @@
+---
+title: "Uncertainty"
+date: "2018-10-09"
+citeproc: false
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+    toc_depth: 4
+editor_options: 
+  chunk_output_type: console
+---
+
+<!-- BLOGDOWN-HEAD -->
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span. { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+</style>
+<!-- /BLOGDOWN-HEAD -->
+
+<h2>Contents</h2>
+<div id="TOC">
+<ul>
+<li><a href="#slides">Slides</a></li>
+<li><a href="#live-code">Live code</a></li>
+<li><a href="#code-from-today">Code from today</a><ul>
+<li><a href="#correlation-matrix">Correlation matrix</a></li>
+<li><a href="#dual-y-axes">Dual y-axes</a></li>
+<li><a href="#multiple-panels">Multiple panels</a></li>
+<li><a href="#regression-models">Regression models</a></li>
+<li><a href="#regression-predictions">Regression predictions</a></li>
+</ul></li>
+<li><a href="#clearest-and-muddiest-things">Clearest and muddiest things</a></li>
+</ul>
+</div>
+
+<h2 id="slides">Slides</h2>
+<p><a href="/slides/MPA-635_2018-10-16.pdf">Download the slides from today’s lecture</a>.</p>
+<figure>
+<a href="/slides/MPA-635_2018-10-16.pdf"><img src="/images/slides/slides_2018-10-16.png" alt="First slide" /></a>
+</figure>
+<h2 id="live-code">Live code</h2>
+<p>Use this link to see the code that I’m actually typing:</p>
+<ul>
+<li><i class="fas fa-globe"></i> <a href="https://andhs.co/live-code" class="uri">https://andhs.co/live-code</a></li>
+</ul>
+<p>I’ve saved the R script to Dropbox, and that link goes to a live version of that file. Refresh or re-open the link as needed to copy/paste code I type up on the screen.</p>
+<h2 id="code-from-today">Code from today</h2>
+<p>In class we looked at the some of the relationships in weather characteristics in Provo <a href="https://www.google.com/maps/place/40%C2%B014&#39;55.5%22N+111%C2%B038&#39;57.2%22W/@40.248752,-111.6514047,17z/">(specifically <code>40.248752, -111.649216</code>)</a> for 2017.</p>
+<p>First, we load the libraries we’ll be using:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(scales)</a></code></pre></div>
+<p>Then we load the data. I used the <a href="https://github.com/hrbrmstr/darksky"><code>darksky</code> R package</a> to download this historical data from <a href="https://darksky.net">Dark Sky</a>, and then I <a href="https://gist.githubusercontent.com/andrewheiss/3eb9ef6186915711b44789767a1e434e/raw/be36336130546dd674332208eef5bac345bbf225/weather_provo_2017.csv">saved the CSV file online</a>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">weather_provo_raw &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://andhs.co/provoweather&quot;</span>)</a></code></pre></div>
+<p>Then we wrangle the data, or make adjustments to it so that it’s easier to use and plot. Here we extract the month and weekday of each row as new columns:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Wrangle data</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">weather_provo_<span class="dv">2017</span> &lt;-<span class="st"> </span>weather_provo_raw <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Month =</span> <span class="kw">month</span>(date, <span class="dt">label =</span> <span class="ot">TRUE</span>, <span class="dt">abbr =</span> <span class="ot">FALSE</span>),</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">         <span class="dt">Day =</span> <span class="kw">wday</span>(date, <span class="dt">label =</span> <span class="ot">TRUE</span>, <span class="dt">abbr =</span> <span class="ot">FALSE</span>))</a></code></pre></div>
+<h3 id="correlation-matrix">Correlation matrix</h3>
+<p>First we look at the correlation between a bunch of the columns in the weather data, like the probability of precipitation, the high and low temperature, humidity, and wind speed. We use <code>select()</code> to only choose those columns, and then we use <code>cor()</code> to calculate the correlation. Ordinarily, <code>cor()</code> takes two arguments—x and y—and it will return a single correlation number. If you feed a data frame into <code>cor()</code>, though, it will calculate the correlation between each pair of columns, automatically.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Correlation matrix</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">things_to_correlate &lt;-<span class="st"> </span>weather_provo_<span class="dv">2017</span> <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(precipProbability, temperatureHigh, temperatureLow, humidity, windSpeed) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw">cor</span>()</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">things_to_correlate</a></code></pre></div>
+<pre><code>##                   precipProbability temperatureHigh temperatureLow
+## precipProbability        1.00000000      -0.3348888     -0.3055170
+## temperatureHigh         -0.33488883       1.0000000      0.9535732
+## temperatureLow          -0.30551699       0.9535732      1.0000000
+## humidity                 0.63379855      -0.7788007     -0.6943848
+## windSpeed                0.08114967      -0.1533819     -0.1302794
+##                       humidity    windSpeed
+## precipProbability  0.633798555  0.081149667
+## temperatureHigh   -0.778800749 -0.153381937
+## temperatureLow    -0.694384760 -0.130279439
+## humidity           1.000000000 -0.006464211
+## windSpeed         -0.006464211  1.000000000</code></pre>
+<p>The two halves of this matrix (split along the diagonal line) are identical, so we can remove the lower triangle with this code (which will set all the cells in the lower triangle to <code>NA</code>):</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Get rid of the lower triangle</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">things_to_correlate[<span class="kw">lower.tri</span>(things_to_correlate)] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">things_to_correlate</a></code></pre></div>
+<pre><code>##                   precipProbability temperatureHigh temperatureLow
+## precipProbability                 1      -0.3348888     -0.3055170
+## temperatureHigh                  NA       1.0000000      0.9535732
+## temperatureLow                   NA              NA      1.0000000
+## humidity                         NA              NA             NA
+## windSpeed                        NA              NA             NA
+##                     humidity    windSpeed
+## precipProbability  0.6337986  0.081149667
+## temperatureHigh   -0.7788007 -0.153381937
+## temperatureLow    -0.6943848 -0.130279439
+## humidity           1.0000000 -0.006464211
+## windSpeed                 NA  1.000000000</code></pre>
+<p>Finally, in order to plot this, the data needs to be in tidy (or long) format. Here we convert the <code>things_to_correlate</code> matrix into a data frame, add a column of the row names, take all the columns and put them into a single column named <code>measure1</code>, and take all the correlation numbers and put them in a column named <code>value</code>. In the end, we make sure the measure variables are ordered by their order of appearance (otherwise they plot alphabetically and don’t make a triangle)</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">things_to_correlate_long &lt;-<span class="st"> </span>things_to_correlate <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw">rownames_to_column</span>(<span class="st">&quot;measure2&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw">gather</span>(measure1, value, <span class="op">-</span>measure2) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">nice_value =</span> <span class="kw">round</span>(value, <span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">measure1 =</span> <span class="kw">fct_inorder</span>(measure1),</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">         <span class="dt">measure2 =</span> <span class="kw">fct_inorder</span>(measure2)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(value))</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="kw">head</span>(things_to_correlate_long)</a></code></pre></div>
+<pre><code>##            measure2          measure1      value nice_value
+## 1 precipProbability precipProbability  1.0000000       1.00
+## 2 precipProbability   temperatureHigh -0.3348888      -0.33
+## 3   temperatureHigh   temperatureHigh  1.0000000       1.00
+## 4 precipProbability    temperatureLow -0.3055170      -0.31
+## 5   temperatureHigh    temperatureLow  0.9535732       0.95
+## 6    temperatureLow    temperatureLow  1.0000000       1.00</code></pre>
+<p>With the data in this shape, we can make a heatmap with <code>geom_tile()</code>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">ggplot</span>(things_to_correlate_long, <span class="kw">aes</span>(<span class="dt">x =</span> measure2, <span class="dt">y =</span> measure1, <span class="dt">fill =</span> value)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_tile</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> nice_value)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">  </span><span class="kw">scale_fill_gradient2</span>(<span class="dt">low =</span> <span class="st">&quot;#5e3c99&quot;</span>, <span class="dt">mid =</span> <span class="st">&quot;white&quot;</span>, <span class="dt">high =</span> <span class="st">&quot;#e66101&quot;</span>, </a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">                       <span class="dt">na.value =</span> <span class="st">&quot;grey95&quot;</span>, <span class="dt">name =</span> <span class="st">&quot;Correlation&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="ot">NULL</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">45</span>, <span class="dt">hjust =</span> <span class="dv">1</span>))</a></code></pre></div>
+<p><img src="/class/07-class_files/figure-html/correlation-heatmap-1.png" width="672" /></p>
+<p>Not surprisingly, high and low temperatures are highly positively correlated, while humidity and the probability of precipitation are highly negatively correlated.</p>
+<h3 id="dual-y-axes">Dual y-axes</h3>
+<p>Adding a second y-axis is legal as long as the second axis is some mathematical version of the first axis (like count + percent, or fahrenheit + celsius). We can add a second axis with the <code>sec.axis = sec_axis()</code> argument in <code>scale_y_continuous()</code><span><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"/><span class="sidenote">You can add a second x-axis doing the same thing inside <code>scale_x_continuous()</code><br />
+<br />
+</span></span>. The <code>trans</code> argument is a mathemtical formula you use to transform the y values, and the <code>.</code> is a placeholder for y. In this case, ggplot will use the following formula to convert fahrenheit to celsius:</p>
+<p><span class="math display">\[
+\text{C} = (32 - \text{F}) \times -\frac{5}{9}
+\]</span></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># Dual y axes</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw">ggplot</span>(weather_provo_<span class="dv">2017</span>, <span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> temperatureHigh)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">sec.axis =</span> <span class="kw">sec_axis</span>(<span class="dt">trans =</span> <span class="op">~</span><span class="st"> </span>(<span class="dv">32</span> <span class="op">-</span><span class="st"> </span>.) <span class="op">*</span><span class="st"> </span><span class="dv">-5</span><span class="op">/</span><span class="dv">9</span>,</a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">                                         <span class="dt">name =</span> <span class="st">&quot;Celsius&quot;</span>, <span class="dt">labels =</span> <span class="kw">degree_format</span>()),</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">                     <span class="dt">labels =</span> <span class="kw">degree_format</span>()) <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="st">&quot;Fahrenheit&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<p><img src="/class/07-class_files/figure-html/dual-y-axis-1.png" width="672" /></p>
+<h3 id="multiple-panels">Multiple panels</h3>
+<p>We can use the <a href="https://github.com/thomasp85/patchwork">patchwork</a> library (not yet on CRAN: install from GitHub <a href="https://github.com/thomasp85/patchwork">following the instructions there</a>) to lay out plots in a single plot. It’s magic.</p>
+<p>If you save the output of a plot to an object, you can manipulate it later (with <code>ggsave()</code> or <code>ggplotly()</code>, for instance). You can also add it to another plot with patchwork.</p>
+<p>First we make two plots, one of temperature and one of humidity:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">temp_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(weather_provo_<span class="dv">2017</span>, <span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> temperatureHigh)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">sec.axis =</span> <span class="kw">sec_axis</span>(<span class="dt">trans =</span> <span class="op">~</span><span class="st"> </span>(<span class="dv">32</span> <span class="op">-</span><span class="st"> </span>.) <span class="op">*</span><span class="st"> </span><span class="dv">-5</span><span class="op">/</span><span class="dv">9</span>,</a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">                                         <span class="dt">name =</span> <span class="st">&quot;Celsius&quot;</span>, <span class="dt">labels =</span> <span class="kw">degree_format</span>()),</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">                     <span class="dt">labels =</span> <span class="kw">degree_format</span>()) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="st">&quot;Fahrenheit&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="st">  </span><span class="kw">theme_minimal</span>()</a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">temp_plot</a></code></pre></div>
+<p><img src="/class/07-class_files/figure-html/make-multiple-plots-1.png" width="672" /></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">humid_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(weather_provo_<span class="dv">2017</span>, <span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> humidity)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> <span class="kw">percent_format</span>(<span class="dt">accuracy =</span> <span class="dv">1</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="st">&quot;Humidity&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="st">  </span><span class="kw">theme_minimal</span>()</a>
+<a class="sourceLine" id="cb13-7" data-line-number="7">humid_plot</a></code></pre></div>
+<p><img src="/class/07-class_files/figure-html/make-multiple-plots-2.png" width="672" /></p>
+<p>Now we can add them together:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">library</span>(patchwork)</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">temp_plot <span class="op">+</span><span class="st"> </span>humid_plot</a></code></pre></div>
+<p><img src="/class/07-class_files/figure-html/multiple-plots-1-1.png" width="672" /></p>
+<p>By default it’ll place them side by side in multiple columns in a single row, but we can specify layout options with <code>plot_layout()</code>. Here <code>ncol</code> specifies that the plots will go in a single column, while <code>heights</code> specifies the relative heights for the two plots (70% for the first one, 30% for the second).</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">temp_plot <span class="op">+</span><span class="st"> </span>humid_plot <span class="op">+</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">plot_layout</span>(<span class="dt">ncol =</span> <span class="dv">1</span>, <span class="dt">heights =</span> <span class="kw">c</span>(<span class="fl">0.7</span>, <span class="fl">0.3</span>))</a></code></pre></div>
+<p><img src="/class/07-class_files/figure-html/multiple-plots-2-1.png" width="672" /></p>
+<p>Patchwork comes with a billion other neat plot layout options. <a href="https://github.com/thomasp85/patchwork">See the documentation at GitHub for examples.</a></p>
+<h3 id="regression-models">Regression models</h3>
+<p>Finally, we plotted regression output. Here, we explain variation in daily temperature with humidity, the phase of the moon, the probability of precipitation, wind speed, air pressure, and cloud cover.</p>
+<p>The first model we run is accurate, but the coefficients are a little hard to interpret. Recall that each slope is interpreted as “a one unit change in X is associated with a &lt;slope of X&gt; change in Y”. The values of humidity, moon phase, and others range from 0 to 1 (i.e. they’re percentages), so a 1 unit change means going from 0 to 1 (or no cloud cover at all to 100% cloud cover). To make these coefficients easier to interpret, we can multiply these columns by 100 (so that 50% cloud coverage is 50 instead of 0.5).</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">model1 &lt;-<span class="st"> </span><span class="kw">lm</span>(temperatureHigh <span class="op">~</span><span class="st"> </span>humidity <span class="op">+</span><span class="st"> </span>moonPhase <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="st">               </span>precipProbability <span class="op">+</span><span class="st"> </span>windSpeed <span class="op">+</span><span class="st"> </span>pressure <span class="op">+</span><span class="st"> </span>cloudCover,</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">             <span class="dt">data =</span> weather_provo_<span class="dv">2017</span>)</a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="kw">summary</span>(model1)</a></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = temperatureHigh ~ humidity + moonPhase + precipProbability + 
+##     windSpeed + pressure + cloudCover, data = weather_provo_2017)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -24.661  -6.381   0.128   5.827  26.284 
+## 
+## Coefficients:
+##                     Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       1213.90616   89.06861  13.629  &lt; 2e-16 ***
+## humidity           -89.91189    6.40497 -14.038  &lt; 2e-16 ***
+## moonPhase           -0.88652    1.70343  -0.520  0.60308    
+## precipProbability   13.55872    4.04966   3.348  0.00090 ***
+## windSpeed           -3.50263    0.40916  -8.561 3.36e-16 ***
+## pressure            -1.08434    0.08862 -12.236  &lt; 2e-16 ***
+## cloudCover          -8.59432    3.07491  -2.795  0.00547 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 9.228 on 358 degrees of freedom
+## Multiple R-squared:  0.7759, Adjusted R-squared:  0.7722 
+## F-statistic: 206.6 on 6 and 358 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>We can make these adjustments directly in the formula, but we have to wrap the math with the <code>I()</code> function, otherwise R will think that “100” is the name of a variable.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">model2 &lt;-<span class="st"> </span><span class="kw">lm</span>(temperatureHigh <span class="op">~</span><span class="st"> </span><span class="kw">I</span>(humidity <span class="op">*</span><span class="st"> </span><span class="dv">100</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(moonPhase <span class="op">*</span><span class="st"> </span><span class="dv">100</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="st">               </span><span class="kw">I</span>(precipProbability <span class="op">*</span><span class="st"> </span><span class="dv">100</span>) <span class="op">+</span><span class="st"> </span>windSpeed <span class="op">+</span><span class="st"> </span>pressure <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(cloudCover <span class="op">*</span><span class="st"> </span><span class="dv">100</span>),</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3">             <span class="dt">data =</span> weather_provo_<span class="dv">2017</span>)</a>
+<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="kw">summary</span>(model2)</a></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = temperatureHigh ~ I(humidity * 100) + I(moonPhase * 
+##     100) + I(precipProbability * 100) + windSpeed + pressure + 
+##     I(cloudCover * 100), data = weather_provo_2017)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -24.661  -6.381   0.128   5.827  26.284 
+## 
+## Coefficients:
+##                               Estimate  Std. Error t value Pr(&gt;|t|)    
+## (Intercept)                1213.906163   89.068610  13.629  &lt; 2e-16 ***
+## I(humidity * 100)            -0.899119    0.064050 -14.038  &lt; 2e-16 ***
+## I(moonPhase * 100)           -0.008865    0.017034  -0.520  0.60308    
+## I(precipProbability * 100)    0.135587    0.040497   3.348  0.00090 ***
+## windSpeed                    -3.502630    0.409156  -8.561 3.36e-16 ***
+## pressure                     -1.084336    0.088619 -12.236  &lt; 2e-16 ***
+## I(cloudCover * 100)          -0.085943    0.030749  -2.795  0.00547 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 9.228 on 358 degrees of freedom
+## Multiple R-squared:  0.7759, Adjusted R-squared:  0.7722 
+## F-statistic: 206.6 on 6 and 358 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Alternatively, you can adjust the columns in the data frame you’re using (this is what I prefer to do):</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">weather_provo_<span class="dv">2017</span>_fixed &lt;-<span class="st"> </span>weather_provo_<span class="dv">2017</span> <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">humidity_scaled =</span> humidity <span class="op">*</span><span class="st"> </span><span class="dv">100</span>,</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3">         <span class="dt">moonPhase_scaled =</span> moonPhase <span class="op">*</span><span class="st"> </span><span class="dv">100</span>,</a>
+<a class="sourceLine" id="cb20-4" data-line-number="4">         <span class="dt">precipProbability_scaled =</span> precipProbability <span class="op">*</span><span class="st"> </span><span class="dv">100</span>,</a>
+<a class="sourceLine" id="cb20-5" data-line-number="5">         <span class="dt">cloudCover_scaled =</span> cloudCover <span class="op">*</span><span class="st"> </span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb20-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb20-7" data-line-number="7">model3 &lt;-<span class="st"> </span><span class="kw">lm</span>(temperatureHigh <span class="op">~</span><span class="st"> </span>humidity_scaled <span class="op">+</span><span class="st"> </span>moonPhase_scaled <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-8" data-line-number="8"><span class="st">               </span>precipProbability_scaled <span class="op">+</span><span class="st"> </span>windSpeed <span class="op">+</span><span class="st"> </span>pressure <span class="op">+</span><span class="st"> </span>cloudCover_scaled,</a>
+<a class="sourceLine" id="cb20-9" data-line-number="9">             <span class="dt">data =</span> weather_provo_<span class="dv">2017</span>_fixed)</a>
+<a class="sourceLine" id="cb20-10" data-line-number="10"><span class="kw">summary</span>(model3)</a></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = temperatureHigh ~ humidity_scaled + moonPhase_scaled + 
+##     precipProbability_scaled + windSpeed + pressure + cloudCover_scaled, 
+##     data = weather_provo_2017_fixed)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -24.661  -6.381   0.128   5.827  26.284 
+## 
+## Coefficients:
+##                             Estimate  Std. Error t value Pr(&gt;|t|)    
+## (Intercept)              1213.906163   89.068610  13.629  &lt; 2e-16 ***
+## humidity_scaled            -0.899119    0.064050 -14.038  &lt; 2e-16 ***
+## moonPhase_scaled           -0.008865    0.017034  -0.520  0.60308    
+## precipProbability_scaled    0.135587    0.040497   3.348  0.00090 ***
+## windSpeed                  -3.502630    0.409156  -8.561 3.36e-16 ***
+## pressure                   -1.084336    0.088619 -12.236  &lt; 2e-16 ***
+## cloudCover_scaled          -0.085943    0.030749  -2.795  0.00547 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 9.228 on 358 degrees of freedom
+## Multiple R-squared:  0.7759, Adjusted R-squared:  0.7722 
+## F-statistic: 206.6 on 6 and 358 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>We can interpret these coefficients thusly:</p>
+<ul>
+<li>A one percent increase in humidity is associated with a 0.899˚ decrease in a day’s high temperature, on average, controlling for a host of other factors</li>
+<li>A one percent increase in the percent of the moon that is visible is not significantly associated with changes in temperature (surprise!)</li>
+<li>A one percent increase in the probability of precipitation is associated with a 0.136˚ increase in a day’s high temperature, on average, controlling for a bunch of stuff</li>
+<li>A 1 mph increase in wind speed is associated with a 3.5˚ decrease in a day’s high temperature, on average, controlling for stuff</li>
+<li>A 1 unit increase in barometic pressure is associated with a 1.08˚ decrease in a day’s high temperature, on average, controlling for stuff</li>
+<li>A one percent increase in the amount of cloud cover is associated with a 0.09˚ decrease in a day’s high temperature, on average, controlling for stuff</li>
+</ul>
+<p>We can show these coefficients visually in a coefficient plot. Right now, the <code>model3</code> object is not in a nice plottable format. We can use the <code>tidy()</code> function in the broom library to convert model objects into manipulatable and plottable data frames. We then filter out the row for the intercept, because we don’t care about that for this plot (it’s just the baseline temperature when not controlling for any of the explanatory variables we included in the model)</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">library</span>(broom)</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb22-3" data-line-number="3">model_tidied &lt;-<span class="st"> </span><span class="kw">tidy</span>(model3, <span class="dt">conf.int =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb22-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(term <span class="op">!=</span><span class="st"> &quot;(Intercept)&quot;</span>)</a>
+<a class="sourceLine" id="cb22-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb22-6" data-line-number="6">model_tidied</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 7
+##   term            estimate std.error statistic  p.value conf.low conf.high
+##   &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+## 1 humidity_scaled -0.899      0.0640   -14.0   5.69e-36  -1.03     -0.773 
+## 2 moonPhase_scal… -0.00887    0.0170    -0.520 6.03e- 1  -0.0424    0.0246
+## 3 precipProbabil…  0.136      0.0405     3.35  9.00e- 4   0.0559    0.215 
+## 4 windSpeed       -3.50       0.409     -8.56  3.36e-16  -4.31     -2.70  
+## 5 pressure        -1.08       0.0886   -12.2   5.32e-29  -1.26     -0.910 
+## 6 cloudCover_sca… -0.0859     0.0307    -2.79  5.47e- 3  -0.146    -0.0255</code></pre>
+<p>Finally, with this tidy model data, we can plot the coefficients and confidence intervals with <code>geom_pointrange()</code>. We actually use the <code>geom_pointrangeh()</code> function from the ggstance library to plot horizontal point ranges. We could have also used regular vertical point ranges with <code>geom_pointrange()</code> and then added a <code>coord_flip()</code> to rotate the plot, but then you have to remember that x and y are switched and it gets confusing.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">library</span>(ggstance)</a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="kw">ggplot</span>(model_tidied, <span class="kw">aes</span>(<span class="dt">x =</span> estimate, <span class="dt">y =</span> term)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb24-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dotted&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb24-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_pointrangeh</span>(<span class="kw">aes</span>(<span class="dt">xmin =</span> conf.low, <span class="dt">xmax =</span> conf.high)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb24-6" data-line-number="6"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Coefficient&quot;</span>, <span class="dt">y =</span> <span class="ot">NULL</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb24-7" data-line-number="7"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<p><img src="/class/07-class_files/figure-html/plot-coefs-1.png" width="672" /></p>
+<h3 id="regression-predictions">Regression predictions</h3>
+<p>(We didn’t cover this in class, but this kind of model visualization is incredibly powerful and important and valuable.)</p>
+<p>Remember that regression coefficients allow us to build actual mathematical formulas that predict the value of Y. The coefficients from <code>model3</code> yield the following big hairy ugly equation:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\text{High temperature}} =&amp; 1213.9 - 0.899 \times \text{humidity_scaled } \\
+&amp; - 0.009 \times \text{moonPhase_scaled } + 0.136 \times \text{precipProbability_scaled } \\
+&amp; - 3.5 \times \text{windSpeed} - 1.08 \times \text{pressure} - 0.086 \times \text{cloudCover_scaled}
+\end{aligned}
+\]</span></p>
+<p>If we plug in values for each of the explanatory variables, we can get the predicted value of high temperature, or <span class="math inline">\(\hat{y}\)</span>.</p>
+<p>The <code>augment()</code> function in the broom library allows us to take a data frame of explanatory variable values, plug them into the model equation, and get predictions out. For example, let’s set each of the variables to some arbitrary values (50% for humidity, moon phase, chance of rain, and cloud cover; 1000 for pressure, and 1 MPH for wind speed).</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">newdata_example &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">humidity_scaled =</span> <span class="dv">50</span>, <span class="dt">moonPhase_scaled =</span> <span class="dv">50</span>, </a>
+<a class="sourceLine" id="cb25-2" data-line-number="2">                              <span class="dt">precipProbability_scaled =</span> <span class="dv">50</span>, <span class="dt">windSpeed =</span> <span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb25-3" data-line-number="3">                              <span class="dt">pressure =</span> <span class="dv">1000</span>, <span class="dt">cloudCover_scaled =</span> <span class="dv">50</span>)</a>
+<a class="sourceLine" id="cb25-4" data-line-number="4">newdata_example</a></code></pre></div>
+<pre><code>## # A tibble: 1 x 6
+##   humidity_scaled moonPhase_scaled precipProbabili… windSpeed pressure
+##             &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1              50               50               50         1     1000
+## # ... with 1 more variable: cloudCover_scaled &lt;dbl&gt;</code></pre>
+<p>We can then plug these values into the model with <code>augment()</code>:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="co"># I use select() here because augment() returns columns for all the explanatory</span></a>
+<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="co"># variables, and the .fitted column with the predicted value is on the far right</span></a>
+<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="co"># and gets cut off</span></a>
+<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="kw">augment</span>(model3, <span class="dt">newdata =</span> newdata_example) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="st">  </span><span class="kw">select</span>(.fitted, .se.fit)</a></code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##   .fitted .se.fit
+## *   &lt;dbl&gt;   &lt;dbl&gt;
+## 1    83.2    1.69</code></pre>
+<p>Given these weather conditions, the predicted high temperature is 83.2˚. Magic!</p>
+<p>We can follow the same pattern to show how the predicted temperature changes as specific variables change across a whole range. Here, we create a data frame of possible wind speeds and keep all the other explanatory variables at their means:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">newdata &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">windSpeed =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">8</span>, <span class="fl">0.5</span>),</a>
+<a class="sourceLine" id="cb29-2" data-line-number="2">                      <span class="dt">pressure =</span> <span class="kw">mean</span>(weather_provo_<span class="dv">2017</span>_fixed<span class="op">$</span>pressure),</a>
+<a class="sourceLine" id="cb29-3" data-line-number="3">                      <span class="dt">precipProbability_scaled =</span> <span class="kw">mean</span>(weather_provo_<span class="dv">2017</span>_fixed<span class="op">$</span>precipProbability_scaled),</a>
+<a class="sourceLine" id="cb29-4" data-line-number="4">                      <span class="dt">moonPhase_scaled =</span> <span class="kw">mean</span>(weather_provo_<span class="dv">2017</span>_fixed<span class="op">$</span>moonPhase_scaled),</a>
+<a class="sourceLine" id="cb29-5" data-line-number="5">                      <span class="dt">humidity_scaled =</span> <span class="kw">mean</span>(weather_provo_<span class="dv">2017</span>_fixed<span class="op">$</span>humidity_scaled),</a>
+<a class="sourceLine" id="cb29-6" data-line-number="6">                      <span class="dt">cloudCover_scaled =</span> <span class="kw">mean</span>(weather_provo_<span class="dv">2017</span>_fixed<span class="op">$</span>cloudCover_scaled))</a>
+<a class="sourceLine" id="cb29-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb29-8" data-line-number="8"><span class="co"># Show the first few rows</span></a>
+<a class="sourceLine" id="cb29-9" data-line-number="9"><span class="kw">head</span>(newdata)</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##   windSpeed pressure precipProbabili… moonPhase_scaled humidity_scaled
+##       &lt;dbl&gt;    &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;
+## 1       0      1016.             10.7             48.8            45.7
+## 2       0.5    1016.             10.7             48.8            45.7
+## 3       1      1016.             10.7             48.8            45.7
+## 4       1.5    1016.             10.7             48.8            45.7
+## 5       2      1016.             10.7             48.8            45.7
+## 6       2.5    1016.             10.7             48.8            45.7
+## # ... with 1 more variable: cloudCover_scaled &lt;dbl&gt;</code></pre>
+<p>If we feed this big data frame into <code>augment()</code>, we can get the predicted high temperature for each row. We can also use the <code>.se.fit</code> column to calculate the 95% confidence interval for each predicted value. We take the standard error, multiply it by -1.96 and 1.96 (or the quantile of the normal distribution at 2.5% and 97.5%), and add that value to the estimate.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">predicted_values &lt;-<span class="st"> </span><span class="kw">augment</span>(model3, <span class="dt">newdata =</span> newdata) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">conf.low =</span> .fitted <span class="op">+</span><span class="st"> </span>(<span class="op">-</span><span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>.se.fit),</a>
+<a class="sourceLine" id="cb31-3" data-line-number="3">         <span class="dt">conf.high =</span> .fitted <span class="op">+</span><span class="st"> </span>(<span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>.se.fit))</a>
+<a class="sourceLine" id="cb31-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb31-5" data-line-number="5">predicted_values <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(windSpeed, .fitted, .se.fit, conf.low, conf.high)</a></code></pre></div>
+<pre><code>## # A tibble: 17 x 5
+##    windSpeed .fitted .se.fit conf.low conf.high
+##        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+##  1       0      68.9   0.829     67.2      70.5
+##  2       0.5    67.1   0.673     65.8      68.4
+##  3       1      65.4   0.551     64.3      66.4
+##  4       1.5    63.6   0.487     62.6      64.6
+##  5       2      61.9   0.504     60.9      62.8
+##  6       2.5    60.1   0.596     58.9      61.3
+##  7       3      58.3   0.735     56.9      59.8
+##  8       3.5    56.6   0.899     54.8      58.4
+##  9       4      54.8   1.08      52.7      57.0
+## 10       4.5    53.1   1.26      50.6      55.6
+## 11       5      51.3   1.45      48.5      54.2
+## 12       5.5    49.6   1.65      46.4      52.8
+## 13       6      47.8   1.85      44.2      51.5
+## 14       6.5    46.1   2.04      42.1      50.1
+## 15       7      44.3   2.24      39.9      48.7
+## 16       7.5    42.6   2.44      37.8      47.4
+## 17       8      40.8   2.64      35.7      46.0</code></pre>
+<p>Neat! Now we can plot this:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw">ggplot</span>(predicted_values, <span class="kw">aes</span>(<span class="dt">x =</span> windSpeed, <span class="dt">y =</span> .fitted)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> conf.low, <span class="dt">ymax =</span> conf.high),</a>
+<a class="sourceLine" id="cb33-3" data-line-number="3">              <span class="dt">fill =</span> <span class="st">&quot;grey80&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> <span class="kw">degree_format</span>()) <span class="op">+</span></a>
+<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Wind speed (MPH)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Predicted high temperature (F)&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb33-7" data-line-number="7"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<p><img src="/class/07-class_files/figure-html/plot-predict-with-wind-1.png" width="672" /></p>
+<p>We can follow the same process to check the marginal effects of other variables, like cloud cover:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="co"># Cloud cover</span></a>
+<a class="sourceLine" id="cb34-2" data-line-number="2">newdata_clouds &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">windSpeed =</span> <span class="kw">mean</span>(weather_provo_<span class="dv">2017</span>_fixed<span class="op">$</span>windSpeed),</a>
+<a class="sourceLine" id="cb34-3" data-line-number="3">                             <span class="dt">pressure =</span> <span class="kw">mean</span>(weather_provo_<span class="dv">2017</span>_fixed<span class="op">$</span>pressure),</a>
+<a class="sourceLine" id="cb34-4" data-line-number="4">                             <span class="dt">precipProbability_scaled =</span> <span class="kw">mean</span>(weather_provo_<span class="dv">2017</span>_fixed<span class="op">$</span>precipProbability_scaled),</a>
+<a class="sourceLine" id="cb34-5" data-line-number="5">                             <span class="dt">moonPhase_scaled =</span> <span class="kw">mean</span>(weather_provo_<span class="dv">2017</span>_fixed<span class="op">$</span>moonPhase_scaled),</a>
+<a class="sourceLine" id="cb34-6" data-line-number="6">                             <span class="dt">humidity_scaled =</span> <span class="kw">mean</span>(weather_provo_<span class="dv">2017</span>_fixed<span class="op">$</span>humidity_scaled),</a>
+<a class="sourceLine" id="cb34-7" data-line-number="7">                             <span class="dt">cloudCover_scaled =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="dt">by =</span> <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb34-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb34-9" data-line-number="9"><span class="co"># Calculate confidence intervals and scale cloud cover back down to 0-1 instead</span></a>
+<a class="sourceLine" id="cb34-10" data-line-number="10"><span class="co"># of 0-100 so we can use scale_x_continuous(labels = percent)</span></a>
+<a class="sourceLine" id="cb34-11" data-line-number="11">predicted_highs_clouds &lt;-<span class="st"> </span><span class="kw">augment</span>(model3, <span class="dt">newdata =</span> newdata_clouds) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb34-12" data-line-number="12"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">conf.low =</span> .fitted <span class="op">+</span><span class="st"> </span>(<span class="op">-</span><span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>.se.fit),</a>
+<a class="sourceLine" id="cb34-13" data-line-number="13">         <span class="dt">conf.high =</span> .fitted <span class="op">+</span><span class="st"> </span>(<span class="fl">1.96</span> <span class="op">*</span><span class="st"> </span>.se.fit)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb34-14" data-line-number="14"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cloudCover =</span> cloudCover_scaled <span class="op">/</span><span class="st"> </span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb34-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb34-16" data-line-number="16"><span class="kw">ggplot</span>(predicted_highs_clouds, <span class="kw">aes</span>(<span class="dt">x =</span> cloudCover, <span class="dt">y =</span> .fitted)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb34-17" data-line-number="17"><span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> conf.low, <span class="dt">ymax =</span> conf.high),</a>
+<a class="sourceLine" id="cb34-18" data-line-number="18">              <span class="dt">fill =</span> <span class="st">&quot;grey80&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb34-19" data-line-number="19"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb34-20" data-line-number="20"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">labels =</span> percent) <span class="op">+</span></a>
+<a class="sourceLine" id="cb34-21" data-line-number="21"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> <span class="kw">degree_format</span>()) <span class="op">+</span></a>
+<a class="sourceLine" id="cb34-22" data-line-number="22"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Cloud cover&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Predicted high temperature (F)&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb34-23" data-line-number="23"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<p><img src="/class/07-class_files/figure-html/full-example-cloud-cover-1.png" width="672" /></p>
+<p>Super magic! These plots show the predicted high temperature across a range of possible cloud cover conditions (or wind speeds in the previous example), with all other explanatory variables held at their mean values.</p>
+<h2 id="clearest-and-muddiest-things">Clearest and muddiest things</h2>
+<p>Go to <a href="https://goo.gl/forms/rSIbw1voOV2vWKMD2">this form</a> and answer these two questions:</p>
+<ol style="list-style-type: decimal">
+<li>What was the muddiest thing from class today? What are you still wondering about?</li>
+<li>What was the clearest thing from class today? What was the most exciting thing you learned?</li>
+</ol>
+<p>I’ll compile the questions and send out answers after class.</p>
