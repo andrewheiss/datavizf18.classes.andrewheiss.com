@@ -17,4 +17,5 @@ csl: ../../static/bib/chicago-fullnote-bibliography-no-bib.csl
 
 # Questions to reflect on
 
-- Questions TBD
+- These readings all show a ton of new ways to present comparisons. Which ones are your favorite? Which ones didn't quite click with you? In what situations are some more appropriate than others?
+- Do bullet graphs break the rule against double y-axes? Why or why not?
