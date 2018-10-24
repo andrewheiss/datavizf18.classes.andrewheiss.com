@@ -1,0 +1,345 @@
+---
+title: "Comparisons"
+date: "2018-10-23"
+citeproc: false
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+    toc_depth: 4
+editor_options: 
+  chunk_output_type: console
+---
+
+<!-- BLOGDOWN-HEAD -->
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span. { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+</style>
+<!-- /BLOGDOWN-HEAD -->
+
+<h2>Contents</h2>
+<div id="TOC">
+<ul>
+<li><a href="#slides">Slides</a></li>
+<li><a href="#code-to-run-today">Code to run today</a></li>
+<li><a href="#code-from-today">Code from today</a><ul>
+<li><a href="#load-libraries">Load libraries</a></li>
+<li><a href="#get-and-clean-data">Get and clean data</a><ul>
+<li><a href="#world-bank-development-indicators">World Bank Development Indicators</a></li>
+<li><a href="#democracy-scores">Democracy scores</a></li>
+</ul></li>
+<li><a href="#small-multiples">Small multiples</a></li>
+<li><a href="#slopegraphs">Slopegraphs</a></li>
+<li><a href="#sparklines">Sparklines</a></li>
+<li><a href="#lollipops">Lollipops</a></li>
+<li><a href="#bullet-charts">Bullet charts</a></li>
+</ul></li>
+<li><a href="#clearest-and-muddiest-things">Clearest and muddiest things</a></li>
+</ul>
+</div>
+
+<h2 id="slides">Slides</h2>
+<p><a href="/slides/MPA-635_2018-10-23.pdf">Download the slides from today’s lecture</a>.</p>
+<figure>
+<a href="/slides/MPA-635_2018-10-23.pdf"><img src="/images/slides/slides_2018-10-23.png" alt="First slide" /></a>
+</figure>
+<h2 id="code-to-run-today">Code to run today</h2>
+<p>Download the following files:</p>
+<ul>
+<li><a href="/files/comparisons.Rmd"><i class="fab fa-r-project"></i> <code>comparisons.Rmd</code></a></li>
+<li><a href="/data/dem_scores.csv"><i class="fas fa-table"></i> <code>dem_scores.csv</code></a></li>
+</ul>
+<h2 id="code-from-today">Code from today</h2>
+<h3 id="load-libraries">Load libraries</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(WDI)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(scales)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">library</span>(ggrepel)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">library</span>(ggstance)</a></code></pre></div>
+<h3 id="get-and-clean-data">Get and clean data</h3>
+<h4 id="world-bank-development-indicators">World Bank Development Indicators</h4>
+<p>The World Bank has a ton of country-level data at <a href="https://data.worldbank.org/">data.worldbank.org</a>. We can use a package named <code>WDI</code> to access their servers and download the data directly into R.</p>
+<p>First, I create a list of indicators named <code>indicators</code>. The cryptic names from from the URLs of the different pages at the World Bank’s website. For instance, data for “school enrollment, primary” is available at <a href="https://data.worldbank.org/indicator/SE.PRM.NENR" class="uri">https://data.worldbank.org/indicator/SE.PRM.NENR</a> (I found that page by searching for primary school enrollment at data.worldbank.org). That last part of the URL (SE.PRM.NENR) is the magic ID code for the variable.</p>
+<p>I then use the <code>WDI()</code> function to get those indicators from the World Bank. I want data from 1995-2015, so I set the start and end years accordingly. The <code>extra=TRUE</code> argument means that it’ll also include other helpful details like region, aid status, etc. Without it, it would only download the indicators we listed.</p>
+<p>Then I clean up the data a little, filtering out rows that aren’t actually countries and renaming the ugly World Bank code columns to actual words.</p>
+<p>Finally, I save this cleaned data as a CSV file so I don’t have to redownload this all every time I knit the document.</p>
+<p>IMPORTANTLY, notice that there’s a chunk option on this chunk that says <code>eval=FALSE</code>. That means that R will <em>not</em> run this code when you knit it, but it will still include it in the document. That’s great. We have to run it here in RStudio to get the raw data and clean it up and write the CSV, but then we can just use the clean CSV file that we saved.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">indicators &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;SP.DYN.LE00.IN&quot;</span>,  <span class="co"># Life expectancy</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">                <span class="st">&quot;EG.ELC.ACCS.ZS&quot;</span>,  <span class="co"># Access to electricity</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">                <span class="st">&quot;SH.DYN.AIDS.ZS&quot;</span>,  <span class="co"># HIV prevalence</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">                <span class="st">&quot;EN.ATM.CO2E.PC&quot;</span>,  <span class="co"># CO2 emissions</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">                <span class="st">&quot;SI.POV.DDAY&quot;</span>,     <span class="co"># Extreme poverty (% earning less than $2/day)</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">                <span class="st">&quot;NY.GDP.PCAP.KD&quot;</span>)  <span class="co"># GDP per capita</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">wdi_raw &lt;-<span class="st"> </span><span class="kw">WDI</span>(<span class="dt">country =</span> <span class="st">&quot;all&quot;</span>, indicators, <span class="dt">extra =</span> <span class="ot">TRUE</span>, <span class="dt">start =</span> <span class="dv">1995</span>, <span class="dt">end =</span> <span class="dv">2015</span>)</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">wdi_clean &lt;-<span class="st"> </span>wdi_raw <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="st">  </span><span class="kw">filter</span>(income <span class="op">!=</span><span class="st"> &quot;Aggregates&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="st">  </span><span class="kw">select</span>(iso2c, country, year, <span class="dt">life_expectancy =</span> SP.DYN.LE00.IN, </a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">         <span class="dt">access_to_electricity =</span> EG.ELC.ACCS.ZS, <span class="dt">hiv_prevalence =</span> SH.DYN.AIDS.ZS,</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">         <span class="dt">co2_emissions =</span> EN.ATM.CO2E.PC, <span class="dt">pct_extreme_poverty =</span> SI.POV.DDAY,</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">         <span class="dt">gdp_per_cap =</span> NY.GDP.PCAP.KD, region, income)</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co"># We can save this as a CSV so we don&#39;t have to redownload it from the World</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co"># Bank every time we run this</span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="kw">write_csv</span>(wdi_clean, <span class="st">&quot;data/wdi_clean.csv&quot;</span>)</a></code></pre></div>
+<p>Because we didn’t evaluate the chunk above, we need to read the CSV file. If you want to be super fancy, you can set the chunk option <code>include=FALSE</code>, which will run this chunk but hide it from the output. That way, people think that you’re runing the code above (that uses <code>WDI()</code>), when really you’re just reading it from a CSV file. Tricky.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Then we can just do this in the future</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">wdi_clean &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/wdi_clean.csv&quot;</span>)</a></code></pre></div>
+<h4 id="democracy-scores">Democracy scores</h4>
+<p>We’ll also load democracy scores from the Polity IV project. This is a generally accepted way of measuring a country’s regime type. The scores range from -10 to 10 and fit within three categories:</p>
+<ul>
+<li>Autocracy: -10 to -6</li>
+<li>Anocracy: -5 to 5</li>
+<li>Democracy: 6 to 10</li>
+</ul>
+<p>The scores are not tidy in this data, since there’s a column for each year, so we use <code>gather()</code> to make this dataset long.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">dem_scores_raw &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/dem_scores.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">dem_scores &lt;-<span class="st"> </span>dem_scores_raw <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw">gather</span>(year, score, <span class="op">-</span>country)</a></code></pre></div>
+<h3 id="small-multiples">Small multiples</h3>
+<p>Let’s look at trends in life expectancy in every country in the world!</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Only look at countries that have complete life expectancy data</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">life_expectancy &lt;-<span class="st"> </span>wdi_clean <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="co"># Temporary filtering so we can work with just 6 countries at first</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">  </span><span class="co"># filter(country %in% c(&quot;Argentina&quot;, &quot;Bolivia&quot;, &quot;Brazil&quot;, &quot;Belize&quot;, &quot;Canada&quot;, &quot;Chile&quot;)) %&gt;% </span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">  </span><span class="co"># Look at each country on its own and remove countries where any of the life</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="st">  </span><span class="co"># expectancy values are missing</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="st">  </span><span class="kw">group_by</span>(country) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">any</span>(<span class="kw">is.na</span>(life_expectancy)))</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co"># See how many countries we&#39;re left with</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">life_expectancy <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(country)</a></code></pre></div>
+<pre><code>## # A tibble: 195 x 1
+## # Groups:   country [195]
+##    country             
+##    &lt;chr&gt;               
+##  1 United Arab Emirates
+##  2 Afghanistan         
+##  3 Antigua and Barbuda 
+##  4 Albania             
+##  5 Armenia             
+##  6 Angola              
+##  7 Argentina           
+##  8 Austria             
+##  9 Australia           
+## 10 Aruba               
+## # ... with 185 more rows</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Plot this stuff</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">big_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(life_expectancy, <span class="kw">aes</span>(<span class="dt">x =</span> year, <span class="dt">y =</span> life_expectancy, <span class="dt">color =</span> region)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">  </span><span class="kw">theme_void</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="ot">NULL</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">strip.text =</span> <span class="kw">element_text</span>(<span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>),</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">        <span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>country, <span class="dt">scales =</span> <span class="st">&quot;free_y&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># Don&#39;t actually run big_plot here in RStudio because the plot panel is too</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co"># small to handle all these countries. Instead, we can save the plot directly as</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co"># a PDF or PNG with ggsave with giant dimensions</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="kw">ggsave</span>(big_plot, <span class="dt">filename =</span> <span class="st">&quot;output/giant.pdf&quot;</span>,</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">       <span class="dt">width =</span> <span class="dv">20</span>, <span class="dt">height =</span> <span class="dv">15</span>, <span class="dt">units =</span> <span class="st">&quot;in&quot;</span>)</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="kw">ggsave</span>(big_plot, <span class="dt">filename =</span> <span class="st">&quot;output/giant.png&quot;</span>,</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">       <span class="dt">width =</span> <span class="dv">20</span>, <span class="dt">height =</span> <span class="dv">15</span>, <span class="dt">units =</span> <span class="st">&quot;in&quot;</span>)</a></code></pre></div>
+<figure class="fullwidth">
+<div class="figure">
+<img src="/images/class/giant.png" alt="Small multiples" />
+<p class="caption">Small multiples</p>
+</div>
+</figure>
+<h3 id="slopegraphs">Slopegraphs</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># Simple slopegraph with only a few countries</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">gdp_south_asia &lt;-<span class="st"> </span>wdi_clean <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(region <span class="op">==</span><span class="st"> &quot;South Asia&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(year <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1995</span>, <span class="dv">2015</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span><span class="kw">group_by</span>(country) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">any</span>(<span class="kw">is.na</span>(gdp_per_cap))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">year =</span> <span class="kw">factor</span>(year)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">label_first =</span> <span class="kw">ifelse</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">1995</span>, <span class="kw">paste0</span>(country, <span class="st">&quot; (&quot;</span>, <span class="kw">dollar</span>(<span class="kw">round</span>(gdp_per_cap)), <span class="st">&quot;)&quot;</span>), <span class="ot">NA</span>),</a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">         <span class="dt">label_last =</span> <span class="kw">ifelse</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">2015</span>, <span class="kw">dollar</span>(<span class="kw">round</span>(gdp_per_cap, <span class="dv">0</span>)), <span class="ot">NA</span>))</a>
+<a class="sourceLine" id="cb9-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co"># seed = 1234 (or any number) ensures that the random positioning is the same</span></a>
+<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co"># every time this plot is made</span></a>
+<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="kw">ggplot</span>(gdp_south_asia, <span class="kw">aes</span>(<span class="dt">x =</span> year, <span class="dt">y =</span> gdp_per_cap, <span class="dt">group =</span> country, <span class="dt">color =</span> country)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size =</span> <span class="fl">1.5</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="st">  </span><span class="kw">geom_text_repel</span>(<span class="kw">aes</span>(<span class="dt">label =</span> label_first), <span class="dt">direction =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">nudge_x =</span> <span class="dv">-1</span>, <span class="dt">seed =</span> <span class="dv">1234</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-17" data-line-number="17"><span class="st">  </span><span class="kw">geom_text_repel</span>(<span class="kw">aes</span>(<span class="dt">label =</span> label_last), <span class="dt">direction =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">nudge_x =</span> <span class="dv">1</span>, <span class="dt">seed =</span> <span class="dv">1234</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="st">  </span><span class="kw">theme_void</span>()</a></code></pre></div>
+<p><img src="/class/08-class_files/figure-html/slopegraph-south-asia-1.png" width="672" /></p>
+<p>EVERYTHING. This looks so artsy.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">gdp_everyone &lt;-<span class="st"> </span>wdi_clean <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(year <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1995</span>, <span class="dv">2015</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">  </span><span class="kw">group_by</span>(country) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">any</span>(<span class="kw">is.na</span>(gdp_per_cap))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">year =</span> <span class="kw">factor</span>(year))</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="kw">ggplot</span>(gdp_everyone, <span class="kw">aes</span>(<span class="dt">x =</span> year, <span class="dt">y =</span> gdp_per_cap, <span class="dt">group =</span> country)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size =</span> <span class="fl">0.5</span>, <span class="dt">alpha =</span> <span class="fl">0.25</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="st">  </span><span class="kw">theme_void</span>()</a></code></pre></div>
+<p><img src="/class/08-class_files/figure-html/slopegraph-everything-1.png" width="672" /></p>
+<p>We can wrangle the data a little to determine which countries had the biggest change in GDP over the two decades.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># What country had that gigantic drop? Or rather, which countries had any drop?</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">gdp_everyone_changes &lt;-<span class="st"> </span>gdp_everyone <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw">select</span>(country, year, gdp_per_cap) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw">spread</span>(year, gdp_per_cap) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">change =</span> <span class="st">`</span><span class="dt">2015</span><span class="st">`</span> <span class="op">-</span><span class="st"> `</span><span class="dt">1995</span><span class="st">`</span>,</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">         <span class="dt">pct_change =</span> (<span class="st">`</span><span class="dt">2015</span><span class="st">`</span> <span class="op">-</span><span class="st"> `</span><span class="dt">1995</span><span class="st">`</span>) <span class="op">/</span><span class="st"> `</span><span class="dt">1995</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="st">  </span><span class="kw">arrange</span>(change)</a></code></pre></div>
+<p>Democracy scores!</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># Democracy scores</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">ggplot</span>(dem_scores, <span class="kw">aes</span>(<span class="dt">x =</span> year, <span class="dt">y =</span> score, <span class="dt">group =</span> country)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">alpha =</span> <span class="fl">0.1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">-5</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">5</span>, <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<p><img src="/class/08-class_files/figure-html/slopegraph-dem-scores-1.png" width="672" /></p>
+<h3 id="sparklines">Sparklines</h3>
+<p>Sparklines are just line charts (or bar charts) that are really really small.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">lithuania_democracy &lt;-<span class="st"> </span>dem_scores <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(country <span class="op">==</span><span class="st"> &quot;Lithuania&quot;</span>)</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">plot_lith &lt;-<span class="st"> </span><span class="kw">ggplot</span>(lithuania_democracy, <span class="kw">aes</span>(<span class="dt">x =</span> year, <span class="dt">y =</span> score, <span class="dt">group =</span> country)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="st">  </span><span class="kw">theme_void</span>()</a>
+<a class="sourceLine" id="cb13-7" data-line-number="7">plot_lith</a></code></pre></div>
+<p><img src="/class/08-class_files/figure-html/lithuania-tiny-1.png" width="96" /></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">bolivia_democracy &lt;-<span class="st"> </span>dem_scores <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(country <span class="op">==</span><span class="st"> &quot;Bolivia&quot;</span>)</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">plot_bolivia &lt;-<span class="st"> </span><span class="kw">ggplot</span>(bolivia_democracy, <span class="kw">aes</span>(<span class="dt">x =</span> year, <span class="dt">y =</span> score, <span class="dt">group =</span> country)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="st">  </span><span class="kw">theme_void</span>()</a>
+<a class="sourceLine" id="cb14-7" data-line-number="7">plot_bolivia</a></code></pre></div>
+<p><img src="/class/08-class_files/figure-html/bolivia-tidy-1.png" width="96" /></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">ggsave</span>(plot_lith, <span class="dt">filename =</span> <span class="st">&quot;output/lith_tiny.pdf&quot;</span>,</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">       <span class="dt">width =</span> <span class="dv">1</span>, <span class="dt">height =</span> <span class="fl">0.15</span>, <span class="dt">units =</span> <span class="st">&quot;in&quot;</span>)</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="kw">ggsave</span>(plot_lith, <span class="dt">filename =</span> <span class="st">&quot;output/lith_tiny.png&quot;</span>,</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">       <span class="dt">width =</span> <span class="dv">1</span>, <span class="dt">height =</span> <span class="fl">0.15</span>, <span class="dt">units =</span> <span class="st">&quot;in&quot;</span>)</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="kw">ggsave</span>(plot_bolivia, <span class="dt">filename =</span> <span class="st">&quot;output/bolivia_tiny.pdf&quot;</span>,</a>
+<a class="sourceLine" id="cb15-7" data-line-number="7">       <span class="dt">width =</span> <span class="dv">1</span>, <span class="dt">height =</span> <span class="fl">0.15</span>, <span class="dt">units =</span> <span class="st">&quot;in&quot;</span>)</a>
+<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="kw">ggsave</span>(plot_bolivia, <span class="dt">filename =</span> <span class="st">&quot;output/bolivia_tiny.png&quot;</span>,</a>
+<a class="sourceLine" id="cb15-9" data-line-number="9">       <span class="dt">width =</span> <span class="dv">1</span>, <span class="dt">height =</span> <span class="fl">0.15</span>, <span class="dt">units =</span> <span class="st">&quot;in&quot;</span>)</a></code></pre></div>
+<p>Once we export that as a PDF or PNG, we can use it in our document somewhere.</p>
+<h3 id="lollipops">Lollipops</h3>
+<p>You’ve seen these already in your Lord of the Rings problem set, but here it is again. These are basically bar graphs, but with <code>geom_pointrange()</code>. We set <code>ymin</code> to 0 and <code>ymax</code> to the actual value in order to get the stem of the lollipop.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># Biggest percent changes in GDP per capita between 1995 and 2015</span></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">gdp_everyone_changes_top10 &lt;-<span class="st"> </span>gdp_everyone_changes <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(pct_change)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># This chooses rows 1 through 10</span></a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">country =</span> <span class="kw">fct_inorder</span>(country))  <span class="co"># This makes sure the countries are sorted</span></a>
+<a class="sourceLine" id="cb16-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="kw">ggplot</span>(gdp_everyone_changes_top10, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_rev</span>(country), <span class="dt">y =</span> pct_change)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_pointrange</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> <span class="dv">0</span>, <span class="dt">ymax =</span> pct_change)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb16-9" data-line-number="9"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb16-10" data-line-number="10"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<p><img src="/class/08-class_files/figure-html/plot-lollipop-1.png" width="672" /></p>
+<p>Alternatively, instead of using <code>geom_pointrange()</code> and <code>coord_flip()</code>, you can use <code>geom_pointrangeh()</code> from <code>library(ggstance)</code>, which makes it so you don’t have to remember that the x and y axis are flipped</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">ggplot</span>(gdp_everyone_changes_top10, <span class="kw">aes</span>(<span class="dt">y =</span> <span class="kw">fct_rev</span>(country), <span class="dt">x =</span> pct_change)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_pointrangeh</span>(<span class="kw">aes</span>(<span class="dt">xmin =</span> <span class="dv">0</span>, <span class="dt">xmax =</span> pct_change)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<p><img src="/class/08-class_files/figure-html/plot-lollipop-horizontal-1.png" width="672" /></p>
+<h3 id="bullet-charts">Bullet charts</h3>
+<p>Finally, we can use ggplot to make those goofy bullet chart things.</p>
+<p>We can type the data in Excel and save as a CSV, or we can make a small data frame directly here in R with <code>tribble()</code>, which lets us define a data frame by row (hence the “r” in “tibble” here)</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">performance &lt;-<span class="st"> </span><span class="kw">tribble</span>(</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">  <span class="op">~</span>region, <span class="op">~</span>bad, <span class="op">~</span>satisfactory, <span class="op">~</span>good, <span class="op">~</span>target, <span class="op">~</span>value,</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3">  <span class="st">&quot;North&quot;</span>, <span class="fl">33.3</span>, <span class="fl">66.6</span>,          <span class="dv">100</span>,   <span class="dv">75</span>,      <span class="dv">70</span>,</a>
+<a class="sourceLine" id="cb18-4" data-line-number="4">  <span class="st">&quot;South&quot;</span>, <span class="fl">33.3</span>, <span class="fl">66.6</span>,          <span class="dv">100</span>,   <span class="dv">65</span>,      <span class="dv">72</span>,</a>
+<a class="sourceLine" id="cb18-5" data-line-number="5">  <span class="st">&quot;East&quot;</span>,  <span class="fl">33.3</span>, <span class="fl">66.6</span>,          <span class="dv">100</span>,   <span class="dv">70</span>,      <span class="dv">78</span>,</a>
+<a class="sourceLine" id="cb18-6" data-line-number="6">  <span class="st">&quot;West&quot;</span>,  <span class="fl">33.3</span>, <span class="fl">66.6</span>,          <span class="dv">100</span>,   <span class="dv">65</span>,      <span class="dv">71</span>,</a>
+<a class="sourceLine" id="cb18-7" data-line-number="7">) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">region =</span> <span class="kw">fct_inorder</span>(region))</a>
+<a class="sourceLine" id="cb18-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb18-10" data-line-number="10"><span class="co"># Really all we do to get a bullet graph is overlay a bunch of columns</span></a>
+<a class="sourceLine" id="cb18-11" data-line-number="11"><span class="kw">ggplot</span>(performance, <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_rev</span>(region))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-12" data-line-number="12"><span class="st">  </span><span class="kw">geom_col</span>(<span class="kw">aes</span>(<span class="dt">y =</span> good), <span class="dt">fill =</span> <span class="st">&quot;#2c7fb8&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-13" data-line-number="13"><span class="st">  </span><span class="kw">geom_col</span>(<span class="kw">aes</span>(<span class="dt">y =</span> satisfactory), <span class="dt">fill =</span> <span class="st">&quot;#7fcdbb&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-14" data-line-number="14"><span class="st">  </span><span class="kw">geom_col</span>(<span class="kw">aes</span>(<span class="dt">y =</span> bad), <span class="dt">fill =</span> <span class="st">&quot;#edf8b1&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-15" data-line-number="15"><span class="st">  </span><span class="kw">geom_col</span>(<span class="kw">aes</span>(<span class="dt">y =</span> value), <span class="dt">fill =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">width =</span> <span class="fl">0.4</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-16" data-line-number="16"><span class="st">  </span><span class="kw">geom_errorbar</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> target, <span class="dt">ymax =</span> target), <span class="dt">color =</span> <span class="st">&quot;#f03b20&quot;</span>, <span class="dt">width =</span> <span class="fl">0.75</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-17" data-line-number="17"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> target), <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">color =</span> <span class="st">&quot;#f03b20&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-18" data-line-number="18"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="ot">NULL</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-19" data-line-number="19"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-20" data-line-number="20"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-21" data-line-number="21"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.grid.minor =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb18-22" data-line-number="22">        <span class="dt">panel.grid.major =</span> <span class="kw">element_blank</span>())</a></code></pre></div>
+<p><img src="/class/08-class_files/figure-html/plot-bullet-1.png" width="672" /></p>
+<h2 id="clearest-and-muddiest-things">Clearest and muddiest things</h2>
+<p>Go to <a href="https://goo.gl/forms/rSIbw1voOV2vWKMD2">this form</a> and answer these two questions:</p>
+<ol style="list-style-type: decimal">
+<li>What was the muddiest thing from class today? What are you still wondering about?</li>
+<li>What was the clearest thing from class today? What was the most exciting thing you learned?</li>
+</ol>
+<p>I’ll compile the questions and send out answers after class.</p>
