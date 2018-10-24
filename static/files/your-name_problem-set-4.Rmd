@@ -1,0 +1,35 @@
+---
+title: "Problem set 4"
+author: "Your name here"
+date: "Date here"
+---
+
+# Details
+
+- Who did you collaborate with: xxxxx
+- Approximately how much time did you spend on this problem set: xxxxx
+- What, if anything, gave you the most trouble: xxxxx
+
+
+# Load, clean, and wrangle data
+
+```{r load-packages-data, warning=FALSE, message=FALSE}
+library(tidyverse)
+
+water_usage <- read_csv("data/water_usage.csv")
+unemployment <- read_csv("data/unemployment.csv")
+```
+
+# Task 1: Bullet charts
+
+Do stuff here
+
+
+# Task 2: Small multiples
+
+Do stuff here
+
+
+# Task 3: Slopegraphs
+
+Do stuff here
