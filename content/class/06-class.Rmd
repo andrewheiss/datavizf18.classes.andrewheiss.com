@@ -42,6 +42,9 @@ library(tidyverse)
 library(lubridate)
 library(ggridges)
 library(scales)
+
+# Make the randomness reproducible
+set.seed(1234)
 ```
 
 Then we load the data. I used the [`darksky` R package](https://github.com/hrbrmstr/darksky) to download this historical data from [Dark Sky](https://darksky.net), and then I [saved the CSV file online](https://gist.githubusercontent.com/andrewheiss/3eb9ef6186915711b44789767a1e434e/raw/be36336130546dd674332208eef5bac345bbf225/weather_provo_2017.csv).
