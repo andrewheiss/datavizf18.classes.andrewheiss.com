@@ -30,7 +30,7 @@ Here's the data I used:
 Here's a more complete version of the code I wrote in class:
 
 - <i class="fas fa-code"></i> [`birth-plots.Rmd`](/files/birth-plots.Rmd)
-- <i class="fab fa-r-project"></i> [The complete RStudio project](/files/birth-plots.zip)
+- <i class="fab fa-r-project"></i> [The complete RStudio project](/files/births.zip)
 - <i class="fas fa-globe"></i> The knitted [`birth-plots.html`](/files/birth-plots.html)
 
 
