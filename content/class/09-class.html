@@ -1,0 +1,574 @@
+---
+title: "Time"
+date: "2018-10-30"
+citeproc: false
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+    toc_depth: 4
+editor_options: 
+  chunk_output_type: console
+---
+
+<!-- BLOGDOWN-HEAD -->
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/plotly-binding/plotly.js"></script>
+<script src="/rmarkdown-libs/typedarray/typedarray.min.js"></script>
+<script src="/rmarkdown-libs/jquery/jquery.min.js"></script>
+<link href="/rmarkdown-libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="/rmarkdown-libs/plotlyjs/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/plotlyjs/plotly-latest.min.js"></script>
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span. { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+</style>
+<!-- /BLOGDOWN-HEAD -->
+
+<h2>Contents</h2>
+<div id="TOC">
+<ul>
+<li><a href="#slides">Slides</a></li>
+<li><a href="#reproducible-examples">Reproducible examples</a></li>
+<li><a href="#style-guide">Style guide</a></li>
+<li><a href="#live-code">Live code</a></li>
+<li><a href="#code-from-today">Code from today</a><ul>
+<li><a href="#datapasta-and-tribbles-and-reprexes">Datapasta and tribbles and reprexes</a></li>
+<li><a href="#interactivity">Interactivity</a></li>
+<li><a href="#seeds">Seeds</a></li>
+<li><a href="#custom-themes">Custom themes</a></li>
+<li><a href="#super-bonus-theming-stuff">Super bonus theming stuff</a></li>
+</ul></li>
+<li><a href="#forecasting-and-decomposition">Forecasting and decomposition</a><ul>
+<li><a href="#load-libraries-and-data">Load libraries and data</a></li>
+<li><a href="#explore-data">Explore data</a></li>
+<li><a href="#decompose-trends">Decompose trends</a></li>
+<li><a href="#forecasting">Forecasting</a></li>
+<li><a href="#bayesian-forecasting">Bayesian forecasting</a></li>
+</ul></li>
+<li><a href="#clearest-and-muddiest-things">Clearest and muddiest things</a></li>
+</ul>
+</div>
+
+<h2 id="slides">Slides</h2>
+<p><a href="/slides/MPA-635_2018-10-30.pdf">Download the slides from today’s lecture</a>.</p>
+<figure>
+<a href="/slides/MPA-635_2018-10-30.pdf"><img src="/images/slides/slides_2018-10-30.png" alt="First slide" /></a>
+</figure>
+<h2 id="reproducible-examples">Reproducible examples</h2>
+<p>Reprexes (or reproducible examples) are the best way to (1) get help online and (2) fix issues on your own.</p>
+<p>Making a good reprex is tricky, but it’s a very valuable skill to know (regardless of programming language!). Here are some helpful resources for making them:</p>
+<ul>
+<li><i class="fas fa-external-link-square-alt"></i> <a href="https://community.rstudio.com/t/faq-whats-a-reproducible-example-reprex-and-how-do-i-do-one/5219">What’s a reproducible example (<code>reprex</code>) and how do I do one?</a></li>
+<li><i class="fas fa-external-link-square-alt"></i> <a href="https://www.jessemaegan.com/post/so-you-ve-been-asked-to-make-a-reprex/">So you’ve been asked to make a reprex</a></li>
+<li><i class="fab fa-r-project"></i> <a href="https://reprex.tidyverse.org/index.html">The reprex package</a></li>
+<li><i class="fas fa-external-link-square-alt"></i> <a href="https://www.tidyverse.org/help/">Get help with the tidyverse</a></li>
+</ul>
+<h2 id="style-guide">Style guide</h2>
+<p>Technically you can write your R code anyway you want. However, there are style conventions that make it easier to (1) read and remember what’s going on in your code, and (2) work with others in a project.</p>
+<p>The <a href="http://style.tidyverse.org/">tidyverse style guide</a> is the most comprehensive style guide for R:<span><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"/><span class="sidenote">It’s based on <a href="https://google.github.io/styleguide/Rguide.xml">Google’s older R style guide</a>, which was written before <code>%&gt;%</code>s were a thing.<br />
+<br />
+</span></span></p>
+<ul>
+<li><i class="fas fa-external-link-square-alt"></i> <a href="http://style.tidyverse.org/">The tidyverse style guide</a></li>
+</ul>
+<h2 id="live-code">Live code</h2>
+<p>Use this link to see the code that I’m actually typing:</p>
+<ul>
+<li><i class="fas fa-globe"></i> <a href="https://andhs.co/live-code" class="uri">https://andhs.co/live-code</a></li>
+</ul>
+<p>I’ve saved the R script to Dropbox, and that link goes to a live version of that file. Refresh or re-open the link as needed to copy/paste code I type up on the screen.</p>
+<h2 id="code-from-today">Code from today</h2>
+<h3 id="datapasta-and-tribbles-and-reprexes">Datapasta and tribbles and reprexes</h3>
+<p>In class we saw how to create a reprex (reproducible example) by using fake data. You can either type your data in Excel and paste it as code to generate a data frame in R using <a href="https://github.com/MilesMcBain/datapasta">the datapasta addins</a>, or you can subset your data like <code>your_data_frame %&gt;% slice(1:10)</code> (to get the first 10 rows).</p>
+<p>This whole chunk is completely reproducible and ready to be used as a question (here, it’s hypothetically asking how to get rid of the fill legend)</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">fake_data &lt;-<span class="st"> </span><span class="kw">tribble</span>(</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="op">~</span>animal, <span class="op">~</span>number,</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">  <span class="st">&quot;cat&quot;</span>, <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">  <span class="st">&quot;dog&quot;</span>, <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">  <span class="st">&quot;bear&quot;</span>, <span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">  <span class="st">&quot;bison&quot;</span>, <span class="dv">4</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">)</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co"># This plot has a fill legend, but I want to remove it because it&#39;s reduntant.</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co"># What&#39;s the best way to get rid of the fill?</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="kw">ggplot</span>(fake_data, <span class="kw">aes</span>(<span class="dt">x =</span> animal, <span class="dt">y =</span> number, <span class="dt">fill =</span> animal)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="st">  </span><span class="kw">geom_col</span>() </a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">  <span class="co"># I add something here, but what?</span></a></code></pre></div>
+<h3 id="interactivity">Interactivity</h3>
+<p>We also looked at how you can use <code>paste()</code> and <code>paste0()</code> to concatenate values and strings to make text that you can then plot.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(plotly)  <span class="co"># For interactive plots</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">fake_data &lt;-<span class="st"> </span><span class="kw">tribble</span>(</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="op">~</span>animal, <span class="op">~</span>number,</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">  <span class="st">&quot;cat&quot;</span>, <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">  <span class="st">&quot;dog&quot;</span>, <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">  <span class="st">&quot;bear&quot;</span>, <span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">  <span class="st">&quot;bison&quot;</span>, <span class="dv">4</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cool_label =</span> <span class="kw">paste0</span>(<span class="st">&quot;There are &quot;</span>, number, <span class="st">&quot; &quot;</span>, animal, <span class="st">&quot;s in the zoo.&quot;</span>))</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">fake_data</a></code></pre></div>
+<pre><code>## # A tibble: 4 x 3
+##   animal number cool_label                    
+##   &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;                         
+## 1 cat         1 There are 1 cats in the zoo.  
+## 2 dog         2 There are 2 dogs in the zoo.  
+## 3 bear        3 There are 3 bears in the zoo. 
+## 4 bison       4 There are 4 bisons in the zoo.</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">ugly_bar_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(fake_data, <span class="kw">aes</span>(<span class="dt">x =</span> animal, <span class="dt">y =</span> number, <span class="dt">fill =</span> animal)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_col</span>(<span class="kw">aes</span>(<span class="dt">text =</span> cool_label))</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">interactive_plot &lt;-<span class="st"> </span>ugly_bar_plot <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="st">  </span><span class="kw">ggplotly</span>(<span class="dt">tooltip =</span> <span class="st">&quot;text&quot;</span>)</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">interactive_plot</a></code></pre></div>
+<div id="d3c56b7d950e" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="d3c56b7d950e">{"x":{"data":[{"orientation":"v","width":0.9,"base":0,"x":[1],"y":[3],"text":"There are 3 bears in the zoo.","type":"bar","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"bear","legendgroup":"bear","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":0,"x":[2],"y":[4],"text":"There are 4 bisons in the zoo.","type":"bar","marker":{"autocolorscale":false,"color":"rgba(124,174,0,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"bison","legendgroup":"bison","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":0,"x":[3],"y":[1],"text":"There are 1 cats in the zoo.","type":"bar","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"cat","legendgroup":"cat","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":0.9,"base":0,"x":[4],"y":[2],"text":"There are 2 dogs in the zoo.","type":"bar","marker":{"autocolorscale":false,"color":"rgba(199,124,255,1)","line":{"width":1.88976377952756,"color":"transparent"}},"name":"dog","legendgroup":"dog","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":26.2283105022831,"r":7.30593607305936,"b":40.1826484018265,"l":31.4155251141553},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"type":"linear","autorange":false,"range":[0.4,4.6],"tickmode":"array","ticktext":["bear","bison","cat","dog"],"tickvals":[1,2,3,4],"categoryorder":"array","categoryarray":["bear","bison","cat","dog"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":"animal","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"type":"linear","autorange":false,"range":[-0.2,4.2],"tickmode":"array","ticktext":["0","1","2","3","4"],"tickvals":[0,1,2,3,4],"categoryorder":"array","categoryarray":["0","1","2","3","4"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"x","title":"number","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":0.913385826771654},"annotations":[{"text":"animal","x":1.02,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"left","yanchor":"bottom","legendTitle":true}],"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"source":"A","attrs":{"d3c577c9f332":{"text":{},"x":{},"y":{},"fill":{},"type":"bar"}},"cur_data":"d3c577c9f332","visdat":{"d3c577c9f332":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1}},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":{"render":[{"code":"function(el, x) { var ctConfig = crosstalk.var('plotlyCrosstalkOpts').set({\"on\":\"plotly_click\",\"persistent\":false,\"dynamic\":false,\"selectize\":false,\"opacityDim\":0.2,\"selected\":{\"opacity\":1}}); }","data":null}]}}</script>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># This is like ggsave, but for interactive HTML plots</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">htmlwidgets<span class="op">::</span><span class="kw">saveWidget</span>(interactive_plot, <span class="st">&quot;output/ugly_plot.html&quot;</span>)</a></code></pre></div>
+<h3 id="seeds">Seeds</h3>
+<p>We also talked about setting a seed before doing anything with random numbers. This guarantees that the random number generating process will be the same every time.</p>
+<p>This plot will be identical every time I run this (and it will be identical if you run it too). (This is also an example of the <code>::</code> syntax—I haven’t loaded the scales library, but I can still format the x-axis as dollars by using <code>scales::dollar()</code>)</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">123</span>)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">fake_income &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">income =</span> <span class="kw">rnorm</span>(<span class="dv">1000</span>, <span class="dt">mean =</span> <span class="dv">100000</span>, <span class="dt">sd =</span> <span class="dv">25000</span>))</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="kw">ggplot</span>(fake_income, <span class="kw">aes</span>(<span class="dt">x =</span> income)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">fill =</span> <span class="st">&quot;#d834b5&quot;</span>, <span class="dt">color =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Income&quot;</span>, <span class="dt">y =</span> <span class="ot">NULL</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.y =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">        <span class="dt">axis.ticks.y =</span> <span class="kw">element_blank</span>())</a></code></pre></div>
+<p><img src="/class/09-class_files/figure-html/seed-stuff-1.png" width="672" /></p>
+<h3 id="custom-themes">Custom themes</h3>
+<p>One really nice thing you can do is save all your theme customizations as an object. That way you can use it on any plot you want later on. You can set all these theme options by hand or use <code>ggThemeAssist</code> to generate them for you.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># I made this theme by tinkering with it attached to a ggplot object and making</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co"># sure it looked okay (it&#39;s super ugly, but it&#39;s just an example). Then I moved</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co"># it up here and assigned it to the `my_theme` object</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">my_theme &lt;-<span class="st"> </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="dt">size =</span> <span class="kw">rel</span>(<span class="fl">1.8</span>)),</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">        <span class="dt">plot.subtitle =</span> <span class="kw">element_text</span>(<span class="dt">face =</span> <span class="st">&quot;italic&quot;</span>, <span class="dt">size =</span> <span class="kw">rel</span>(<span class="fl">1.3</span>), <span class="dt">color =</span> <span class="st">&quot;grey50&quot;</span>),</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">        <span class="dt">plot.caption =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">        <span class="co"># Move legend to the bottom of the plot</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">        <span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">        <span class="co"># Move the legend to the left</span></a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">        <span class="dt">legend.justification =</span> <span class="st">&quot;left&quot;</span>,</a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">        <span class="co"># There&#39;s still a tiny gap between the edge of the plot and the legend,</span></a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">        <span class="co"># so add some negative left margin to push it the rest of the way over.</span></a>
+<a class="sourceLine" id="cb7-14" data-line-number="14">        <span class="co"># Also add some negative top margin to bring it close to the plot</span></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15">        <span class="dt">legend.box.margin =</span> <span class="kw">margin</span>(<span class="dt">l =</span> <span class="fl">-0.75</span>, <span class="dt">t =</span> <span class="fl">-0.5</span>, <span class="dt">unit =</span> <span class="st">&quot;lines&quot;</span>),</a>
+<a class="sourceLine" id="cb7-16" data-line-number="16">        <span class="co"># Left align the x-axis title if there is one</span></a>
+<a class="sourceLine" id="cb7-17" data-line-number="17">        <span class="dt">axis.title.x =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="dv">0</span>))</a>
+<a class="sourceLine" id="cb7-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co"># Here&#39;s one plot with the theme adjustments</span></a>
+<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="kw">ggplot</span>(fake_data, <span class="kw">aes</span>(<span class="dt">x =</span> animal, <span class="dt">y =</span> number, <span class="dt">fill =</span> animal)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-22" data-line-number="22"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;This is the title&quot;</span>,</a>
+<a class="sourceLine" id="cb7-23" data-line-number="23">       <span class="dt">subtitle =</span> <span class="st">&quot;This is the subtitle&quot;</span>,</a>
+<a class="sourceLine" id="cb7-24" data-line-number="24">       <span class="dt">caption =</span> <span class="st">&quot;And this is the caption&quot;</span>,</a>
+<a class="sourceLine" id="cb7-25" data-line-number="25">       <span class="dt">x =</span> <span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb7-26" data-line-number="26">       <span class="dt">y =</span> <span class="st">&quot;Count&quot;</span>,</a>
+<a class="sourceLine" id="cb7-27" data-line-number="27">       <span class="dt">fill =</span> <span class="ot">NULL</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-28" data-line-number="28"><span class="st">  </span>my_theme</a></code></pre></div>
+<p><img src="/class/09-class_files/figure-html/custom-theme-1.png" width="672" /></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># Here&#39;s another plot with the same theme adjustments, plus removing the y axis</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co"># (I didn&#39;t put that part in my_theme because I don&#39;t want all my plots to not</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co"># have y axes)</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="kw">ggplot</span>(fake_income, <span class="kw">aes</span>(<span class="dt">x =</span> income)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_density</span>(<span class="dt">fill =</span> <span class="st">&quot;#d834b5&quot;</span>, <span class="dt">color =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Income&quot;</span>, <span class="dt">y =</span> <span class="ot">NULL</span>, <span class="dt">title =</span> <span class="st">&quot;Distribution of income&quot;</span>,</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">       <span class="dt">subtitle =</span> <span class="st">&quot;Totally fake data&quot;</span>, <span class="dt">caption =</span> <span class="st">&quot;Source: rnorm()&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="st">  </span>my_theme <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.y =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">        <span class="dt">axis.ticks.y =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">        <span class="dt">panel.grid.major.y =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb8-13" data-line-number="13">        <span class="dt">panel.grid.minor.y =</span> <span class="kw">element_blank</span>())</a></code></pre></div>
+<p><img src="/class/09-class_files/figure-html/custom-theme-2.png" width="672" /></p>
+<h3 id="super-bonus-theming-stuff">Super bonus theming stuff</h3>
+<p>I typically don’t assign my theme to an object, though. Instead, I create a function, which lets me (1) make adjustments like <code>base_family</code> or <code>base_size</code>, and (2) use a custom theme that looks like all the other layers in the ggplot chain (it really bugs me that <code>my_theme</code> doesn’t have parentheses while everything else does! :) )</p>
+<p>Here are a bunch of real custom themes I’ve created:</p>
+<ul>
+<li><a href="https://github.com/andrewheiss/datavizf18.classes.andrewheiss.com/blob/master/lib/graphics.R#L12"><code>theme_dv()</code></a>: the theme I use for plots in this class</li>
+<li><a href="https://github.com/andrewheiss/donors-ngo-restrictions/blob/master/lib/graphics.R#L54"><code>theme_donors()</code></a>: the theme I use in a paper about aid agency donors</li>
+<li><a href="https://github.com/andrewheiss/Closing-space/blob/master/lib/graphic-functions.R#L21"><code>theme_ngo()</code></a>: the theme I use in a paper on NGOs</li>
+</ul>
+<p>This is how I typically make a custom theme. Notice that the function I make has two arguments: <code>size</code> and <code>family</code>. I pass these to <code>theme_minimal()</code> inside the function. That way I can run <code>my_fancy_theme(size = 18)</code> and then R will use <code>theme_minimal(base_size = 18)</code> inside the function.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">my_fancy_theme &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">size =</span> <span class="dv">11</span>, <span class="dt">family =</span> <span class="st">&quot;&quot;</span>) {</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">  final_theme &lt;-<span class="st"> </span><span class="kw">theme_minimal</span>(<span class="dt">base_size =</span> size, <span class="dt">base_family =</span> family) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="dt">size =</span> <span class="kw">rel</span>(<span class="fl">1.8</span>)),</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">          <span class="dt">plot.subtitle =</span> <span class="kw">element_text</span>(<span class="dt">face =</span> <span class="st">&quot;italic&quot;</span>, <span class="dt">size =</span> <span class="kw">rel</span>(<span class="fl">1.3</span>), <span class="dt">color =</span> <span class="st">&quot;grey50&quot;</span>),</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">          <span class="dt">plot.caption =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">          <span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">          <span class="dt">legend.justification =</span> <span class="st">&quot;left&quot;</span>,</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">          <span class="dt">legend.box.margin =</span> <span class="kw">margin</span>(<span class="dt">l =</span> <span class="fl">-0.75</span>, <span class="dt">t =</span> <span class="fl">-0.5</span>, <span class="dt">unit =</span> <span class="st">&quot;lines&quot;</span>),</a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">          <span class="dt">axis.title.x =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="dv">0</span>)) </a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">  </a>
+<a class="sourceLine" id="cb9-11" data-line-number="11">  <span class="kw">return</span>(final_theme)</a>
+<a class="sourceLine" id="cb9-12" data-line-number="12">}</a>
+<a class="sourceLine" id="cb9-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="kw">ggplot</span>(fake_data, <span class="kw">aes</span>(<span class="dt">x =</span> animal, <span class="dt">y =</span> number, <span class="dt">fill =</span> animal)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="st">  </span><span class="kw">geom_col</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;This is the title&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;This is the subtitle&quot;</span>,</a>
+<a class="sourceLine" id="cb9-17" data-line-number="17">       <span class="dt">caption =</span> <span class="st">&quot;And this is the caption&quot;</span>, <span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="st">&quot;Count&quot;</span>, <span class="dt">fill =</span> <span class="ot">NULL</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="st">  </span><span class="kw">my_fancy_theme</span>(<span class="dt">size =</span> <span class="dv">15</span>)</a></code></pre></div>
+<p><img src="/class/09-class_files/figure-html/theme-function-1.png" width="672" /></p>
+<h2 id="forecasting-and-decomposition">Forecasting and decomposition</h2>
+<p>We ran out of time for this in class, but really all I did was copy/paste from the examples and vignettes at these websites and adapt them to this births data from the CDC:</p>
+<ul>
+<li><a href="https://github.com/business-science/tibbletime"><code>tibbletime</code></a></li>
+<li><a href="https://www.business-science.io/code-tools/2017/10/26/demo_week_tibbletime.html">This whole series of tutorials on <code>tibbletime</code></a></li>
+<li><a href="https://github.com/business-science/timetk"><code>timetk</code></a></li>
+<li><a href="https://www.business-science.io/code-tools/2017/07/09/sweep-0-1-0.html">This tutorial on <code>sweep</code></a></li>
+<li><a href="https://facebook.github.io/prophet/docs/quick_start.html#r-api">Facebook’s Prophet library for forecasting</a></li>
+<li><a href="https://otexts.org/fpp2/">Rob Hyndman’s <em>Forecasting: Principles and Practice</em></a></li>
+</ul>
+<p>I’m using these two datasets (from the <a href="https://github.com/fivethirtyeight/data/tree/master/births">CDC and fivethirtyeight</a>)</p>
+<ul>
+<li><i class="fas fa-table"></i> <a href="/data/US_births_1994-2003_CDC_NCHS.csv"><code>US_births_1994-2003_CDC_NCHS.csv</code></a></li>
+<li><i class="fas fa-table"></i> <a href="/data/US_births_2000-2014_SSA.csv"><code>US_births_2000-2014_SSA.csv</code></a></li>
+</ul>
+<h3 id="load-libraries-and-data">Load libraries and data</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># Libraries for time series and forecasting stuff</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co"># You have to load *a ton* of these to get the ecosystem of time series packages working</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw">library</span>(lubridate)  <span class="co"># Deal with dates</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="kw">library</span>(tibbletime)  <span class="co"># Add cool time-based filtering functions</span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="kw">library</span>(timetk)  <span class="co"># Convert data frames to time series-specific objects</span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="kw">library</span>(forecast)  <span class="co"># Make forecasts and decompose time series</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="kw">library</span>(zoo)  <span class="co"># Another time series package</span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="kw">library</span>(sweep)  <span class="co"># Convert forecasted objects into data frames (like broom, but for forecasts)</span></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="kw">library</span>(prophet)  <span class="co"># Facebook&#39;s Bayesian forecasting algorithm</span></a></code></pre></div>
+<p>I’m assuming these CSV files are in a folder in my project named “data”:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">births_<span class="dv">2000</span>_<span class="dv">2014</span> &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/US_births_2000-2014_SSA.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="co"># This data goes up to 2003, but the previous data starts at 2000, so we&#39;ll</span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co"># remove 2000-2003 from here</span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">births_<span class="dv">1994</span>_<span class="dv">1999</span> &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/US_births_1994-2003_CDC_NCHS.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="st">  </span><span class="kw">filter</span>(year <span class="op">&lt;</span><span class="st"> </span><span class="dv">2000</span>)</a></code></pre></div>
+<p>We need to manipulate this data a little after we combine these two datasets. Right now, there is a column for year, month, and day, but we need to make this an actual date, so we paste these numbers together with <code>paste0()</code>, and then use <code>ymd()</code> to parse the date as an actual date. The <code>as_tbl_time()</code> function at the end of the chain makes it so we can do cool filtering and summarizing and grouping with the time column in this data frame:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">births_clean &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(births_<span class="dv">1994</span>_<span class="dv">1999</span>, births_<span class="dv">2000</span>_<span class="dv">2014</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">date =</span> <span class="kw">paste0</span>(year, <span class="st">&quot;-&quot;</span>, month, <span class="st">&quot;-&quot;</span>, date_of_month)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">date =</span> <span class="kw">ymd</span>(date)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw">select</span>(date, births) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span><span class="kw">as_tbl_time</span>(<span class="dt">index =</span> date)</a></code></pre></div>
+<h3 id="explore-data">Explore data</h3>
+<p>Since this data frame is time-enabled (with <code>as_tbl_time</code>), we can do cool things with it, like this:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># Only include rows from January 2000 to June 30, 2000</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">births_clean <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="st">  </span><span class="kw">filter_time</span>(<span class="st">&quot;2000-01&quot;</span> <span class="op">~</span><span class="st"> &quot;2000-06-30&quot;</span>)</a></code></pre></div>
+<pre><code>## # A time tibble: 182 x 2
+## # Index: date
+##    date       births
+##    &lt;date&gt;      &lt;int&gt;
+##  1 2000-01-01   9083
+##  2 2000-01-02   8006
+##  3 2000-01-03  11363
+##  4 2000-01-04  13032
+##  5 2000-01-05  12558
+##  6 2000-01-06  12466
+##  7 2000-01-07  12516
+##  8 2000-01-08   8934
+##  9 2000-01-09   7949
+## 10 2000-01-10  11668
+## # ... with 172 more rows</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># Only include rows from 2010 to 2014, and then only select the first day of</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co"># each month</span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">births_clean <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="st">  </span><span class="kw">filter_time</span>(<span class="st">&quot;2010-01-01&quot;</span> <span class="op">~</span><span class="st"> &quot;2014-12-31&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="st">  </span><span class="kw">as_period</span>(<span class="st">&quot;monthly&quot;</span>, <span class="dt">side =</span> <span class="st">&quot;start&quot;</span>)</a></code></pre></div>
+<pre><code>## # A time tibble: 60 x 2
+## # Index: date
+##    date       births
+##    &lt;date&gt;      &lt;int&gt;
+##  1 2010-01-01   7871
+##  2 2010-02-01  11445
+##  3 2010-03-01  11984
+##  4 2010-04-01  11994
+##  5 2010-05-01   7911
+##  6 2010-06-01  12591
+##  7 2010-07-01  13181
+##  8 2010-08-01   7370
+##  9 2010-09-01  13409
+## 10 2010-10-01  13141
+## # ... with 50 more rows</code></pre>
+<p>Let’s create a month-based time series where we calculate the average number of births per month. Then we’ll plot it with a loess line:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">births_monthly &lt;-<span class="st"> </span>births_clean <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw">collapse_by</span>(<span class="st">&quot;monthly&quot;</span>, <span class="dt">side =</span> <span class="st">&quot;start&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw">group_by</span>(date) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">avg_births =</span> <span class="kw">mean</span>(births))</a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="kw">ggplot</span>(births_monthly, <span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> avg_births)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-9" data-line-number="9"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<p><img src="/class/09-class_files/figure-html/monthly-ts-1.png" width="672" /></p>
+<p>Neat!</p>
+<p>We can also calculate a rolling average where we take the mean of every month’s previous twelve months. We use the <code>rollify()</code> function, which works a little strangely—it’s actually a function generator (meaning it’ll take some function, like mean, and make it work on the previous 12 periods).</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="co"># Here we define a bunch of rolling mean functions. These don&#39;t do anything</span></a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="co"># yet—once you feed them some data, they&#39;ll calculate the mean of the past</span></a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="co"># number of periods given in `window`</span></a>
+<a class="sourceLine" id="cb18-4" data-line-number="4">rolling_<span class="dv">6</span> &lt;-<span class="st"> </span><span class="kw">rollify</span>(mean, <span class="dt">window =</span> <span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb18-5" data-line-number="5">rolling_<span class="dv">12</span> &lt;-<span class="st"> </span><span class="kw">rollify</span>(mean, <span class="dt">window =</span> <span class="dv">12</span>)</a>
+<a class="sourceLine" id="cb18-6" data-line-number="6">rolling_<span class="dv">24</span> &lt;-<span class="st"> </span><span class="kw">rollify</span>(mean, <span class="dt">window =</span> <span class="dv">24</span>)</a>
+<a class="sourceLine" id="cb18-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb18-8" data-line-number="8">births_monthly_with_means &lt;-<span class="st"> </span>births_monthly <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-9" data-line-number="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">past_6 =</span> <span class="kw">rolling_6</span>(avg_births),</a>
+<a class="sourceLine" id="cb18-10" data-line-number="10">         <span class="dt">past_12 =</span> <span class="kw">rolling_12</span>(avg_births),</a>
+<a class="sourceLine" id="cb18-11" data-line-number="11">         <span class="dt">past_24 =</span> <span class="kw">rolling_24</span>(avg_births))</a>
+<a class="sourceLine" id="cb18-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb18-13" data-line-number="13"><span class="co"># Make this long so we can plot all these rolling averages at the same time</span></a>
+<a class="sourceLine" id="cb18-14" data-line-number="14">births_monthly_long &lt;-<span class="st"> </span>births_monthly_with_means <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-15" data-line-number="15"><span class="st">  </span><span class="kw">gather</span>(window_size, value, <span class="kw">c</span>(past_<span class="dv">6</span>, past_<span class="dv">12</span>, past_<span class="dv">24</span>))</a>
+<a class="sourceLine" id="cb18-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb18-17" data-line-number="17"><span class="kw">ggplot</span>(births_monthly_long, <span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> avg_births)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-18" data-line-number="18"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">alpha =</span> <span class="fl">0.25</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-19" data-line-number="19"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> value, <span class="dt">color =</span> window_size), <span class="dt">size =</span> <span class="fl">0.75</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-20" data-line-number="20"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<p><img src="/class/09-class_files/figure-html/rolling-avg-1.png" width="672" /></p>
+<p>They’re all a little different! A 6-month window still shows some seasonality, while the 12- and 24-month windows are much smoother.</p>
+<h3 id="decompose-trends">Decompose trends</h3>
+<p>We can decompose this time series and extract the trend and seasonality. But first, we have to convert our nice data frame into a strange time series-enabled object with the <code>ts()</code> function. To make life easier, we use the <code>tk_ts()</code> function here, which is part of the <code>timetk</code> package, which allows us to more easily convert our tidy data into time series data.</p>
+<p>Here we add a new column that is time series-enabled:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">births_months_ts &lt;-<span class="st"> </span>births_monthly <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">births_ts =</span> <span class="kw">tk_ts</span>(avg_births, <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">1994</span>, <span class="dv">1</span>), <span class="dt">frequency =</span> <span class="dv">12</span>))</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="co"># births_ts looks identical to avg_births, but it&#39;s not; it has metadata about</span></a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="co"># periods and start dates and things like that</span></a>
+<a class="sourceLine" id="cb19-6" data-line-number="6">births_months_ts</a></code></pre></div>
+<pre><code>## # A time tibble: 252 x 3
+## # Index: date
+##    date       avg_births births_ts
+##    &lt;date&gt;          &lt;dbl&gt;     &lt;dbl&gt;
+##  1 1994-01-01     10345.    10345.
+##  2 1994-02-01     10762.    10762.
+##  3 1994-03-01     10959.    10959.
+##  4 1994-04-01     10580.    10580.
+##  5 1994-05-01     10655.    10655.
+##  6 1994-06-01     10991.    10991.
+##  7 1994-07-01     11157.    11157.
+##  8 1994-08-01     11360.    11360.
+##  9 1994-09-01     11307.    11307.
+## 10 1994-10-01     10651.    10651.
+## # ... with 242 more rows</code></pre>
+<p>Now we can decompose this with the <code>stl()</code> function (which stands for “seasonal, trend, and irregular, with loess”). <code>s.window</code> is set to periodic because the help file and every example I found online said to do that.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">births_decomposed &lt;-<span class="st"> </span><span class="kw">stl</span>(births_months_ts<span class="op">$</span>births_ts, <span class="dt">s.window =</span> <span class="st">&quot;periodic&quot;</span>)</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="co"># Look at the first few rows</span></a>
+<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="kw">head</span>(births_decomposed<span class="op">$</span>time.series)</a></code></pre></div>
+<pre><code>##           seasonal    trend   remainder
+## Jan 1994 -451.9350 10944.27 -147.010706
+## Feb 1994 -192.3067 10923.01   30.975569
+## Mar 1994 -193.8057 10901.75  251.280333
+## Apr 1994 -298.9887 10881.71   -2.987806
+## May 1994 -151.4014 10861.67  -55.589677
+## Jun 1994  131.7005 10842.76   16.775290</code></pre>
+<p>Cool! It extracted the seasonal part, the trend part, and left us with some unexplained variation.</p>
+<p>We can use <code>autoplot()</code> (which comes with the <code>forecast</code> library) to plot all of these at once.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="co"># autoplot uses ggplot behind the scenes, so you can still add regular layers to</span></a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="co"># it, like theme_minimal()</span></a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="kw">autoplot</span>(births_decomposed) <span class="op">+</span></a>
+<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<p><img src="/class/09-class_files/figure-html/plot-decompose-1.png" width="672" /></p>
+<p>Or, we can extract each of these decomposed parts and plot them on our own (I prefer doing this, since I have more control over the data)</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="co"># You can extract each part of the decomposed time series with these functions</span></a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="kw">seasonal</span>(births_decomposed)</a>
+<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="kw">trendcycle</span>(births_decomposed)</a>
+<a class="sourceLine" id="cb24-4" data-line-number="4"><span class="kw">remainder</span>(births_decomposed)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="co"># Or even better, do it all at once in a data frame</span></a>
+<a class="sourceLine" id="cb25-2" data-line-number="2">births_decomposed_nice &lt;-<span class="st"> </span>births_decomposed<span class="op">$</span>time.series <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="st">  </span><span class="kw">tk_tbl</span>()  <span class="co"># Convert the weird time series object back to a data frame</span></a>
+<a class="sourceLine" id="cb25-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="co"># Combine the extracted parts with the original monthly data</span></a>
+<a class="sourceLine" id="cb25-6" data-line-number="6">births_with_decomposition &lt;-<span class="st"> </span>births_monthly <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-7" data-line-number="7"><span class="st">  </span><span class="kw">bind_cols</span>(births_decomposed_nice)</a>
+<a class="sourceLine" id="cb25-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb25-9" data-line-number="9"><span class="co"># Yay!</span></a>
+<a class="sourceLine" id="cb25-10" data-line-number="10">births_with_decomposition</a></code></pre></div>
+<pre><code>## # A time tibble: 252 x 6
+## # Index: date
+##    date       avg_births index         seasonal  trend remainder
+##    &lt;date&gt;          &lt;dbl&gt; &lt;S3: yearmon&gt;    &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;
+##  1 1994-01-01     10345. Jan 1994        -452.  10944.   -147.  
+##  2 1994-02-01     10762. Feb 1994        -192.  10923.     31.0 
+##  3 1994-03-01     10959. Mar 1994        -194.  10902.    251.  
+##  4 1994-04-01     10580. Apr 1994        -299.  10882.     -2.99
+##  5 1994-05-01     10655. May 1994        -151.  10862.    -55.6 
+##  6 1994-06-01     10991. Jun 1994         132.  10843.     16.8 
+##  7 1994-07-01     11157. Jul 1994         388.  10824.    -55.1 
+##  8 1994-08-01     11360. Aug 1994         537.  10804.     18.7 
+##  9 1994-09-01     11307. Sep 1994         636.  10785.   -113.  
+## 10 1994-10-01     10651. Oct 1994          28.9 10768.   -146.  
+## # ... with 242 more rows</code></pre>
+<p>We can make this data long, which will let us make facets for each of the parts:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">births_decomposed_long &lt;-<span class="st"> </span>births_with_decomposition <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="st">  </span><span class="kw">gather</span>(variation_type, value, <span class="kw">c</span>(avg_births, seasonal, trend, remainder)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">variation_type =</span> <span class="kw">factor</span>(variation_type, </a>
+<a class="sourceLine" id="cb27-4" data-line-number="4">                                 <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;avg_births&quot;</span>, <span class="st">&quot;trend&quot;</span>, <span class="st">&quot;seasonal&quot;</span>, <span class="st">&quot;remainder&quot;</span>),</a>
+<a class="sourceLine" id="cb27-5" data-line-number="5">                                 <span class="dt">ordered =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb27-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb27-7" data-line-number="7"><span class="kw">ggplot</span>(births_decomposed_long, <span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> value)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb27-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb27-9" data-line-number="9"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb27-10" data-line-number="10"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>variation_type, <span class="dt">ncol =</span> <span class="dv">1</span>, <span class="dt">scales =</span> <span class="st">&quot;free_y&quot;</span>)</a></code></pre></div>
+<p><img src="/class/09-class_files/figure-html/plot-extracted-decomposition-1.png" width="672" /></p>
+<p>Super cool!</p>
+<h3 id="forecasting">Forecasting</h3>
+<p>We can also use past trends and seasonality in the data to make predictions about the future using the <code>forecast</code> package. Here we use an <a href="https://otexts.org/fpp2/arima-r.html">auto ARIMA model</a> to guess at the trend in the time series (there are a billion other ways to estimate this model—take Dr. Nelson’s forecasting class to learn those). Then we use that model to forecast a few periods into the future.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">births_arima &lt;-<span class="st"> </span><span class="kw">auto.arima</span>(births_months_ts<span class="op">$</span>births_ts)</a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="co"># Use the model to forecast 12 months into the future</span></a>
+<a class="sourceLine" id="cb28-4" data-line-number="4">births_forecast &lt;-<span class="st"> </span><span class="kw">forecast</span>(births_arima, <span class="dt">h =</span> <span class="dv">12</span>)</a>
+<a class="sourceLine" id="cb28-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb28-6" data-line-number="6"><span class="co"># Plot the forecast. Again, we can use autoplot.</span></a>
+<a class="sourceLine" id="cb28-7" data-line-number="7"><span class="kw">autoplot</span>(births_forecast) <span class="op">+</span></a>
+<a class="sourceLine" id="cb28-8" data-line-number="8"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
+<p><img src="/class/09-class_files/figure-html/forecast-births-1.png" width="672" /></p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="co"># We&#39;re fairly limited in what we can actually tweak when using autoplot(), so</span></a>
+<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="co"># instead we can convert the forecast object to a data frame and use ggplot()</span></a>
+<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="co"># like normal</span></a>
+<a class="sourceLine" id="cb29-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb29-5" data-line-number="5"><span class="co"># Get data out of this weird births_forecast object</span></a>
+<a class="sourceLine" id="cb29-6" data-line-number="6">births_forecast_tidy &lt;-<span class="st"> </span><span class="kw">sw_sweep</span>(births_forecast, <span class="dt">timekit_idx =</span> <span class="ot">TRUE</span>, <span class="dt">rename_index =</span> <span class="st">&quot;date&quot;</span>)</a>
+<a class="sourceLine" id="cb29-7" data-line-number="7"><span class="kw">tail</span>(births_forecast_tidy)  <span class="co"># Look at the last few rows of this forecast</span></a></code></pre></div>
+<pre><code>## # A tibble: 6 x 7
+##   date          key       value  lo.80  lo.95  hi.80  hi.95
+##   &lt;S3: yearmon&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Jul 2015      forecast 11518. 11200. 11032. 11835. 12003.
+## 2 Aug 2015      forecast 11558. 11229. 11055. 11886. 12060.
+## 3 Sep 2015      forecast 11707. 11370. 11191. 12045. 12223.
+## 4 Oct 2015      forecast 11022. 10669. 10482. 11374. 11561.
+## 5 Nov 2015      forecast 10756. 10387. 10191. 11125. 11320.
+## 6 Dec 2015      forecast 10885. 10501. 10298. 11268. 11472.</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="co"># For whatever reason, the date column here is a special type of variable called</span></a>
+<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="co"># &quot;yearmon&quot;, which ggplot doesn&#39;t know how to deal with (like, we can&#39;t zoom in</span></a>
+<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="co"># on the plot with coord_cartesian). We use zoo::as.Date() to convert the</span></a>
+<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="co"># yearmon variable into a regular date</span></a>
+<a class="sourceLine" id="cb31-5" data-line-number="5">births_forecast_tidy_real_date &lt;-<span class="st"> </span>births_forecast_tidy <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">actual_date =</span> zoo<span class="op">::</span><span class="kw">as.Date</span>(date, <span class="dt">frac =</span> <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb31-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb31-8" data-line-number="8"><span class="co"># Plot this puppy!</span></a>
+<a class="sourceLine" id="cb31-9" data-line-number="9"><span class="kw">ggplot</span>(births_forecast_tidy_real_date, <span class="kw">aes</span>(<span class="dt">x =</span> actual_date, <span class="dt">y =</span> value, <span class="dt">color =</span> key)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-10" data-line-number="10"><span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> lo<span class="fl">.95</span>, <span class="dt">ymax =</span> hi<span class="fl">.95</span>), </a>
+<a class="sourceLine" id="cb31-11" data-line-number="11">              <span class="dt">fill =</span> <span class="st">&quot;#3182bd&quot;</span>, <span class="dt">color =</span> <span class="ot">NA</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-12" data-line-number="12"><span class="st">  </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> lo<span class="fl">.80</span>, <span class="dt">ymax =</span> hi<span class="fl">.80</span>, <span class="dt">fill =</span> key), </a>
+<a class="sourceLine" id="cb31-13" data-line-number="13">              <span class="dt">fill =</span> <span class="st">&quot;#deebf7&quot;</span>, <span class="dt">color =</span> <span class="ot">NA</span>, <span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-14" data-line-number="14"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-15" data-line-number="15"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="fl">0.5</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-16" data-line-number="16"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="st">&quot;Births&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-17" data-line-number="17"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>comma) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-18" data-line-number="18"><span class="st">  </span><span class="co"># Zoom in on 2012-2016</span></a>
+<a class="sourceLine" id="cb31-19" data-line-number="19"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">ymd</span>(<span class="kw">c</span>(<span class="st">&quot;2012-01-01&quot;</span>, <span class="st">&quot;2016-01-01&quot;</span>))) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-20" data-line-number="20"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-21" data-line-number="21"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</a></code></pre></div>
+<p><img src="/class/09-class_files/figure-html/forecast-births-2.png" width="672" /></p>
+<p>Magic!</p>
+<h3 id="bayesian-forecasting">Bayesian forecasting</h3>
+<p>Finally, we’ll use Facebook’s open source Bayesian forecasting algorithm to make a similar forecast. The <code>prophet()</code> function requires that the date column be named <code>ds</code> and the main outcome variable (here births) be named <code>y</code>. I don’t know why. So we rename those columns, feed the data frame through <code>prophet()</code>, then make an empty data frame for the future periods we’ll predict, and then use <code>predict()</code> to use the prophet model to make predictions for the empty future data frame.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">births_prophetized &lt;-<span class="st"> </span>births_monthly <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(<span class="dt">ds =</span> date, <span class="dt">y =</span> avg_births)</a>
+<a class="sourceLine" id="cb32-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb32-4" data-line-number="4">prophet_model &lt;-<span class="st"> </span><span class="kw">prophet</span>(births_prophetized)</a></code></pre></div>
+<pre><code>## Disabling weekly seasonality. Run prophet with weekly.seasonality=TRUE to override this.</code></pre>
+<pre><code>## Disabling daily seasonality. Run prophet with daily.seasonality=TRUE to override this.</code></pre>
+<pre><code>## Initial log joint probability = -2.43379
+## Optimization terminated normally: 
+##   Convergence detected: relative gradient magnitude is below tolerance</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">future_dates &lt;-<span class="st"> </span><span class="kw">make_future_dataframe</span>(prophet_model, <span class="dt">periods =</span> <span class="dv">36</span>, <span class="dt">freq =</span> <span class="st">&quot;month&quot;</span>)</a>
+<a class="sourceLine" id="cb36-2" data-line-number="2">prophet_predict &lt;-<span class="st"> </span><span class="kw">predict</span>(prophet_model, future_dates)</a>
+<a class="sourceLine" id="cb36-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb36-4" data-line-number="4"><span class="co"># The plot() function for prophet objects uses ggplot behind the scenes, so we</span></a>
+<a class="sourceLine" id="cb36-5" data-line-number="5"><span class="co"># can add ggplot layers like normal</span></a>
+<a class="sourceLine" id="cb36-6" data-line-number="6"><span class="kw">plot</span>(prophet_model, prophet_predict) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb36-7" data-line-number="7"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb36-8" data-line-number="8"><span class="st">  </span><span class="co"># Zoom in on 2008-2018 </span></a>
+<a class="sourceLine" id="cb36-9" data-line-number="9"><span class="st">  </span><span class="co"># I only figured out this as.POSIXct thing because R was complaining when I</span></a>
+<a class="sourceLine" id="cb36-10" data-line-number="10"><span class="st">  </span><span class="co"># did ymd() like I did above</span></a>
+<a class="sourceLine" id="cb36-11" data-line-number="11"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">as.POSIXct</span>(<span class="kw">c</span>(<span class="st">&quot;2008-01-01&quot;</span>, <span class="st">&quot;2018-01-01&quot;</span>)))</a></code></pre></div>
+<p><img src="/class/09-class_files/figure-html/prophet-forecasting-1.png" width="672" /></p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="co"># We can also decompose this time series, but here we only get the yearly</span></a>
+<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="co"># effects</span></a>
+<a class="sourceLine" id="cb37-3" data-line-number="3"><span class="co">#</span></a>
+<a class="sourceLine" id="cb37-4" data-line-number="4"><span class="co"># Even though both these plots are ggplot objects, for whatever reason we can&#39;t</span></a>
+<a class="sourceLine" id="cb37-5" data-line-number="5"><span class="co"># actually add additional layers like theme_minimal. Oh well.</span></a>
+<a class="sourceLine" id="cb37-6" data-line-number="6"><span class="co">#</span></a>
+<a class="sourceLine" id="cb37-7" data-line-number="7"><span class="co"># There&#39;s probably a way to extract each of these parts out like we did with the</span></a>
+<a class="sourceLine" id="cb37-8" data-line-number="8"><span class="co"># forecast library, but I don&#39;t want to dig around in the prophet documentation,</span></a>
+<a class="sourceLine" id="cb37-9" data-line-number="9"><span class="co"># so I won&#39;t ¯\_(ツ)_/¯</span></a>
+<a class="sourceLine" id="cb37-10" data-line-number="10"><span class="kw">prophet_plot_components</span>(prophet_model, prophet_predict) </a></code></pre></div>
+<p><img src="/class/09-class_files/figure-html/prophet-forecasting-2.png" width="672" /></p>
+<h2 id="clearest-and-muddiest-things">Clearest and muddiest things</h2>
+<p>Go to <a href="https://goo.gl/forms/rSIbw1voOV2vWKMD2">this form</a> and answer these two questions:</p>
+<ol style="list-style-type: decimal">
+<li>What was the muddiest thing from class today? What are you still wondering about?</li>
+<li>What was the clearest thing from class today? What was the most exciting thing you learned?</li>
+</ol>
+<p>I’ll compile the questions and send out answers after class.</p>
