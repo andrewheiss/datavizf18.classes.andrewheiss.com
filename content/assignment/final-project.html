@@ -9,4 +9,85 @@ editor_options:
 
 
 
-<p>The instructions for the final project will be posted by the end of October.</p>
+<p><span><label for="sn-1" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-1" class="margin-toggle"/><span class="marginnote"> <img src="https://media.giphy.com/media/XreQmk7ETCak0/giphy.gif" alt="Thumbs up computer kid" /><br />
+<br />
+</span></span> You made it to the end of our whirlwind tour of data visualization principles! Congratulations!</p>
+<p>Now you get to show off all the tools you learned with a beautiful, truthful, narrative visualization.</p>
+<h2 id="visualization">Visualization</h2>
+<p>For your final project, you will take a dataset, explore it, tinker with it, and tell a nuanced story about it using at least three graphs.</p>
+<p>I want this project to be as useful for you and your future career as possible—you’ll hopefully want to show off your final project in a portfolio or during job interviews.</p>
+<p>Accordingly, you have some choice in what data you can use for this project. I’ve found several different high-quality datasets online related to the core MPA tracks (and some business stuff too, for the non-MPAs in the class). <strong>You do not have to choose a dataset in your given emphasis.</strong> Choose whatever one you are most interested in or will have the most fun with.</p>
+<h3 id="data-from-the-internet">Data from the internet</h3>
+<p>Go to <a href="https://toolbox.google.com/datasetsearch">Google Dataset Search</a> or Utah’s <a href="https://opendata.utah.gov/">Open Data Catalog</a> (or anywhere else online), find an interesting dataset and ask questions about it. Here are some different high-quality datasets that students have worked with before:</p>
+<h3 id="nonprofit-management">Nonprofit management</h3>
+<ul>
+<li><a href="https://www.kaggle.com/crawford/us-charities-and-nonprofits">U.S. Charities and Non-profits</a>: All of the charities and nonprofits registered with the IRS<span><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"/><span class="sidenote">Source: IRS. This is actually split into six separate files. You can combine them all into one massive national database with <code>bind_rows()</code>, or filter the data to include specific states (or a single state). It all depends on the story you’re telling.<br />
+<br />
+</span></span></li>
+<li><a href="https://data.world/causebot/grant-2010-to-2016">Nonprofit Grants 2010 to 2016</a>: Nonprofit grants made in the US as listed in Schedule I of the IRS 990 tax form between 2010 to 2016<span><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle"/><span class="sidenote">Source: IRS<br />
+<br />
+</span></span></li>
+</ul>
+<h3 id="federal-state-and-local-government-management">Federal, state, and local government management</h3>
+<ul>
+<li><a href="https://www.kaggle.com/kwullum/deadly-traffic-accidents-in-the-uk-2015">Deadly traffic accidents in the UK (2015)</a>: List of all traffic-related deaths in the UK in 2015<span><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle"/><span class="sidenote">Source: <a href="https://data.gov.uk/dataset/road-accidents-safety-data/resource/ceb00cff-443d-4d43-b17a-ee13437e9564">data.gov.uk</a><br />
+<br />
+</span></span></li>
+<li><a href="https://www.kaggle.com/fema/firefighter-fatalities">Firefighter Fatalities in the United States</a>: Name, rank, and cause of death for all firefighters killed since 2000<span><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle"/><span class="sidenote">Source: FEMA<br />
+<br />
+</span></span></li>
+<li><a href="https://www.kaggle.com/fema/federal-disasters">Federal Emergencies and Disasters, 1953–Present</a>: Every federal emergency or disaster declared by the President of the United States since 1953<span><label for="sn-6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-6" class="margin-toggle"/><span class="sidenote">Source: FEMA<br />
+<br />
+</span></span></li>
+<li><a href="https://www.kaggle.com/START-UMD/gtd">Global Terrorism Database (1970–2016)</a>: 170,000 terrorist attacks worldwide, 1970-2016<span><label for="sn-7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-7" class="margin-toggle"/><span class="sidenote">Source: National Consortium for the Study of Terrorism and Responses to Terrorism (START), University of Maryland<br />
+<br />
+</span></span></li>
+<li><a href="https://data.world/cityofaustin/i26j-ai4z">City of Austin 311 Unified Data</a>: All 311 calls to the City of Austin since 2014<span><label for="sn-8" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-8" class="margin-toggle"/><span class="sidenote">Source: City of Austin<br />
+<br />
+</span></span></li>
+</ul>
+<h3 id="business-management">Business management</h3>
+<ul>
+<li><a href="https://www.kaggle.com/jiashenliu/515k-hotel-reviews-data-in-europe">515K Hotel Reviews Data in Europe</a>: 515,000 customer reviews and scoring of 1,493 luxury hotels across Europe<span><label for="sn-9" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-9" class="margin-toggle"/><span class="sidenote">Source: Booking.com<br />
+<br />
+</span></span></li>
+<li><a href="https://www.kaggle.com/chasebank/bank-deposits">Chase Bank Branch Deposits, 2010–2016</a>: Records for every branch of Chase Bank in the United States<span><label for="sn-10" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-10" class="margin-toggle"/><span class="sidenote">Source: Chase Bank. This dataset is not quite tidy and will require a little bit of reshaping with <code>gather()</code>, since there are individual columns of deposits per year.<br />
+<br />
+</span></span></li>
+</ul>
+<h2 id="instructions">Instructions</h2>
+<p>Here’s what you’ll need to do:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Download</strong> a dataset and explore it. Many of these datasets are large and will not open (well) in Excel, so you’ll need to load the CSV file into R with <code>read_csv()</code>. Most of these datasets have nice categorical variables that you can use for grouping and summarizing, and many have time components too, so you can look at trends. Your past problem sets and in-class examples will come in handy here.</li>
+<li><strong>Find</strong> a story in the data. Explore that story and make sure it’s true and insightful.</li>
+<li>Use R to <strong>create</strong> multiple graphs to tell the story. You can make as many graphs as you want, but you must use at least <strong>three</strong> different chart types (i.e. don’t just make three scatterplots or three maps).</li>
+<li>Export these figures as PDF files, place them in Adobe Illustrator (or InDesign or Gravit Designer or Inkscape), and <strong>make</strong> one combined graphic or handout where you tell the complete story. You have a lot of latitude in how you do this. You can make a graphic-heavy one-page handout. You can make something along the lines of the <a href="https://www.wired.co.uk/article/nuclear-power-reactors-global">this</a>, with one big graphic + smaller subgraphics + explanatory text. Just don’t make a <a href="https://medium.com/@kazarnowicz/why-infographics-are-bad-3a2fa49673e2">goofy infographic</a>. Whatever you do, the final figure must include all the graphics, must have some explanatory text to help summarize the narrative, and must be well designed.</li>
+<li><strong>Export</strong> the final graphic from Illustrator as a PDF and a PNG.</li>
+<li><strong>Write</strong> a memo using R Markdown to introduce, frame, and describe your story and figure. <a href="/files/your_name_finalproject.Rmd">Use this template to get started</a>. You should include the following in the memo:
+<ul>
+<li>Executive summary</li>
+<li>Background information and summary of the data</li>
+<li>Explanation, description, and code for each individual figure</li>
+<li>Explanation and description for the final figure</li>
+<li>Final figure should be included as an image (remember <code>![Caption goes here](path/to/file)</code>)</li>
+</ul></li>
+</ol>
+<p>Remember to follow R Markdown etiquette rules and style—don’t have it output extraneous messages or warnings, include summary tables in nice tables, adjust the dimensions for your figures, and remove the placeholder text that’s in the template already (i.e. I don’t wan’t to see stuff like “Describe and show how you cleaned and reshaped the data” in the final report.)</p>
+<p>You can <a href="/files/example_final.zip">download a full example of what a final project might look like</a> (but don’t make your final combined visualization look exactly like this—show some creativity!)</p>
+<p>Also, <a href="https://datavizf17.classes.andrewheiss.com/final-projects/">you can look through past projects</a>.</p>
+<h2 id="final-deliverables">Final deliverables</h2>
+<p>You <strong>must</strong> e-mail me the following files <strong>before</strong> the deadline.<span><label for="sn-11" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-11" class="margin-toggle"/><span class="marginnote"> <a href="/assignment/rubrics/final-project-rubric.pdf"><img src="/images/rubrics/final-project-rubric.png" alt="Final project rubric" /></a><br />
+<br />
+</span></span></p>
+<ol style="list-style-type: decimal">
+<li>A memo introducing and describing your final graphic (see full instructions above)</li>
+<li>A standalone PDF of your graphic exported from Illustrator</li>
+<li>A standalone PNG of your graphic exported from Illustrator</li>
+</ol>
+<p><strong>No late work will be accepted for this project since it’s the last project and it counts as your final.</strong></p>
+<p>I will use <a href="/assignment/rubrics/final-project-rubric.pdf">this rubric</a> to grade the final product.</p>
+<p><span><label for="sn-12" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-12" class="margin-toggle"/><span class="marginnote"> <img src="https://media.giphy.com/media/l4HodBpDmoMA5p9bG/giphy.gif" alt="Clapping" /><br />
+<br />
+</span></span> I am happy to give feedback and help along the way—just not at, like, 10 PM on the night it’s due. Please don’t hesitate to come and get help! My goal is for you to have a beautiful graphic in the end that you’ll want to show off to all your friends, family, neighbors, employers, and strangers on the street—I’m not trying to trip you up or give you trick questions!</p>
+<p>And that’s it. <strong>You’re done!</strong> Go out into the world now and make beautiful, insightul, and truthful graphics.</p>
+<p><a href="https://24ways.org/2010/go-forth-and-make-awesomeness/"><span class="newthought">Go forth and make awesomeness.</span></a></p>
