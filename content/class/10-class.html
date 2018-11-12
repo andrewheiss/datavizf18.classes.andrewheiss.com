@@ -13,18 +13,486 @@ editor_options:
 ---
 
 <!-- BLOGDOWN-HEAD -->
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span. { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+</style>
 <!-- /BLOGDOWN-HEAD -->
 
 <h2>Contents</h2>
 <div id="TOC">
 <ul>
 <li><a href="#slides">Slides</a></li>
+<li><a href="#installing-sf-and-other-gis-software">Installing <code>sf</code> and other GIS software</a></li>
+<li><a href="#projections-and-coordinate-reference-systems">Projections and coordinate reference systems</a></li>
+<li><a href="#shapefiles-to-download">Shapefiles to download</a></li>
+<li><a href="#live-code">Live code</a></li>
+<li><a href="#examples-of-using-the-sf-library">Examples of using the <code>sf</code> library</a><ul>
+<li><a href="#load-shapefiles">Load shapefiles</a></li>
+<li><a href="#wrangle-and-clean-data">Wrangle and clean data</a></li>
+<li><a href="#world-map-with-different-projections">World map with different projections</a></li>
+<li><a href="#us-map-with-different-projections">US map with different projections</a></li>
+<li><a href="#plotting-libraries-and-counties">Plotting libraries and counties</a></li>
+<li><a href="#converting-to-different-projections">Converting to different projections</a></li>
+<li><a href="#making-your-own-geoencoded-data">Making your own geoencoded data</a></li>
+<li><a href="#centroids">Centroids</a></li>
+</ul></li>
 <li><a href="#clearest-and-muddiest-things">Clearest and muddiest things</a></li>
 </ul>
 </div>
 
 <h2 id="slides">Slides</h2>
-<p>The slides from today will go here.</p>
+<p><a href="/slides/MPA-635_2018-11-06.pdf">Download the slides from today’s lecture</a>.</p>
+<figure>
+<a href="/slides/MPA-635_2018-11-06.pdf"><img src="/images/slides/slides_2018-11-06.png" alt="First slide" /></a>
+</figure>
+<h2 id="installing-sf-and-other-gis-software">Installing <code>sf</code> and other GIS software</h2>
+<ol style="list-style-type: decimal">
+<li><p>Plotting geographic stuff with ggplot is easy nowadays with the new <code>sf</code> package, which works nicely within the tidyverse paradigm. Using the “Packages” panel in RStudio, install these packages: <code>sf</code>, <code>maps</code>, <code>maptools</code>, and <code>rgeos</code></p></li>
+<li><strong>Extra step for macOS people only</strong>: R doesn’t do all the geographic calculations by itself—it relies on a few pieces of standalone GIS software behind the scenes. When people on Windows install <code>sf</code>, those pieces of software <em>should</em> be installed automatically. This doesn’t happen on macOS, so you have to install them manually. The easiest way to do this is with Terminal. Here’s what you have to do:
+<ol style="list-style-type: decimal">
+<li>Open Terminal</li>
+<li><p>Type <code>xcode-select --install</code></p>
+<p>A software update popup window should appear that will ask if you want to install command line developer tools. Click on “Install” (you don’t need to click on “Get Xcode”)</p></li>
+<li>Go to <a href="https://brew.sh/">brew.sh</a>, copy the big long command under “Install Homebrew” (starts with <code>/usr/bin/ruby -e &quot;$(curl -fsSL...</code>), paste it into Terminal, and press enter. This installs Homebrew, which is special software that lets you install Unix-y programs from the terminal.<span><label for="sn-1" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-1" class="margin-toggle"/><span class="marginnote"> You can install stuff like MySQL, Python, Apache, and even R if you want; there’s a <a href="http://formulae.brew.sh/">full list of Homebrew formulae here</a>.<br />
+<br />
+</span></span></li>
+<li><p>Type this line in Terminal to install <code>gdal</code>, <code>geos</code>, and <code>proj</code>:</p>
+<pre><code> brew install gdal geos proj udunits</code></pre></li>
+<li><p>Wait for a few minutes while all that stuff compiles.</p></li>
+</ol></li>
+<li><p>Verify that this all worked by running <code>library(sf)</code> in RStudio. You should see a message saying something like <code>Linking to GEOS 3.6.1, GDAL 2.1.3, proj.4 4.9.3</code>. That means it’s working.</p></li>
+</ol>
+<h2 id="projections-and-coordinate-reference-systems">Projections and coordinate reference systems</h2>
+<p>As you read in this week’s readings, projections matter a lot for maps. You can convert your geographic data between different coordinate systems (or projections)<span><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"/><span class="sidenote">TECHNICALLY coordinate systems and projection systems <a href="https://gis.stackexchange.com/a/149751/56265">are different things</a>, but I’m not a geographer and I don’t care that much about the nuance.<br />
+<br />
+</span></span> fairly easily with <code>sf</code>. You can use <code>coord_sf(crs = st_crs(XXXX))</code> to convert coordinate reference systems (CRS) as you plot, or use <code>st_transform()</code> to convert data frames to a different CRS.</p>
+<p>There are standard indexes of more than 4,000 of these projections (!!!) at <a href="http://spatialreference.org/">spatialreference.org</a> or at <a href="https://epsg.io/">epsg.io</a>. Here are some common ones:</p>
+<ul>
+<li><a href="http://spatialreference.org/ref/esri/54002/">54002</a>: Equidistant cylindrical projection for the world<span><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle"/><span class="sidenote">This is essentially the <a href="https://en.wikipedia.org/wiki/Gall%E2%80%93Peters_projection">Gall-Peters projection</a> from <a href="https://www.youtube.com/watch?v=vVX-PrBRtTY">the West Wing clip</a>.<br />
+<br />
+</span></span></li>
+<li><a href="http://spatialreference.org/ref/esri/54004/">54004</a>: Mercator projection for the world</li>
+<li><a href="http://spatialreference.org/ref/esri/54008/">54008</a>: Sinusoidal projection for the world</li>
+<li><a href="http://spatialreference.org/ref/esri/54009/">54009</a>: Mollweide projection for the world</li>
+<li><a href="http://spatialreference.org/ref/esri/54030/">54030</a>: Robinson projection for the world<span><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle"/><span class="sidenote">This is my favorite world projection.<br />
+<br />
+</span></span></li>
+<li><a href="http://spatialreference.org/ref/epsg/4326/">4326</a>: WGS 84: DOD GPS coordinates (standard -180 to 180 system)</li>
+<li><a href="http://spatialreference.org/ref/epsg/4269/">4269</a>: NAD 83: Relatively common projection for North America</li>
+<li><a href="http://spatialreference.org/ref/esri/102003/">102003</a>: Albers projection specifically for the contiguous United States</li>
+</ul>
+<p>Alternatively, instead of using these index numbers, you can use any of the names listed at <a href="http://proj4.org/projections/index.html"><code>proj.4</code></a>, such as:</p>
+<ul>
+<li><code>st_crs(&quot;+proj=merc&quot;)</code>: Mercator</li>
+<li><code>&quot;+proj=robin&quot;</code>: Robinson</li>
+<li><code>&quot;+proj=moll&quot;</code>: Mollweide</li>
+<li><code>&quot;+proj=aeqd&quot;</code>: Azimuthal Equidistant</li>
+<li><code>&quot;+proj=cass&quot;</code>: Cassini-Soldner</li>
+</ul>
+<h2 id="shapefiles-to-download">Shapefiles to download</h2>
+<p>Download and unzip these and put them in a folder named “data” in a new RStudio project:</p>
+<ul>
+<li><i class="far fa-map"></i> <a href="https://www.naturalearthdata.com/downloads/110m-cultural-vectors/">Natural Earth Admin 0—Countries</a></li>
+<li><i class="far fa-map"></i> <a href="https://gis.utah.gov/data/boundaries/citycountystate/">Utah county boundaries</a></li>
+<li><i class="far fa-map"></i> <a href="https://gis.utah.gov/data/society/schools-libraries/">Utah libraries</a></li>
+<li><i class="far fa-map"></i> <a href="https://gis.utah.gov/data/society/places-of-worship/">Utah places of worship</a></li>
+<li><i class="far fa-map"></i> <a href="https://www.census.gov/geo/maps-data/data/cbf/cbf_state.html">US state boundaries</a></li>
+</ul>
+<h2 id="live-code">Live code</h2>
+<p>Use this link to see the code that I’m actually typing:</p>
+<ul>
+<li><i class="fas fa-globe"></i> <a href="https://andhs.co/live-code" class="uri">https://andhs.co/live-code</a></li>
+</ul>
+<p>I’ve saved the R script to Dropbox, and that link goes to a live version of that file. Refresh or re-open the link as needed to copy/paste code I type up on the screen.</p>
+<h2 id="examples-of-using-the-sf-library">Examples of using the <code>sf</code> library</h2>
+<p>First we load the packages we’ll be using:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">library</span>(sf)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">library</span>(scico)</a></code></pre></div>
+<h3 id="load-shapefiles">Load shapefiles</h3>
+<p>And then we load a bunch of shapefiles. You downloaded these from the links up above. This assumes they’re in a folder named data, with each collection of shapefile stuff in its own subfolder. The <code>stringsAsFactors</code> option makes it so any character-based columns are loaded as actual text data instead of as a factor. You can also use <code>read_sf()</code> to read these shapefiles without neeing to set <code>stringsAsFactors = FALSE</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Load all these shapefiles!</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># https://gis.utah.gov/data/boundaries/citycountystate/</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">utah_counties &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;data/Counties/Counties.shp&quot;</span>,</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">                         <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co"># https://gis.utah.gov/data/society/schools-libraries/</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">utah_libraries &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;data/Libraries/Libraries.shp&quot;</span>,</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">                          <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co"># https://gis.utah.gov/data/society/places-of-worship/</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">utah_places_of_worship &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;data/PlacesOfWorship/PlacesOfWorship.shp&quot;</span>,</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">                                  <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co"># https://www.census.gov/geo/maps-data/data/cbf/cbf_state.html</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">us_states &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;data/cb_2017_us_state_20m/cb_2017_us_state_20m.shp&quot;</span>,</a>
+<a class="sourceLine" id="cb3-16" data-line-number="16">                     <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co"># https://www.naturalearthdata.com/downloads/110m-cultural-vectors/</span></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19">countries &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;data/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp&quot;</span>,</a>
+<a class="sourceLine" id="cb3-20" data-line-number="20">                     <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<h3 id="wrangle-and-clean-data">Wrangle and clean data</h3>
+<p>Because <code>st_read()</code> (or <code>read_sf()</code>) loads these shapefiles as data frames, all our typical dplyr verbs work (like <code>mutate()</code>, <code>filter()</code>, <code>group_by()</code>, etc.). Let’s clean up a couple of these datasets:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Only look at contiguous US</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">states_<span class="dv">48</span> &lt;-<span class="st"> </span>us_states <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>(STUSPS <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;HI&quot;</span>, <span class="st">&quot;AK&quot;</span>, <span class="st">&quot;PR&quot;</span>)))</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co"># Omit Antarctica</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">countries_with_people &lt;-<span class="st"> </span>countries <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="st">  </span><span class="kw">filter</span>(ISO_A3 <span class="op">!=</span><span class="st"> &quot;ATA&quot;</span>)</a></code></pre></div>
+<h3 id="world-map-with-different-projections">World map with different projections</h3>
+<p>Making a map is really as simple as using <code>geom_sf()</code>. This is so magical.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> countries_with_people)</a></code></pre></div>
+<p><img src="/class/10-class_files/figure-html/super-simple-map-1.png" width="672" /></p>
+<p>We can change the projection of the map with <code>coord_sf()</code> and specify different coordinate reference systems (CRS). See above for a list of a bunch of different ones. Also, because <code>geom_sf()</code> is a standard ggplot layer, we assign it fills and colors and sizes and alphas and anything else you can do with a <code>geom_*()</code> layer.</p>
+<p>Also, the Natural Earth data conveniently includes columns indicating a country’s continent (<code>CONTINENT</code>), as well as a coloring scheme with 7–13 colors (<code>MAPCOLOR7</code>, <code>MAPCOLOR9</code>, etc.) so that no countries with a shared border share a color.</p>
+<p>Here are a bunch of maps colored differently and with different projections:</p>
+<figure class="fullwidth">
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">library</span>(patchwork)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">gall_peters &lt;-<span class="st"> </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> countries_with_people, <span class="kw">aes</span>(<span class="dt">fill =</span> <span class="kw">factor</span>(MAPCOLOR7)), </a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">          <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">size =</span> <span class="fl">0.1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="st">  </span><span class="kw">coord_sf</span>(<span class="dt">crs =</span> <span class="dv">54002</span>, <span class="dt">datum =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st">  </span><span class="co"># Equidistant (Gall-Peters)</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st">  </span><span class="co"># Turn off legend</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Gall-Peters&quot;</span>,</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">       <span class="dt">caption =</span> <span class="st">&quot;Filled with 7 colors&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>())</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12">robinson &lt;-<span class="st"> </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> countries_with_people, <span class="kw">aes</span>(<span class="dt">fill =</span> CONTINENT), </a>
+<a class="sourceLine" id="cb6-14" data-line-number="14">          <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">size =</span> <span class="fl">0.1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="st">  </span><span class="kw">coord_sf</span>(<span class="dt">crs =</span> <span class="dv">54030</span>, <span class="dt">datum =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st">  </span><span class="co"># Robinson</span></a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="st">  </span><span class="co"># coord_sf(crs = &quot;+proj=robin&quot;, datum = NA) +  # You can also do this</span></a>
+<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st">  </span><span class="co"># Turn off legend</span></a>
+<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Robinson&quot;</span>,</a>
+<a class="sourceLine" id="cb6-19" data-line-number="19">       <span class="dt">caption =</span> <span class="st">&quot;Filled by continent&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-20" data-line-number="20"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-21" data-line-number="21"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>())</a>
+<a class="sourceLine" id="cb6-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb6-23" data-line-number="23">sinusoidal &lt;-<span class="st"> </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-24" data-line-number="24"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> countries_with_people, <span class="kw">aes</span>(<span class="dt">fill =</span> <span class="kw">factor</span>(MAPCOLOR9)), </a>
+<a class="sourceLine" id="cb6-25" data-line-number="25">          <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">size =</span> <span class="fl">0.1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-26" data-line-number="26"><span class="st">  </span><span class="kw">coord_sf</span>(<span class="dt">crs =</span> <span class="dv">54008</span>, <span class="dt">datum =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st">  </span><span class="co"># Sinusoidal</span></a>
+<a class="sourceLine" id="cb6-27" data-line-number="27"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st">  </span><span class="co"># Turn off legend</span></a>
+<a class="sourceLine" id="cb6-28" data-line-number="28"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Sinusoidal&quot;</span>,</a>
+<a class="sourceLine" id="cb6-29" data-line-number="29">       <span class="dt">caption =</span> <span class="st">&quot;Filled with 9 colors&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-30" data-line-number="30"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-31" data-line-number="31"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>())</a>
+<a class="sourceLine" id="cb6-32" data-line-number="32"></a>
+<a class="sourceLine" id="cb6-33" data-line-number="33">mercator &lt;-<span class="st"> </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-34" data-line-number="34"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> countries_with_people, <span class="kw">aes</span>(<span class="dt">fill =</span> <span class="kw">factor</span>(MAPCOLOR13)), </a>
+<a class="sourceLine" id="cb6-35" data-line-number="35">          <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">size =</span> <span class="fl">0.1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-36" data-line-number="36"><span class="st">  </span><span class="kw">coord_sf</span>(<span class="dt">crs =</span> <span class="dv">3785</span>, <span class="dt">datum =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st">  </span><span class="co"># Mercator</span></a>
+<a class="sourceLine" id="cb6-37" data-line-number="37"><span class="st">  </span><span class="co"># coord_sf(crs = &quot;+proj=merc&quot;, datum = NA) +  # You can also do this</span></a>
+<a class="sourceLine" id="cb6-38" data-line-number="38"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span><span class="st">  </span><span class="co"># Turn off legend</span></a>
+<a class="sourceLine" id="cb6-39" data-line-number="39"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Mercator&quot;</span>,</a>
+<a class="sourceLine" id="cb6-40" data-line-number="40">       <span class="dt">caption =</span> <span class="st">&quot;Filled with 13 colors&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-41" data-line-number="41"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-42" data-line-number="42"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>())</a>
+<a class="sourceLine" id="cb6-43" data-line-number="43"></a>
+<a class="sourceLine" id="cb6-44" data-line-number="44"><span class="co"># Use patchwork to put these in a 2x2 grid</span></a>
+<a class="sourceLine" id="cb6-45" data-line-number="45">(gall_peters <span class="op">|</span><span class="st"> </span>robinson) <span class="op">/</span><span class="st"> </span>(sinusoidal <span class="op">|</span><span class="st"> </span>mercator)</a></code></pre></div>
+<p><img src="/class/10-class_files/figure-html/different-world-projections-1.png" width="100%" /></p>
+</figure>
+<h3 id="us-map-with-different-projections">US map with different projections</h3>
+<p>The map of the US can also be projected differently—two common projections are NAD83 and Albers.</p>
+<p>Unfortunately the shapefile from the Census doesn’t include a cool column for state colors. BUUUUT I found <a href="https://www.flickr.com/photos/walkingsf/6366242033">a map somebody made on Flickr with 4 colors</a>, and they included a list of color divisions, so I copied that list and made a mini data frame of it.</p>
+<figure class="fullwidth">
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># I named the state column NAME to match what it is in the states_48 dataset to</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co"># make joining easier</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">state_colors &lt;-<span class="st"> </span><span class="kw">tribble</span>(</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">  <span class="op">~</span>state_color, <span class="op">~</span>NAME,</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">  <span class="dv">0</span>, <span class="kw">c</span>(<span class="st">&quot;Alaska&quot;</span>, <span class="st">&quot;Arkansas&quot;</span>, <span class="st">&quot;Connecticut&quot;</span>, <span class="st">&quot;District of Columbia&quot;</span>, <span class="st">&quot;Iowa&quot;</span>, <span class="st">&quot;Kentucky&quot;</span>, <span class="st">&quot;Michigan&quot;</span>, <span class="st">&quot;Nevada&quot;</span>, <span class="st">&quot;New Mexico&quot;</span>, <span class="st">&quot;North Carolina&quot;</span>, <span class="st">&quot;Pennsylvania&quot;</span>, <span class="st">&quot;Vermont&quot;</span>, <span class="st">&quot;Wyoming&quot;</span>),</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">  <span class="dv">1</span>, <span class="kw">c</span>(<span class="st">&quot;Florida&quot;</span>, <span class="st">&quot;Illinois&quot;</span>, <span class="st">&quot;Minnesota&quot;</span>, <span class="st">&quot;Montana&quot;</span>, <span class="st">&quot;Nebraska&quot;</span>, <span class="st">&quot;New Hampshire&quot;</span>, <span class="st">&quot;Oklahoma&quot;</span>, <span class="st">&quot;Tennessee&quot;</span>, <span class="st">&quot;Utah&quot;</span>, <span class="st">&quot;Washington&quot;</span>, <span class="st">&quot;West Virginia&quot;</span>),</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">  <span class="dv">2</span>, <span class="kw">c</span>(<span class="st">&quot;California&quot;</span>, <span class="st">&quot;Colorado&quot;</span>, <span class="st">&quot;Delaware&quot;</span>, <span class="st">&quot;Georgia&quot;</span>, <span class="st">&quot;Hawaii&quot;</span>, <span class="st">&quot;Idaho&quot;</span>, <span class="st">&quot;Maine&quot;</span>, <span class="st">&quot;Massachusetts&quot;</span>, <span class="st">&quot;Mississippi&quot;</span>, <span class="st">&quot;Missouri&quot;</span>, <span class="st">&quot;New Jersey&quot;</span>, <span class="st">&quot;North Dakota&quot;</span>, <span class="st">&quot;Ohio&quot;</span>, <span class="st">&quot;Texas&quot;</span>, <span class="st">&quot;Virginia&quot;</span>),</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">  <span class="dv">3</span>, <span class="kw">c</span>(<span class="st">&quot;Alabama&quot;</span>, <span class="st">&quot;Arizona&quot;</span>, <span class="st">&quot;Indiana&quot;</span>, <span class="st">&quot;Kansas&quot;</span>, <span class="st">&quot;Louisiana&quot;</span>, <span class="st">&quot;Maryland&quot;</span>, <span class="st">&quot;New York&quot;</span>, <span class="st">&quot;Oregon&quot;</span>, <span class="st">&quot;Rhode Island&quot;</span>, <span class="st">&quot;South Carolina&quot;</span>, <span class="st">&quot;South Dakota&quot;</span>, <span class="st">&quot;Wisconsin&quot;</span>)</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="st">  </span><span class="kw">unnest</span>()</a>
+<a class="sourceLine" id="cb7-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">states_<span class="dv">48</span>_colored &lt;-<span class="st"> </span>states_<span class="dv">48</span> <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="st">  </span><span class="kw">left_join</span>(state_colors, <span class="dt">by =</span> <span class="st">&quot;NAME&quot;</span>)</a>
+<a class="sourceLine" id="cb7-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15">nad83 &lt;-<span class="st"> </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> states_<span class="dv">48</span>_colored, <span class="kw">aes</span>(<span class="dt">fill =</span> <span class="kw">as.factor</span>(state_color)),</a>
+<a class="sourceLine" id="cb7-17" data-line-number="17">          <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">size =</span> <span class="fl">0.1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;NAD83&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="st">  </span><span class="kw">coord_sf</span>(<span class="dt">crs =</span> <span class="dv">4269</span>, <span class="dt">datum =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st">  </span><span class="co"># NAD83</span></a>
+<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-22" data-line-number="22"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text =</span> <span class="kw">element_blank</span>())</a>
+<a class="sourceLine" id="cb7-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb7-24" data-line-number="24">albers &lt;-<span class="st"> </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-25" data-line-number="25"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> states_<span class="dv">48</span>_colored, <span class="kw">aes</span>(<span class="dt">fill =</span> <span class="kw">as.factor</span>(state_color)),</a>
+<a class="sourceLine" id="cb7-26" data-line-number="26">          <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">size =</span> <span class="fl">0.1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-27" data-line-number="27"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Albers&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-28" data-line-number="28"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-29" data-line-number="29"><span class="st">  </span><span class="kw">coord_sf</span>(<span class="dt">crs =</span> <span class="dv">102003</span>, <span class="dt">datum =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st">  </span><span class="co"># Albers</span></a>
+<a class="sourceLine" id="cb7-30" data-line-number="30"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-31" data-line-number="31"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text =</span> <span class="kw">element_blank</span>())</a>
+<a class="sourceLine" id="cb7-32" data-line-number="32"></a>
+<a class="sourceLine" id="cb7-33" data-line-number="33">nad83 <span class="op">+</span><span class="st"> </span>albers <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-34" data-line-number="34"><span class="st">  </span><span class="kw">plot_layout</span>(<span class="dt">ncol =</span> <span class="dv">2</span>)</a></code></pre></div>
+<p><img src="/class/10-class_files/figure-html/different-us-projections-1.png" width="1152" /></p>
+</figure>
+<h3 id="plotting-libraries-and-counties">Plotting libraries and counties</h3>
+<p>The <code>geom_sf()</code> function is smart enough to adapt to the type of data in the magic <code>geometry</code> column in the shapefile. If the geometry is a polygon, like country or state shapes, it’ll make a polygon. If the geometry is a bunch of x, y coordinates, it’ll make points. Here’s an example of using <code>geom_sf()</code> to make both county shapes and points marking libraries.</p>
+<p>Also, again because these shapefiles are essentially data frames, we can use standard dplyr verbs on them, like <code>group_by()</code> and <code>summarize()</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># Calculate the count of libraries per county</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">libraries_per_county &lt;-<span class="st"> </span>utah_libraries <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw">group_by</span>(COUNTY) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">num_libraries =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  </span><span class="co"># Change the NAME column to upper case so that it can join with the utah_counties data frame</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">NAME =</span> <span class="kw">str_to_upper</span>(COUNTY))</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">utah_counties_with_libraries &lt;-<span class="st"> </span>utah_counties <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="st">  </span><span class="co"># Join the summarized libraries-per-county data</span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="st">  </span><span class="kw">st_join</span>(libraries_per_county) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="st">  </span><span class="co"># Calculate the number of libraries per capita</span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">people_per_library =</span> POP_CURRES <span class="op">/</span><span class="st"> </span>num_libraries)</a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co"># Plot both of these with geom_sf</span></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="st">  </span><span class="co"># This will plot the counties</span></a>
+<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> utah_counties_with_libraries, </a>
+<a class="sourceLine" id="cb8-18" data-line-number="18">          <span class="kw">aes</span>(<span class="dt">fill =</span> people_per_library), <span class="dt">size =</span> <span class="fl">0.25</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="st">  </span><span class="co"># This will plot the libraries as points</span></a>
+<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> libraries_per_county, <span class="dt">size =</span> <span class="fl">0.5</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="st">  </span><span class="kw">coord_sf</span>(<span class="dt">crs =</span> <span class="dv">26912</span>, <span class="dt">datum =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st">  </span><span class="co"># 26912 is NAD83, but specifically for North America</span></a>
+<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="st">  </span><span class="kw">scale_fill_scico</span>(<span class="dt">palette =</span> <span class="st">&quot;bilbao&quot;</span>, <span class="dt">end =</span> <span class="fl">0.9</span>, <span class="dt">begin =</span> <span class="fl">0.05</span>,</a>
+<a class="sourceLine" id="cb8-23" data-line-number="23">                   <span class="dt">labels =</span> scales<span class="op">::</span>comma, <span class="dt">na.value =</span> <span class="st">&quot;white&quot;</span>,</a>
+<a class="sourceLine" id="cb8-24" data-line-number="24">                   <span class="dt">name =</span> <span class="st">&quot;People per library&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="kw">guide_colorbar</span>(<span class="dt">barwidth =</span> <span class="dv">10</span>, <span class="dt">barheight =</span> <span class="dv">1</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Libraries in Utah&quot;</span>,</a>
+<a class="sourceLine" id="cb8-27" data-line-number="27">       <span class="dt">subtitle =</span> <span class="st">&quot;Davis and Weber counties seem to be the most</span><span class="ch">\n</span><span class="st">underserved given their populations&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="st">  </span><span class="kw">theme_void</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-29" data-line-number="29"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</a>
+<a class="sourceLine" id="cb8-30" data-line-number="30">        <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>))</a></code></pre></div>
+<p><img src="/class/10-class_files/figure-html/plot-libraries-county-1.png" width="672" /></p>
+<h3 id="converting-to-different-projections">Converting to different projections</h3>
+<p>So far we’ve converted to different projections as we plot using <code>coord_sf()</code>. This forces all the <code>geom_sf()</code> layers to use the same CRS, regardless of what their <code>geometry</code> columns are currently using.</p>
+<p>Alternatively, you can make the CRS conversion within the data frame itself with <code>st_transform()</code>. This is useful for situations where you might want to plot things without <code>geom_sf()</code>, like adding labels with <code>geom_label()</code>, since your x and y coordinates need to be in the same projection as your other map elements.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">libraries_albers &lt;-<span class="st"> </span>utah_libraries <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">102003</span>)</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">libraries_albers <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(geometry) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
+<pre><code>## Geometry set for 6 features 
+## geometry type:  POINT
+## dimension:      XY
+## bbox:           xmin: -1434813 ymin: 212729 xmax: -1250077 ymax: 579980.8
+## epsg (SRID):    102003
+## proj4string:    +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=37.5 +lon_0=-96 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs
+## First 5 geometries:</code></pre>
+<pre><code>## POINT (-1323639 432520.5)</code></pre>
+<pre><code>## POINT (-1434813 212729)</code></pre>
+<pre><code>## POINT (-1324264 549928.3)</code></pre>
+<pre><code>## POINT (-1320397 560885.8)</code></pre>
+<pre><code>## POINT (-1300693 579980.8)</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">libraries_gps &lt;-<span class="st"> </span>utah_libraries <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">4326</span>)</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb16-4" data-line-number="4">libraries_gps <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(geometry) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
+<pre><code>## Geometry set for 6 features 
+## geometry type:  POINT
+## dimension:      XY
+## bbox:           xmin: -112.6421 ymin: 38.27423 xmax: -110.7378 ymax: 41.70823
+## epsg (SRID):    4326
+## proj4string:    +proj=longlat +datum=WGS84 +no_defs
+## First 5 geometries:</code></pre>
+<pre><code>## POINT (-111.7966 40.37548)</code></pre>
+<pre><code>## POINT (-112.6421 38.27423)</code></pre>
+<pre><code>## POINT (-112.0381 41.40833)</code></pre>
+<pre><code>## POINT (-112.0143 41.51064)</code></pre>
+<pre><code>## POINT (-111.818 41.70823)</code></pre>
+<h3 id="making-your-own-geoencoded-data">Making your own geoencoded data</h3>
+<p>You don’t have to rely on shapefiles you find on the internet for all your geographic plotting needs. You can make your own data! Here, I found the latitude and longitude for three cities in Utah with Google Maps.<span><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle"/><span class="sidenote">Right click anywhere in Google Maps, select “What’s here?”, and see the exact coordinates for that spot.<br />
+<br />
+</span></span> I made this data frame with <code>tribble()</code>, but you could also put these in a CSV file (or even have them in a CSV file already, like with the rat data from mini project 1).</p>
+<p>The <code>st_as_sf()</code> function converts the two columns into a magic <code>geometry</code> column based on the projection you feed it. In this case, 4326 is the standard -180 to 180 lat/lon system used by GPSes and Google Maps.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">city_data &lt;-<span class="st"> </span><span class="kw">tribble</span>(</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2">  <span class="op">~</span>city, <span class="op">~</span>long, <span class="op">~</span>lat,</a>
+<a class="sourceLine" id="cb23-3" data-line-number="3">  <span class="st">&quot;Provo&quot;</span>, <span class="fl">-111.652327</span>, <span class="fl">40.250396</span>,</a>
+<a class="sourceLine" id="cb23-4" data-line-number="4">  <span class="st">&quot;Salt Lake City&quot;</span>, <span class="fl">-111.921267</span>, <span class="fl">40.755425</span>,</a>
+<a class="sourceLine" id="cb23-5" data-line-number="5">  <span class="st">&quot;Moab&quot;</span>, <span class="fl">-109.553448</span>, <span class="fl">38.572405</span></a>
+<a class="sourceLine" id="cb23-6" data-line-number="6">) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-7" data-line-number="7"><span class="st">  </span><span class="kw">st_as_sf</span>(<span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">&quot;long&quot;</span>, <span class="st">&quot;lat&quot;</span>), <span class="dt">crs =</span> <span class="dv">4326</span>) </a>
+<a class="sourceLine" id="cb23-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb23-9" data-line-number="9">city_data</a></code></pre></div>
+<pre><code>## Simple feature collection with 3 features and 1 field
+## geometry type:  POINT
+## dimension:      XY
+## bbox:           xmin: -111.9213 ymin: 38.57241 xmax: -109.5534 ymax: 40.75543
+## epsg (SRID):    4326
+## proj4string:    +proj=longlat +datum=WGS84 +no_defs
+## # A tibble: 3 x 2
+##   city                       geometry
+##   &lt;chr&gt;                   &lt;POINT [°]&gt;
+## 1 Provo           (-111.6523 40.2504)
+## 2 Salt Lake City (-111.9213 40.75543)
+## 3 Moab           (-109.5534 38.57241)</code></pre>
+<p>This <code>city_data</code> object is now essentially a shapefile that is plottable with <code>geom_sf()</code>. Also, notice how even though <code>utah_shape</code> and <code>city_data</code> use different CRSes, <code>coord_sf()</code> forces them to plot using the same NAD83 26912 CRS.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="co"># Extract Utah out of the states_48 data</span></a>
+<a class="sourceLine" id="cb25-2" data-line-number="2">utah_shape &lt;-<span class="st"> </span>states_<span class="dv">48</span> <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(STUSPS <span class="op">==</span><span class="st"> &quot;UT&quot;</span>)</a>
+<a class="sourceLine" id="cb25-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb25-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> utah_shape, <span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb25-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> city_data) <span class="op">+</span></a>
+<a class="sourceLine" id="cb25-8" data-line-number="8"><span class="st">  </span><span class="kw">coord_sf</span>(<span class="dt">crs =</span> <span class="dv">26912</span>, <span class="dt">datum =</span> <span class="ot">NA</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb25-9" data-line-number="9"><span class="st">  </span><span class="kw">theme_void</span>()</a></code></pre></div>
+<p><img src="/class/10-class_files/figure-html/plot-cities-1.png" width="672" /></p>
+<p>We can add labels here too, but first we need a little bit of trickery. <code>geom_sf()</code> doesn’t handle labels, so we need to use our normal <code>geom_label()</code> function, which means we need an x and y value. As it stands now, we have an x and a y (longitude and latitude), but those values are stuck in the magic <code>geometry</code> column. We can extract them using the <code>st_coordinates()</code> function:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">city_data_with_xy &lt;-<span class="st"> </span>city_data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">long =</span> <span class="kw">st_coordinates</span>(.)[,<span class="dv">1</span>],</a>
+<a class="sourceLine" id="cb26-3" data-line-number="3">         <span class="dt">lat =</span> <span class="kw">st_coordinates</span>(.)[,<span class="dv">2</span>])</a>
+<a class="sourceLine" id="cb26-4" data-line-number="4">city_data_with_xy</a></code></pre></div>
+<pre><code>## Simple feature collection with 3 features and 3 fields
+## geometry type:  POINT
+## dimension:      XY
+## bbox:           xmin: -111.9213 ymin: 38.57241 xmax: -109.5534 ymax: 40.75543
+## epsg (SRID):    4326
+## proj4string:    +proj=longlat +datum=WGS84 +no_defs
+## # A tibble: 3 x 4
+##   city            long   lat             geometry
+##   &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt;          &lt;POINT [°]&gt;
+## 1 Provo          -112.  40.3  (-111.6523 40.2504)
+## 2 Salt Lake City -112.  40.8 (-111.9213 40.75543)
+## 3 Moab           -110.  38.6 (-109.5534 38.57241)</code></pre>
+<p>Neat! The one problem, though, is that it extracts them using whatever CRS the <code>geometry</code> column is currently set to. Here it’s 4326 (the Google Maps form), but if we want to use NAD83 (26912), these x and y points won’t work. We need to convert the <code>geometry</code> column to our desired final CRS <em>before</em> extracting the points. Notice how these points now are in the hundreds of thousands instead of between -180 and 180:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">city_data_with_xy &lt;-<span class="st"> </span>city_data <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">26912</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">long =</span> <span class="kw">st_coordinates</span>(.)[,<span class="dv">1</span>],</a>
+<a class="sourceLine" id="cb28-4" data-line-number="4">         <span class="dt">lat =</span> <span class="kw">st_coordinates</span>(.)[,<span class="dv">2</span>])</a>
+<a class="sourceLine" id="cb28-5" data-line-number="5">city_data_with_xy</a></code></pre></div>
+<pre><code>## Simple feature collection with 3 features and 3 fields
+## geometry type:  POINT
+## dimension:      XY
+## bbox:           xmin: 422233.8 ymin: 4270320 xmax: 626012.9 ymax: 4512016
+## epsg (SRID):    26912
+## proj4string:    +proj=utm +zone=12 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
+## # A tibble: 3 x 4
+##   city              long      lat           geometry
+##   &lt;chr&gt;            &lt;dbl&gt;    &lt;dbl&gt;        &lt;POINT [m]&gt;
+## 1 Provo          444521. 4455753. (444521.3 4455753)
+## 2 Salt Lake City 422234. 4512016. (422233.8 4512016)
+## 3 Moab           626013. 4270320. (626012.9 4270320)</code></pre>
+<p>With this numeric longitude and latitude, we can plot this data with regular <code>geom_*()</code> functions:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> utah_shape, <span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> city_data_with_xy) <span class="op">+</span></a>
+<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="st">  </span><span class="co"># This nudge value has to be huge because NAD83 uses giant numbers. If we were</span></a>
+<a class="sourceLine" id="cb30-5" data-line-number="5"><span class="st">  </span><span class="co"># plotting with the Google Maps 4326, we&#39;d only need to nudge a little bit</span></a>
+<a class="sourceLine" id="cb30-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_label</span>(<span class="dt">data =</span> city_data_with_xy, <span class="kw">aes</span>(<span class="dt">x =</span> long, <span class="dt">y =</span> lat, <span class="dt">label =</span> city),</a>
+<a class="sourceLine" id="cb30-7" data-line-number="7">             <span class="dt">nudge_y =</span> <span class="dv">25000</span>) <span class="op">+</span><span class="st">  </span></a>
+<a class="sourceLine" id="cb30-8" data-line-number="8"><span class="st">  </span><span class="co"># This forces the two geom_sf layers to use 26912, but doesn&#39;t affect</span></a>
+<a class="sourceLine" id="cb30-9" data-line-number="9"><span class="st">  </span><span class="co"># geom_label; we took care of that by hand</span></a>
+<a class="sourceLine" id="cb30-10" data-line-number="10"><span class="st">  </span><span class="kw">coord_sf</span>(<span class="dt">crs =</span> <span class="dv">26912</span>, <span class="dt">datum =</span> <span class="ot">NA</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb30-11" data-line-number="11"><span class="st">  </span><span class="kw">theme_void</span>()</a></code></pre></div>
+<p><img src="/class/10-class_files/figure-html/plot-cities-with-labels-1.png" width="672" /></p>
+<h3 id="centroids">Centroids</h3>
+<p>We didn’t cover this in class, but it’s helpful to know. You can use the <code>st_centroid()</code> function to find the middle of a polygon. This is helpful if you want to add labels to counties or states and put them in the middle without looking up their coordinates in Google Maps. Because you use <code>geom_label()</code> or <code>geom_text()</code> to plot the labels, you need to extract the coordinates like we did above, but that’s fairly trivial. Here’s the Utah libraries map with labels in the center of each county.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="co"># Find county centroids</span></a>
+<a class="sourceLine" id="cb31-2" data-line-number="2">counties_centroid &lt;-<span class="st"> </span>utah_counties <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="st">  </span><span class="co"># Convert geometry column to NAD83, since that&#39;s what we use in the final plot</span></a>
+<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="st">  </span><span class="kw">st_transform</span>(<span class="dv">26912</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-5" data-line-number="5"><span class="st">  </span><span class="co"># Calculate centroid points for every county</span></a>
+<a class="sourceLine" id="cb31-6" data-line-number="6"><span class="st">  </span><span class="kw">st_centroid</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-7" data-line-number="7"><span class="st">  </span><span class="co"># Extract these as actual numbers</span></a>
+<a class="sourceLine" id="cb31-8" data-line-number="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">long =</span> <span class="kw">st_coordinates</span>(.)[,<span class="dv">1</span>],</a>
+<a class="sourceLine" id="cb31-9" data-line-number="9">         <span class="dt">lat =</span> <span class="kw">st_coordinates</span>(.)[,<span class="dv">2</span>]) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-10" data-line-number="10"><span class="st">  </span><span class="co"># Make the county names title case instead of ALL CAPS</span></a>
+<a class="sourceLine" id="cb31-11" data-line-number="11"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">NAME =</span> <span class="kw">str_to_title</span>(NAME))</a>
+<a class="sourceLine" id="cb31-12" data-line-number="12"><span class="co"># This will probably give you a warning. I don&#39;t know why, but it still works in</span></a>
+<a class="sourceLine" id="cb31-13" data-line-number="13"><span class="co"># the end, so you can ignore it I guess</span></a>
+<a class="sourceLine" id="cb31-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb31-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb31-16" data-line-number="16"><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-17" data-line-number="17"><span class="st">  </span><span class="co"># This will plot the counties</span></a>
+<a class="sourceLine" id="cb31-18" data-line-number="18"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> utah_counties_with_libraries, </a>
+<a class="sourceLine" id="cb31-19" data-line-number="19">          <span class="kw">aes</span>(<span class="dt">fill =</span> people_per_library), <span class="dt">size =</span> <span class="fl">0.25</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-20" data-line-number="20"><span class="st">  </span><span class="co"># This will plot the libraries as points</span></a>
+<a class="sourceLine" id="cb31-21" data-line-number="21"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> libraries_per_county, <span class="dt">size =</span> <span class="fl">0.5</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-22" data-line-number="22"><span class="st">  </span><span class="co"># This will add the county labels</span></a>
+<a class="sourceLine" id="cb31-23" data-line-number="23"><span class="st">  </span><span class="kw">geom_label</span>(<span class="dt">data =</span> counties_centroid, <span class="kw">aes</span>(<span class="dt">x =</span> long, <span class="dt">y =</span> lat, <span class="dt">label =</span> NAME),</a>
+<a class="sourceLine" id="cb31-24" data-line-number="24">             <span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">alpha =</span> <span class="fl">0.25</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-25" data-line-number="25"><span class="st">  </span><span class="kw">coord_sf</span>(<span class="dt">crs =</span> <span class="dv">26912</span>, <span class="dt">datum =</span> <span class="ot">NA</span>) <span class="op">+</span><span class="st">  </span><span class="co"># 26912 is NAD83, but specifically for North America</span></a>
+<a class="sourceLine" id="cb31-26" data-line-number="26"><span class="st">  </span><span class="kw">scale_fill_scico</span>(<span class="dt">palette =</span> <span class="st">&quot;bilbao&quot;</span>, <span class="dt">end =</span> <span class="fl">0.9</span>, <span class="dt">begin =</span> <span class="fl">0.05</span>,</a>
+<a class="sourceLine" id="cb31-27" data-line-number="27">                   <span class="dt">labels =</span> scales<span class="op">::</span>comma, <span class="dt">na.value =</span> <span class="st">&quot;white&quot;</span>,</a>
+<a class="sourceLine" id="cb31-28" data-line-number="28">                   <span class="dt">name =</span> <span class="st">&quot;People per library&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-29" data-line-number="29"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="kw">guide_colorbar</span>(<span class="dt">barwidth =</span> <span class="dv">10</span>, <span class="dt">barheight =</span> <span class="dv">1</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-30" data-line-number="30"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Libraries in Utah&quot;</span>,</a>
+<a class="sourceLine" id="cb31-31" data-line-number="31">       <span class="dt">subtitle =</span> <span class="st">&quot;Davis and Weber counties seem to be the most</span><span class="ch">\n</span><span class="st">underserved given their populations&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-32" data-line-number="32"><span class="st">  </span><span class="kw">theme_void</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-33" data-line-number="33"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</a>
+<a class="sourceLine" id="cb31-34" data-line-number="34">        <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>))</a></code></pre></div>
+<p><img src="/class/10-class_files/figure-html/centroid-example-1.png" width="672" /></p>
+<p>So cool!</p>
 <h2 id="clearest-and-muddiest-things">Clearest and muddiest things</h2>
 <p>Go to <a href="https://goo.gl/forms/rSIbw1voOV2vWKMD2">this form</a> and answer these two questions:</p>
 <ol style="list-style-type: decimal">

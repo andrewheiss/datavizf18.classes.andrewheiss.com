@@ -73,13 +73,14 @@ lessons:
   - title: "Space"
     date: "November 6"
     reading: "10-reading"
+    class: "10-class"
 
   - title: "Text"
     date: "November 13"
     reading: "11-reading"
   
   - title: "**Problem set 5**"
-    date: "November 13"
+    date: "November 20"
     assignment: "05-problem-set"
 
   - title: '<span class="fake-header-table">Communicating</span>'
