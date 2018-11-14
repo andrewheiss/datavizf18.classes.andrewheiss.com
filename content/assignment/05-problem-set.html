@@ -1,7 +1,7 @@
 ---
 title: "Problem set 5"
-date: "2018-11-13"
-due_date: "2018-11-13"
+date: "2018-11-20"
+due_date: "2018-11-20"
 due_time: "11:59 PM"
 editor_options: 
   chunk_output_type: console
@@ -9,4 +9,62 @@ editor_options:
 
 
 
-<p>The instructions for this problem set will be posted at least one week before it is due.</p>
+<h2 id="task-0-setting-things-up">Task 0: Setting things up</h2>
+<p>Create a new RStudio project somewhere on your computer. Open that new folder in Windows File Explorer or macOS Finder (however you navigate around the files on your computer), and create subfolders there named <code>output</code> and <code>data</code>.</p>
+<p><a href="/files/your-name_problem-set-5.Rmd">Download this R Markdown file</a> and place it in <em>the root</em> of your newly-created project<span><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"/><span class="sidenote">You’ll probably have to right click on the link and choose “Save link as…”.<br />
+<br />
+</span></span> It contains an basic outline/skeleton of the tasks you’ll do in this assignment. Like before, it doesn’t have a lot.</p>
+<p>Download these files and place them in your data folder:</p>
+<ul>
+<li><a href="/data/riaa.csv"><i class="fas fa-table"></i> <code>riaa.csv</code></a>: This comes from the Recording Industry Association of America (RIAA)’s <a href="https://www.riaa.com/u-s-sales-database/">US sales database</a>. <strong>The <code>Value</code> column is measured in millions of dollars.</strong></li>
+<li><a href="/data/share-of-individuals-using-the-internet-1990-2015.csv"><i class="fas fa-table"></i> <code>share-of-individuals-using-the-internet-1990-2015.csv</code></a>: This comes from Max Roser’s <a href="https://ourworldindata.org/internet/">Our World in Data</a> project.</li>
+<li><a href="https://www.naturalearthdata.com/downloads/110m-cultural-vectors/"><i class="far fa-map"></i> Natural Earth 110m Admin 0—Countries</a>: This will download as a .zip file. Unzip the file and move the entire <code>ne_110m_admin_0_countries</code> directory into your data folder.</li>
+</ul>
+<p>In the end, the structure of your new project directory should look something like this:</p>
+<pre><code>your-project-name/
+  your-name_problem-set-5.Rmd
+  your-project-name.Rproj
+  output/
+    NOTHING
+  data/
+    riaa.csv
+    share-of-individuals-using-the-internet-1990-2015.csv
+    ne_110m_admin_0_countries/
+      ne_110m_admin_0_countries.shp
+      ne_110m_admin_0_countries.prj
+      ne_110m_admin_0_countries.shx
+      (and all the other ne_110m_admin_0_countries.* files)</code></pre>
+<h2 id="tast-1-riaa-music-revenues">Tast 1: RIAA music revenues</h2>
+<p>The music landscape in the United States has seen multiple tectonic shifts over the past four decades. Use data from the RIAA to plot music revenues by format from 1977 to 2017. Figure out the best way to plot this (<code>geom_area()</code>, <code>geom_line()</code>, something else, etc.) and tell a story about the music industry.</p>
+<h2 id="task-2-world-map">Task 2: World map</h2>
+<p>Make a map showing the proportion of individuals in each country that had access to the internet in 2015. If you want to be super cool, make a second map showing that same proportion in 2000.</p>
+<p>Some hints:</p>
+<ul>
+<li>I’ve provided some starter code in the R Markdown template.</li>
+<li>You’ll want to fill each country by the <code>users</code> column.</li>
+<li>Make sure you choose a good projection. See the <a href="/class/10-class/#projections-and-coordinate-reference-systems">“Projections and coordinate reference systems” section from the class page</a>.</li>
+<li>See the class page for examples of how to use <code>geom_sf()</code> to plot shapefiles.</li>
+</ul>
+<h2 id="task-3-personal-map">Task 3: Personal map</h2>
+<p>Draw your own map with your own points. This could be a map of places you’ve lived, or a map of places you’ve visited, or a map of places you want to visit. Anything!</p>
+<p>The only requirement is that you find an appropriate shapefile (states, counties, world, etc.), collect latitude and longitude data from Google Maps, and plot the points (with or without labels) on a map.</p>
+<p>Hint: Basically follow <a href="/class/10-class/#making-your-own-geoencoded-data">the code from class in the section named “Making your own geoencoded data”</a></p>
+<h2 id="task-4-word-frequencies">Task 4: Word frequencies</h2>
+<p>Download the entire corpus (or 6+ books) of some author on <a href="http://www.gutenberg.org/">Project Gutenberg</a>. Jane Austen, Victor Hugo, Emily Brontë, Lucy Maud Montgomery, Arthur Conan Doyle, Mark Twain, Henry David Thoreau, Fyodor Dostoyevsky, Leo Tolstoy. Anyone. Just make sure it’s all from the same author.</p>
+<p>Make the following plots and describe what each tell about your corpus or author:</p>
+<ol style="list-style-type: decimal">
+<li>Top 10 most frequent words <em>in each book</em></li>
+<li>Top 10 most unique words <em>in each book</em> (see tf-idf)</li>
+<li>The most distinctive “he X” vs. “she X” bigrams <em>in the author’s entire corpus</em></li>
+</ol>
+<p>Hint: Pretty much all the code for this is <a href="/class/11-class/#tokens-and-word-counts">at the class webpage</a>. Adapt that code to fit your corpus.</p>
+<h2 id="submit">Submit</h2>
+<p>When you’re done, submit a knitted PDF or Word file of your analysis on Learning Suite. As always, it’s best if the final knitted document is clean and free of warnings and messages (so if a chunk is creating messages, like wherever you run <code>library(tidyverse)</code>, add <code>message=FALSE, warning=FALSE</code> to the chunk options).</p>
+<h2 id="optional-extra-fun-tasks">Optional extra fun tasks</h2>
+<p>Try doing one or more of the following:</p>
+<ul>
+<li>Use sentiment analysis to track how positive or negative one of your Project Gutenberg books is over time.</li>
+<li>Build a topic model based on 1+ Project Gutenberg books. What topics do you find when you look for 5 topics? For 10?</li>
+<li>Use text fingerprinting to compare hapax legomena or sentence length across multiple books by the same author.</li>
+<li>Make your map of internet users interactive with <code>ggplotly()</code>. Or animate it with <code>gganimate</code>.</li>
+</ul>

@@ -1,10 +1,91 @@
 ---
 title: "Problem set 5"
-date: "2018-11-13"
-due_date: "2018-11-13"
+date: "2018-11-20"
+due_date: "2018-11-20"
 due_time: "11:59 PM"
 editor_options: 
   chunk_output_type: console
 ---
 
-The instructions for this problem set will be posted at least one week before it is due.
+# Task 0: Setting things up
+
+Create a new RStudio project somewhere on your computer. Open that new folder in Windows File Explorer or macOS Finder (however you navigate around the files on your computer), and create subfolders there named `output` and `data`.
+
+[Download this R Markdown file](/files/your-name_problem-set-5.Rmd) and place it in *the root* of your newly-created project^[You'll probably have to right click on the link and choose "Save link as…".] It contains an basic outline/skeleton of the tasks you'll do in this assignment. Like before, it doesn't have a lot.
+
+Download these files and place them in your data folder:
+
+- [<i class="fas fa-table"></i> `riaa.csv`](/data/riaa.csv): This comes from the Recording Industry Association of America (RIAA)'s [US sales database](https://www.riaa.com/u-s-sales-database/). **The `Value` column is measured in millions of dollars.**
+- [<i class="fas fa-table"></i> `share-of-individuals-using-the-internet-1990-2015.csv`](/data/share-of-individuals-using-the-internet-1990-2015.csv): This comes from Max Roser's [Our World in Data](https://ourworldindata.org/internet/) project.
+- [<i class="far fa-map"></i> Natural Earth 110m Admin 0—Countries](https://www.naturalearthdata.com/downloads/110m-cultural-vectors/): This will download as a .zip file. Unzip the file and move the entire `ne_110m_admin_0_countries` directory into your data folder.
+
+In the end, the structure of your new project directory should look something like this:
+
+```
+your-project-name/
+  your-name_problem-set-5.Rmd
+  your-project-name.Rproj
+  output/
+    NOTHING
+  data/
+    riaa.csv
+    share-of-individuals-using-the-internet-1990-2015.csv
+    ne_110m_admin_0_countries/
+      ne_110m_admin_0_countries.shp
+      ne_110m_admin_0_countries.prj
+      ne_110m_admin_0_countries.shx
+      (and all the other ne_110m_admin_0_countries.* files)
+```
+
+# Tast 1: RIAA music revenues
+
+The music landscape in the United States has seen multiple tectonic shifts over the past four decades. Use data from the RIAA to plot music revenues by format from 1977 to 2017. Figure out the best way to plot this (`geom_area()`, `geom_line()`, something else, etc.) and tell a story about the music industry.
+
+
+# Task 2: World map
+
+Make a map showing the proportion of individuals in each country that had access to the internet in 2015. If you want to be super cool, make a second map showing that same proportion in 2000.
+
+Some hints: 
+
+- I've provided some starter code in the R Markdown template.
+- You'll want to fill each country by the `users` column.
+- Make sure you choose a good projection. See the ["Projections and coordinate reference systems" section from the class page](/class/10-class/#projections-and-coordinate-reference-systems).
+- See the class page for examples of how to use `geom_sf()` to plot shapefiles.
+
+
+# Task 3: Personal map
+
+Draw your own map with your own points. This could be a map of places you've lived, or a map of places you've visited, or a map of places you want to visit. Anything! 
+
+The only requirement is that you find an appropriate shapefile (states, counties, world, etc.), collect latitude and longitude data from Google Maps, and plot the points (with or without labels) on a map.
+
+Hint: Basically follow [the code from class in the section named "Making your own geoencoded data"](/class/10-class/#making-your-own-geoencoded-data)
+
+
+# Task 4: Word frequencies
+
+Download the entire corpus (or 6+ books) of some author on [Project Gutenberg](http://www.gutenberg.org/). Jane Austen, Victor Hugo, Emily Brontë, Lucy Maud Montgomery, Arthur Conan Doyle, Mark Twain, Henry David Thoreau, Fyodor Dostoyevsky, Leo Tolstoy. Anyone. Just make sure it's all from the same author.
+
+Make the following plots and describe what each tell about your corpus or author:
+
+1. Top 10 most frequent words *in each book*
+2. Top 10 most unique words *in each book* (see tf-idf)
+3. The most distinctive "he X" vs. "she X" bigrams *in the author's entire corpus*
+
+Hint: Pretty much all the code for this is [at the class webpage](/class/11-class/#tokens-and-word-counts). Adapt that code to fit your corpus.
+
+
+# Submit
+
+When you're done, submit a knitted PDF or Word file of your analysis on Learning Suite. As always, it's best if the final knitted document is clean and free of warnings and messages (so if a chunk is creating messages, like wherever you run `library(tidyverse)`, add `message=FALSE, warning=FALSE` to the chunk options).
+
+
+# Optional extra fun tasks
+
+Try doing one or more of the following:
+
+- Use sentiment analysis to track how positive or negative one of your Project Gutenberg books is over time.
+- Build a topic model based on 1+ Project Gutenberg books. What topics do you find when you look for 5 topics? For 10?
+- Use text fingerprinting to compare hapax legomena or sentence length across multiple books by the same author.
+- Make your map of internet users interactive with `ggplotly()`. Or animate it with `gganimate`.
