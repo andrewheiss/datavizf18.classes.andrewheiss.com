@@ -90,10 +90,6 @@ lessons:
   - title: "Annotating and grouping"
     date: "November 27"
     reading: "12-reading"
-  
-  - title: "**Mini project 2**"
-    date: "November 27"
-    assignment: "02-project"
 
   - title: "Enhancing graphics"
     date: "December 4"
@@ -102,6 +98,10 @@ lessons:
   - title: "**Code-through due** (*this is a Friday*)"
     date: "December 7"
     assignment: "code-through"
+
+  - title: "**Mini project 2** (*this is a Friday*)"
+    date: "December 7"
+    assignment: "02-project"
 
   - title: "Truth, beauty, and data revisited"
     date: "December 11"

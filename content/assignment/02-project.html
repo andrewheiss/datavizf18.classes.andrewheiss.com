@@ -1,12 +1,498 @@
 ---
-title: "Mini project 2"
-date: "2018-11-27"
-due_date: "2018-11-27"
+title: "Mini project 2: Refugees in the United States"
+date: "2018-12-07"
+due_date: "2018-12-07"
 due_time: "11:59 PM"
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
 editor_options: 
   chunk_output_type: console
 ---
 
+<!-- BLOGDOWN-HEAD -->
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span. { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+</style>
+<!-- /BLOGDOWN-HEAD -->
 
+<h2>Contents</h2>
+<div id="TOC">
+<ul>
+<li><a href="#instructions">Instructions</a></li>
+<li><a href="#data-cleaning-code">Data cleaning code</a></li>
+<li><a href="#data-to-possibly-use-in-your-plot">Data to possibly use in your plot</a><ul>
+<li><a href="#country-totals-over-time">Country totals over time</a></li>
+<li><a href="#cumulative-country-totals-over-time">Cumulative country totals over time</a></li>
+<li><a href="#continent-totals-over-time">Continent totals over time</a></li>
+<li><a href="#cumulative-continent-totals-over-time">Cumulative continent totals over time</a></li>
+</ul></li>
+<li><a href="#visualization-ideas">Visualization ideas</a></li>
+</ul>
+</div>
 
-<p>The instructions for this mini project will be posted at least three weeks before it is due.</p>
+<p><span class="newthought"> The United States has resettled</span> more than 600,000 refugees from 60 different countries since 2006.</p>
+<figure>
+<div class="figure">
+<img src="/images/assignment/refugees_welcome.jpg" alt="Refugees welcome, by Attila Szervác" />
+<p class="caption"><a href="https://commons.wikimedia.org/wiki/File:Refugees_welcome.png">Refugees welcome, by Attila Szervác</a></p>
+</div>
+</figure>
+<p>In this mini project, you will use <strong>R, ggplot, and <a href="https://www.adobe.com/products/illustrator.html">Illustrator</a>, <a href="https://inkscape.org/en/">Inkscape</a>, or <a href="https://www.designer.io/">Gravit Designer</a></strong> to explore where these refugees have come from.</p>
+<h2 id="instructions">Instructions</h2>
+<p>Here’s what you need to do:</p>
+<ol>
+<li><p><strong>Create</strong> a new RStudio project and place it on your computer somewhere. Open that new folder in Windows File Explorer or macOS Finder (however you navigate around the files on your computer), and create two subfolders there named <code>data</code> and <code>output</code>.</p></li>
+<li><p><strong>Download</strong> the Department of Homeland Security’s annual count of people granted refugee status between 2006-2015:</p>
+<p><a href="/data/refugee_status.csv"><i class="fas fa-table"></i> DHS refugees, 2006-2015</a></p>
+<p>Place this in the <code>data</code> subfolder you created in step 1.<span><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"/><span class="sidenote">As always, you’ll probably need to right click on this link and choose “Save link as…”, since your browser will want to display it as text. This data was originally <a href="https://www.kaggle.com/dhs/refugee-report">uploaded by the Department of Homeland Security to Kaggle</a>, and is provided with a public domain license.<br />
+<br />
+</span></span></p></li>
+<li><p><strong>Create</strong> a new R Markdown file and save it in your project. In RStudio go to File &gt; New File &gt; R Markdown…, choose the default options, and delete all the placeholder text in the new file except for the metadata at the top, which is between <code>---</code> and <code>---</code>.</p></li>
+<li><p><strong>Verify</strong> that your project folder is structured like this:</p>
+<pre><code>your-project-name/
+  your-analysis.Rmd
+  your-project-name.Rproj
+  data/
+    refugee_status.csv
+  output/
+    NOTHING</code></pre></li>
+<li><p><strong>Clean</strong> the data using the code I’ve given you below.</p></li>
+<li><p><strong>Summarize</strong> the data somehow. There is data for 60 countries over 10 years, so you’ll probably need to aggregate or reshape the data somehow (unless you do a 60-country sparkline). I’ve included some examples down below.</p></li>
+<li><p><strong>Create</strong> an appropriate time-based visualization based on the data. I’ve shown a few different ways to summarize the data so that it’s plottable down below. Don’t just calculate overall averages or totals per country—the visualization needs to deal with change over time. <em>Do as much polishing and refining in R</em>—make adjustments to the colors, scales, labels, grid lines, and even fonts, etc.</p></li>
+<li><p><strong>Save</strong> the figure as a PDF.<span><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"/><span class="sidenote">Use <code>ggsave(plot_name, filename = &quot;output/blah.pdf&quot;, width = XX, height = XX)</code><br />
+<br />
+</span></span></p></li>
+<li><p><strong>Refine and polish</strong> the saved PDF in <a href="https://www.adobe.com/products/illustrator.html">Illustrator</a> or <a href="https://inkscape.org/en/">Inkscape</a> or <a href="https://www.designer.io/">Gravit Designer</a>, adding annotations, changing colors, and otherwise enhancing it.</p></li>
+<li><p><strong>Export</strong> the polished image as a PDF and a PNG file.</p></li>
+<li><strong>Write</strong> a memo (no word limit) explaining your process. I’m specifically looking for the following:
+<ul>
+<li>What story are you telling with your graphic?</li>
+<li>How did you apply the principles of CRAP?</li>
+<li>How did you apply Alberto Cairo’s five qualities of great visualizations?</li>
+</ul></li>
+<li><strong>Upload</strong> the following outputs to Learning Suite:
+<ul>
+<li>A PDF or Word file of your memo with your final code, intermediate graphic (the one you create in R), and final graphic (the one you enhance) in it.<span><label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle"/><span class="sidenote">Remember to use <code>![Caption](path/to/figure/here)</code> to place external images in Markdown.<br />
+<br />
+</span></span></li>
+<li>A standalone PNG version of your graphic.<span><label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle"/><span class="sidenote">You’ll export this from Illustrator or Inkscape<br />
+<br />
+</span></span></li>
+<li>A standalone PDF version of your graphic.<span><label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle"/><span class="sidenote">You’ll export this from Illustrator or Inkscape<br />
+<br />
+</span></span></li>
+</ul></li>
+</ol>
+<p>You will be graded based on how you use R and <code>ggplot</code>, how well you apply the principles of CRAP and <em>The Truthful Art</em>, and how appropriate the graph is for the data and the story you’re telling. I will use <a href="/files/mini-project-2-rubric.pdf">this rubric</a> to give comments the final product—the actual grade will be a check or check plus.<span><label for="sn-6" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-6" class="margin-toggle"/><span class="marginnote"> <a href="/assignment/rubrics/mini-project-2-rubric.pdf"><img src="/images/rubrics/mini-project-2-rubric.png" alt="Example rubric for redesign 2" /></a><br />
+<br />
+</span></span></p>
+<p>For this assignment, I am less concerned with the code (that’s why I gave most of it to you), and more concerned with the <em>design</em>. Choose good colors based on palettes <a href="/reference/#colors">listed in the reference list</a>. Choose <a href="/reference/#fonts">good, clean fonts</a>. Use the heck out of <code>theme()</code>. Add informative design elements in Illustrator/Inkscape/Gravit Designer. Make it look beautiful and CRAPpy.</p>
+<p><strong>The assignment is due by 11:59 PM on Friday, December 7</strong>.</p>
+<p><strong>Please seek out help when you need it!</strong> You know enough R (and have enough examples of code from class and your readings) to be able to do this. Your project has to be turned in individually, and your visualization should be your own (i.e. if you work with others, don’t all turn in the same graph), but you should work with others! Meet with me for help too—I’m here to help!</p>
+<p><em>You can do this,</em> and you’ll feel like a true dataviz witch/wizard when you’re done.</p>
+<h2 id="data-cleaning-code">Data cleaning code</h2>
+<p>The data isn’t perfectly clean and tidy, but it’s real world data, so this is normal. Because the emphasis for this assignment is on design, not code, I’ve provided code to help you clean up the data.</p>
+<p>These are the main issues with the data:</p>
+<ul>
+<li><p>There are non-numeric values in the data, like <code>-</code>, <code>X</code>, and <code>D</code>. The data isn’t very well documented; I’m assuming <code>-</code> indicates a missing value, but I’m not sure what <code>X</code> and <code>D</code> mean, so for this assignment, we’ll just assume they’re also missing.</p></li>
+<li><p>The data generally includes rows for dozens of countries, but there are also rows for some continents, “unknown,” “other,” and a total row. Because <a href="https://twitter.com/africasacountry">Africa is not a country</a>, and neither are the other continents, we want to exclude all non-countries.</p></li>
+<li><p>Maintaining consistent country names across different datasets is <em>literally</em> the woooooooorst. Countries have different formal official names and datasets are never consistent in how they use those names.<span><label for="sn-7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-7" class="margin-toggle"/><span class="sidenote">For instance, “North Korea”, “Korea, North”, “DPRK”, “Korea, Democratic People’s Republic of”, and “Democratic People’s Republic of Korea”, and “Korea (DPRK)” are all perfectly normal versions of the country’s name and you’ll find them all in the wild.<br />
+<br />
+</span></span> It’s such a tricky problem that social scientists have spent their careers just figuring out how to properly name and code countries. Really.<span><label for="sn-8" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-8" class="margin-toggle"/><span class="sidenote">See Gleditsch, Kristian S. &amp; Michael D. Ward. 1999. <a href="https://www.tandfonline.com/doi/abs/10.1080/03050629908434958">“Interstate System Membership: A Revised List of the Independent States since 1816.”</a> <em>International Interactions</em> 25: 393-413; or the <a href="http://www.paulhensel.org/icownames.html">“ICOW Historical State Names Data Set”</a>.<br />
+<br />
+</span></span> There are international standards for country codes, though, like <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3">ISO 3166-1 alpha 3</a> (my favorite), also known as ISO3. It’s not perfect—it omits microstates (some Polynesian countries) and gray area states (Palestine, Kosovo)—but it’s an international standard, so it has that going for it.</p></li>
+<li><p><span><label for="sn-9" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-9" class="margin-toggle"/><span class="marginnote"> All this country code stuff is important for mapping data or for joining different datasets.<br />
+<br />
+</span></span> To ensure that country names are consistent in this data, we use the <code>countrycode</code> package (install it if you don’t have it), which is amazing. The <code>countrycode()</code> function will take a country name in a given coding scheme and convert it to a different coding scheme using this syntax:<span><label for="sn-10" class="margin-toggle">&#8853;</label><input type="checkbox" id="sn-10" class="margin-toggle"/><span class="marginnote"> Run <code>?countrycode</code> to see all the different coding schemes it can convert to/from. Bonus tip: run <code>View(countrycode_data)</code> to see what all those coding schemes look like.<br />
+<br />
+</span></span></p>
+<pre><code>  countrycode(variable, &quot;current-coding-scheme&quot;, &quot;new-coding-scheme&quot;)</code></pre>
+<p>It also does a farily good job at guessing and parsing inconsistent country names (e.g. it will recognize “Congo, Democratic Republic”, even though it should technically be “Democratic Republic of the Congo”). Here, we use <code>countrycode</code> to convert the inconsistent country names into ISO3 codes. We then create a cleaner version of the <code>origin_country</code> column by converting the ISO3 codes back into country names. Note that the function chokes on North Korea initially, since it’s included as “Korea, North”—we use the <code>custom_match</code> argument to help the function out.</p></li>
+<li><p>The data isn’t tidy—there are individual columns for each year. <code>gather()</code> takes every column and changes it to a row. We exclude the country, region, continent, and ISO3 code from the change-into-rows transformation with <code>-origin_country, -iso3, -origin_region, -origin_continent</code>.</p></li>
+<li><p>Currently, the year is being treated as a number, but it’s helpful to also treat it as an actual date. We create a new variable named <code>year_date</code> that converts the raw number (e.g. 2009) into a date. The date needs to have at least a month, day, and year, so we actually convert it to January 1, 2009 with <code>ymd(paste0(year, &quot;-01-01&quot;))</code>.</p></li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">library</span>(countrycode)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">library</span>(lubridate)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">refugees_raw &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/refugee_status.csv&quot;</span>, <span class="dt">na =</span> <span class="kw">c</span>(<span class="st">&quot;-&quot;</span>, <span class="st">&quot;X&quot;</span>, <span class="st">&quot;D&quot;</span>)) </a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">non_countries &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Africa&quot;</span>, <span class="st">&quot;Asia&quot;</span>, <span class="st">&quot;Europe&quot;</span>, <span class="st">&quot;North America&quot;</span>, <span class="st">&quot;Oceania&quot;</span>, </a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">                   <span class="st">&quot;South America&quot;</span>, <span class="st">&quot;Unknown&quot;</span>, <span class="st">&quot;Other&quot;</span>, <span class="st">&quot;Total&quot;</span>)</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">refugees_clean &lt;-<span class="st"> </span>refugees_raw <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">  </span><span class="co"># Make this column name easier to work with</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">origin_country =</span> <span class="st">`</span><span class="dt">Continent/Country of Nationality</span><span class="st">`</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="st">  </span><span class="co"># Get rid of non-countries</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>(origin_country <span class="op">%in%</span><span class="st"> </span>non_countries)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="st">  </span><span class="co"># Convert country names to ISO3 codes</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">iso3 =</span> <span class="kw">countrycode</span>(origin_country, <span class="st">&quot;country.name&quot;</span>, <span class="st">&quot;iso3c&quot;</span>,</a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">                            <span class="dt">custom_match =</span> <span class="kw">c</span>(<span class="st">&quot;Korea, North&quot;</span> =<span class="st"> &quot;PRK&quot;</span>))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="st">  </span><span class="co"># Convert ISO3 codes to country names, regions, and continents</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">origin_country =</span> <span class="kw">countrycode</span>(iso3, <span class="st">&quot;iso3c&quot;</span>, <span class="st">&quot;country.name&quot;</span>),</a>
+<a class="sourceLine" id="cb5-14" data-line-number="14">         <span class="dt">origin_region =</span> <span class="kw">countrycode</span>(iso3, <span class="st">&quot;iso3c&quot;</span>, <span class="st">&quot;region&quot;</span>),</a>
+<a class="sourceLine" id="cb5-15" data-line-number="15">         <span class="dt">origin_continent =</span> <span class="kw">countrycode</span>(iso3, <span class="st">&quot;iso3c&quot;</span>, <span class="st">&quot;continent&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="st">  </span><span class="co"># Make this data tidy</span></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="st">  </span><span class="kw">gather</span>(year, number, <span class="op">-</span>origin_country, <span class="op">-</span>iso3, <span class="op">-</span>origin_region, <span class="op">-</span>origin_continent) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="st">  </span><span class="co"># Make sure the year column is numeric + make an actual date column for years</span></a>
+<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">year =</span> <span class="kw">as.numeric</span>(year),</a>
+<a class="sourceLine" id="cb5-20" data-line-number="20">         <span class="dt">year_date =</span> <span class="kw">ymd</span>(<span class="kw">paste0</span>(year, <span class="st">&quot;-01-01&quot;</span>)))</a></code></pre></div>
+<h2 id="data-to-possibly-use-in-your-plot">Data to possibly use in your plot</h2>
+<p>Here are some possible summaries of the data you might use…</p>
+<h3 id="country-totals-over-time">Country totals over time</h3>
+<p>This is just the <code>refugees_clean</code> data frame I gave you. You’ll want to filter it and select specific countries, though—you won’t really be able to plot 60 countries all at once unless you use sparklines.</p>
+<table>
+<colgroup>
+<col width="19%" />
+<col width="7%" />
+<col width="19%" />
+<col width="21%" />
+<col width="7%" />
+<col width="10%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">origin_country</th>
+<th align="center">iso3</th>
+<th align="center">origin_region</th>
+<th align="center">origin_continent</th>
+<th align="center">year</th>
+<th align="center">number</th>
+<th align="center">year_date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Afghanistan</td>
+<td align="center">AFG</td>
+<td align="center">Southern Asia</td>
+<td align="center">Asia</td>
+<td align="center">2006</td>
+<td align="center">651</td>
+<td align="center">2006-01-01</td>
+</tr>
+<tr class="even">
+<td align="center">Angola</td>
+<td align="center">AGO</td>
+<td align="center">Middle Africa</td>
+<td align="center">Africa</td>
+<td align="center">2006</td>
+<td align="center">13</td>
+<td align="center">2006-01-01</td>
+</tr>
+<tr class="odd">
+<td align="center">Armenia</td>
+<td align="center">ARM</td>
+<td align="center">Western Asia</td>
+<td align="center">Asia</td>
+<td align="center">2006</td>
+<td align="center">87</td>
+<td align="center">2006-01-01</td>
+</tr>
+<tr class="even">
+<td align="center">Azerbaijan</td>
+<td align="center">AZE</td>
+<td align="center">Western Asia</td>
+<td align="center">Asia</td>
+<td align="center">2006</td>
+<td align="center">77</td>
+<td align="center">2006-01-01</td>
+</tr>
+<tr class="odd">
+<td align="center">Belarus</td>
+<td align="center">BLR</td>
+<td align="center">Eastern Europe</td>
+<td align="center">Europe</td>
+<td align="center">2006</td>
+<td align="center">350</td>
+<td align="center">2006-01-01</td>
+</tr>
+<tr class="even">
+<td align="center">Bhutan</td>
+<td align="center">BTN</td>
+<td align="center">Southern Asia</td>
+<td align="center">Asia</td>
+<td align="center">2006</td>
+<td align="center">3</td>
+<td align="center">2006-01-01</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cumulative-country-totals-over-time">Cumulative country totals over time</h3>
+<p>Note the <code>cumsum()</code> function—it calculates the cumulative sum of a column.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">refugees_countries_cumulative &lt;-<span class="st"> </span>refugees_clean <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw">arrange</span>(year_date) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw">group_by</span>(origin_country) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cumulative_total =</span> <span class="kw">cumsum</span>(number))</a></code></pre></div>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="6%" />
+<col width="14%" />
+<col width="17%" />
+<col width="6%" />
+<col width="8%" />
+<col width="12%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">origin_country</th>
+<th align="center">iso3</th>
+<th align="center">origin_region</th>
+<th align="center">origin_continent</th>
+<th align="center">year</th>
+<th align="center">number</th>
+<th align="center">year_date</th>
+<th align="center">cumulative_total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Afghanistan</td>
+<td align="center">AFG</td>
+<td align="center">Southern Asia</td>
+<td align="center">Asia</td>
+<td align="center">2006</td>
+<td align="center">651</td>
+<td align="center">2006-01-01</td>
+<td align="center">651</td>
+</tr>
+<tr class="even">
+<td align="center">Afghanistan</td>
+<td align="center">AFG</td>
+<td align="center">Southern Asia</td>
+<td align="center">Asia</td>
+<td align="center">2007</td>
+<td align="center">441</td>
+<td align="center">2007-01-01</td>
+<td align="center">1092</td>
+</tr>
+<tr class="odd">
+<td align="center">Afghanistan</td>
+<td align="center">AFG</td>
+<td align="center">Southern Asia</td>
+<td align="center">Asia</td>
+<td align="center">2008</td>
+<td align="center">576</td>
+<td align="center">2008-01-01</td>
+<td align="center">1668</td>
+</tr>
+<tr class="even">
+<td align="center">Afghanistan</td>
+<td align="center">AFG</td>
+<td align="center">Southern Asia</td>
+<td align="center">Asia</td>
+<td align="center">2009</td>
+<td align="center">349</td>
+<td align="center">2009-01-01</td>
+<td align="center">2017</td>
+</tr>
+<tr class="odd">
+<td align="center">Afghanistan</td>
+<td align="center">AFG</td>
+<td align="center">Southern Asia</td>
+<td align="center">Asia</td>
+<td align="center">2010</td>
+<td align="center">515</td>
+<td align="center">2010-01-01</td>
+<td align="center">2532</td>
+</tr>
+<tr class="even">
+<td align="center">Afghanistan</td>
+<td align="center">AFG</td>
+<td align="center">Southern Asia</td>
+<td align="center">Asia</td>
+<td align="center">2011</td>
+<td align="center">428</td>
+<td align="center">2011-01-01</td>
+<td align="center">2960</td>
+</tr>
+</tbody>
+</table>
+<h3 id="continent-totals-over-time">Continent totals over time</h3>
+<p>Note the <code>na.rm = TRUE</code> argument in <code>sum()</code>. This makes R ignore any missing data when calculating the total. Without it, if R finds a missing value in the column, it will mark the final sum as <code>NA</code> too, which we don’t want.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">refugees_continents &lt;-<span class="st"> </span>refugees_clean <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(origin_continent, year_date) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">total =</span> <span class="kw">sum</span>(number, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<table style="width:56%;">
+<colgroup>
+<col width="26%" />
+<col width="18%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">origin_continent</th>
+<th align="center">year_date</th>
+<th align="center">total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Africa</td>
+<td align="center">2006-01-01</td>
+<td align="center">18116</td>
+</tr>
+<tr class="even">
+<td align="center">Africa</td>
+<td align="center">2007-01-01</td>
+<td align="center">17473</td>
+</tr>
+<tr class="odd">
+<td align="center">Africa</td>
+<td align="center">2008-01-01</td>
+<td align="center">8931</td>
+</tr>
+<tr class="even">
+<td align="center">Africa</td>
+<td align="center">2009-01-01</td>
+<td align="center">9664</td>
+</tr>
+<tr class="odd">
+<td align="center">Africa</td>
+<td align="center">2010-01-01</td>
+<td align="center">13303</td>
+</tr>
+<tr class="even">
+<td align="center">Africa</td>
+<td align="center">2011-01-01</td>
+<td align="center">7677</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cumulative-continent-totals-over-time">Cumulative continent totals over time</h3>
+<p>Note that there are two <code>group_by()</code> functions here. First we get the total number of refugees per continent per year, then we group by continent only to get the cumulative sum of refugees across continents.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">refugees_continents_cumulative &lt;-<span class="st"> </span>refugees_clean <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(origin_continent, year_date) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">total =</span> <span class="kw">sum</span>(number, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw">arrange</span>(year_date) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  </span><span class="kw">group_by</span>(origin_continent) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cumulative_total =</span> <span class="kw">cumsum</span>(total))</a></code></pre></div>
+<table style="width:82%;">
+<colgroup>
+<col width="26%" />
+<col width="18%" />
+<col width="11%" />
+<col width="26%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">origin_continent</th>
+<th align="center">year_date</th>
+<th align="center">total</th>
+<th align="center">cumulative_total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Africa</td>
+<td align="center">2006-01-01</td>
+<td align="center">18116</td>
+<td align="center">18116</td>
+</tr>
+<tr class="even">
+<td align="center">Africa</td>
+<td align="center">2007-01-01</td>
+<td align="center">17473</td>
+<td align="center">35589</td>
+</tr>
+<tr class="odd">
+<td align="center">Africa</td>
+<td align="center">2008-01-01</td>
+<td align="center">8931</td>
+<td align="center">44520</td>
+</tr>
+<tr class="even">
+<td align="center">Africa</td>
+<td align="center">2009-01-01</td>
+<td align="center">9664</td>
+<td align="center">54184</td>
+</tr>
+<tr class="odd">
+<td align="center">Africa</td>
+<td align="center">2010-01-01</td>
+<td align="center">13303</td>
+<td align="center">67487</td>
+</tr>
+<tr class="even">
+<td align="center">Africa</td>
+<td align="center">2011-01-01</td>
+<td align="center">7677</td>
+<td align="center">75164</td>
+</tr>
+</tbody>
+</table>
+<h2 id="visualization-ideas">Visualization ideas</h2>
+<p>You can redesign one of these ugly, less-than-helpful graphs, or create a brand new visualization (like a map!).</p>
+<figure class="fullwidth">
+<p><img src="/assignment/02-project_files/figure-html/create-plots-1.png" width="1056" /></p>
+</figure>
+<p>Or be super brave and make a map!</p>
+<figure class="fullwidth">
+<p><img src="/assignment/02-project_files/figure-html/create-map-1.png" width="1056" /></p>
+<figure>

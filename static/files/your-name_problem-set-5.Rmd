@@ -1,0 +1,98 @@
+---
+title: "Problem set 5"
+author: "Your name here"
+date: "Date here"
+---
+
+# Load, clean, and wrangle data
+
+```{r load-packages-data, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(sf)
+library(tidytext)
+library(gutenbergr)
+
+# Load and clean RIAA data
+# https://www.riaa.com/u-s-sales-database/
+riaa <- read_csv("data/riaa.csv") %>% 
+  # Only look at these kinds of sales
+  filter(Format %in% c("LP/EP", "Cassette", "CD", "Download Album", 
+                       "Download Single", "Ringtones & Ringbacks", 
+                       "On-Demand Streaming (Ad-Supported)", "Paid Subscription")) %>% 
+  # Look at inflation-adjusted sales (the other metrics are for
+  # non-inflation-adjusted sales and actual units sold)
+  filter(Metric == "Value (Adjusted)") %>% 
+  mutate(Value = ifelse(is.na(Value), 0, Value))
+
+# Load and clean internet user data
+internet_users <- read_csv("data/share-of-individuals-using-the-internet-1990-2015.csv") %>%
+  # Rename country code column to ISO_A3 so it matches what's in the Natural Earth shapefile
+  rename(users = `Individuals using the Internet (% of population) (% of population)`,
+         ISO_A3 = Code)
+
+# Load world shapefile from Natural Earth
+# https://www.naturalearthdata.com/downloads/110m-cultural-vectors/
+world_shapes <- st_read("data/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp",
+                        stringsAsFactors = FALSE)
+
+# TODO: Load other shapefiles here as needed
+```
+
+```{r get-gutenberg-data}
+# TODO: Use the gutenberg_download() function to download a bunch of books
+
+# BONUS: If you don't want to redownload these books every time you knit this
+# document, use write_csv() to save a CSV version of the book data frame to your
+# data folder. Then use read_csv() to load that data instead of gutenberg_download()
+```
+
+# Task 1: RIAA music revenues
+
+Do stuff here. 
+
+Note that these values are adjusted for inflation and represent 2017 dollars. Also, try moving beyond the default colors and consider adding labels directly to the plot rather than using a legend.
+
+Tell a story about what's happening in this chart. Interpret it.
+
+
+# Task 2: World map
+
+Do stuff here.
+
+Tell a story about what's happening in this map. Interpret it.
+
+```{r plot-2015-internet-users}
+# Only look at 2015
+users_2015 <- internet_users %>%
+  filter(Year == 2015)
+
+# left_join takes two data frames and combines them, based on a shared column
+# (in this case ISO_A3)
+users_map <- world_shapes %>%
+  left_join(users_2015, by = "ISO_A3") %>%
+  filter(ISO_A3 != "ATA")  # No internet in Antarctica. Sorry penguins.
+
+# TODO: Make a map of internet users with ggplot() + geom_sf()
+```
+
+
+# Task 3: Personal map
+
+Do stuff here. Tell a story about what's happening in this map.
+
+
+# Task 4: Word frequencies
+
+Do stuff here. Tell stories about what these charts mean.
+
+## Top 10 most frequent words in each book
+
+Stuff here.
+
+## Top 10 most unique words in each book
+
+Stuff here.
+
+## The most distinctive "he X" vs. "she X" bigrams in the author's entire corpus
+
+Stuff here.
