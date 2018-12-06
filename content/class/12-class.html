@@ -1,0 +1,290 @@
+---
+title: "Annotating and grouping"
+date: "2018-11-27"
+citeproc: false
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+    toc_depth: 4
+editor_options: 
+  chunk_output_type: console
+---
+
+<!-- BLOGDOWN-HEAD -->
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span. { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+</style>
+<!-- /BLOGDOWN-HEAD -->
+
+<h2>Contents</h2>
+<div id="TOC">
+<ul>
+<li><a href="#slides">Slides</a></li>
+<li><a href="#data-to-download">Data to download</a></li>
+<li><a href="#live-code">Live code</a></li>
+<li><a href="#louisville-animal-bites">Louisville animal bites</a></li>
+<li><a href="#iterative-design-grouping-and-annotating">Iterative design + grouping and annotating</a><ul>
+<li><a href="#happiness-explained-by-life-expectancy">Happiness explained by life expectancy</a></li>
+<li><a href="#happiness-explained-by-life-expectancy-colored-by-region">Happiness explained by life expectancy, colored by region</a></li>
+<li><a href="#happiness-by-region">Happiness by region</a></li>
+<li><a href="#combined-mega-plot-with-patchwork">Combined mega plot with patchwork</a></li>
+</ul></li>
+<li><a href="#clearest-and-muddiest-things">Clearest and muddiest things</a></li>
+</ul>
+</div>
+
+<h2 id="slides">Slides</h2>
+<p><a href="/slides/MPA-635_2018-11-27.pdf">Download the slides from today’s lecture</a>.</p>
+<figure>
+<a href="/slides/MPA-635_2018-11-27.pdf"><img src="/images/slides/slides_2018-11-27.png" alt="First slide" /></a>
+</figure>
+<h2 id="data-to-download">Data to download</h2>
+<p>Download these and put them in a folder named “data” in an RStudio project:</p>
+<ul>
+<li><i class="fas fa-table"></i> <a href="/data/world_happiness.csv">World happiness</a><span><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"/><span class="sidenote">I collected this data from the UN and the World Bank. If you’re interested, <a href="https://statsf18.classes.andrewheiss.com/files/create_happiness_data.R">you can see the R script I used to create this dataset here.</a><br />
+<br />
+</span></span></li>
+<li><i class="fas fa-table"></i> <a href="/data/Health_AnimalBites.csv">Louisville animal bites</a><span><label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"/><span class="sidenote"><a href="https://www.kaggle.com/rtatman/animal-bites">See complete column descriptions</a>. The data is released under a public domain license and hosted originally at Kaggle.<br />
+<br />
+</span></span></li>
+</ul>
+<h2 id="live-code">Live code</h2>
+<p>Use this link to see the code that I’m actually typing:</p>
+<ul>
+<li><i class="fas fa-globe"></i> <a href="https://andhs.co/live-code" class="uri">https://andhs.co/live-code</a></li>
+</ul>
+<p>I’ve saved the R script to Dropbox, and that link goes to a live version of that file. Refresh or re-open the link as needed to copy/paste code I type up on the screen.</p>
+<h2 id="louisville-animal-bites">Louisville animal bites</h2>
+<p>Use some of this code to help you get started. You don’t have to do this—this gets a count of dog, cat, and other bites between 2010 and 2017. Feel free to do whatever you want. You’re iterating here!</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(lubridate)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">bites_raw &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/Health_AnimalBites.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># Or directly from the internet if you want</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># bites_raw &lt;- read_csv(&quot;https://datavizf18.classes.andrewheiss.com/data/Health_AnimalBites.csv&quot;)</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">bites &lt;-<span class="st"> </span>bites_raw <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">year =</span> <span class="kw">year</span>(bite_date)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">species =</span> <span class="kw">case_when</span>(</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">    SpeciesIDDesc <span class="op">==</span><span class="st"> &quot;CAT&quot;</span> <span class="op">~</span><span class="st"> &quot;Cat&quot;</span>,</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">    SpeciesIDDesc <span class="op">==</span><span class="st"> &quot;DOG&quot;</span> <span class="op">~</span><span class="st"> &quot;Dog&quot;</span>,</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">    <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> &quot;Other&quot;</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">  )) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">species =</span> <span class="kw">factor</span>(species, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;Dog&quot;</span>, <span class="st">&quot;Cat&quot;</span>, <span class="st">&quot;Other&quot;</span>), <span class="dt">ordered =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="st">  </span><span class="kw">filter</span>(year <span class="op">&lt;</span><span class="st"> </span><span class="dv">2018</span>, year <span class="op">&gt;=</span><span class="st"> </span><span class="dv">2010</span>) </a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">bites_species_year &lt;-<span class="st"> </span>bites <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(species)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="st">  </span><span class="kw">group_by</span>(year, species) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">total_bites =</span> <span class="kw">n</span>())</a></code></pre></div>
+<h2 id="iterative-design-grouping-and-annotating">Iterative design + grouping and annotating</h2>
+<p>Here are some fairly polished plots based on the world happiness index and other UN and World Bank data, all arranged in a nice 3-panel figure with patchwork. This is the final output—the process of getting to the point took a while and went through lots of different iterations, which is the creative process in action.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">library</span>(ggrepel)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">library</span>(broom)  <span class="co"># For dealing with models as data frames</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw">library</span>(patchwork)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw">library</span>(ggbeeswarm)  <span class="co"># For cool dot plots</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">happiness &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/world_happiness.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">happiness_clean &lt;-<span class="st"> </span>happiness <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">in_asia =</span> region <span class="op">==</span><span class="st"> &quot;East Asia &amp; Pacific&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">label_to_plot =</span> <span class="kw">ifelse</span>(in_asia, country, <span class="ot">NA</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">region_big =</span> <span class="kw">case_when</span>(</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">    region <span class="op">==</span><span class="st"> &quot;East Asia &amp; Pacific&quot;</span> <span class="op">~</span><span class="st"> &quot;Asia&quot;</span>,</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">    region <span class="op">==</span><span class="st"> &quot;Europe &amp; Central Asia&quot;</span> <span class="op">~</span><span class="st"> &quot;Europe&quot;</span>,</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">    region <span class="op">==</span><span class="st"> &quot;Latin America &amp; Caribbean&quot;</span> <span class="op">~</span><span class="st"> &quot;North &amp; South America&quot;</span>,</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">    region <span class="op">==</span><span class="st"> &quot;North America&quot;</span> <span class="op">~</span><span class="st"> &quot;North &amp; South America&quot;</span>,</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">    region <span class="op">==</span><span class="st"> &quot;South Asia&quot;</span> <span class="op">~</span><span class="st"> &quot;Asia&quot;</span>,</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">    <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span>region</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">  )) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">region_big =</span> <span class="kw">factor</span>(region_big, </a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">                             <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;North &amp; South America&quot;</span>, <span class="st">&quot;Europe&quot;</span>, </a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">                                        <span class="st">&quot;Middle East &amp; North Africa&quot;</span>, <span class="st">&quot;Asia&quot;</span>, </a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">                                        <span class="st">&quot;Sub-Saharan Africa&quot;</span>), </a>
+<a class="sourceLine" id="cb4-16" data-line-number="16">                             <span class="dt">ordered =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<h3 id="happiness-explained-by-life-expectancy">Happiness explained by life expectancy</h3>
+<p>Here’s the relationship between life expectancy and national happiness, with East Asian and Oceanic countries highlighted with redundant shapes. Note how instead of using <code>annotate()</code>, I make a separate data frame called <code>extra_labels</code> and then use <code>geom_text()</code> to plot it twice. This might be overkill here, since I’m only plotting two things, but it allows for more flexibility later if I want to add additional labels and not worry about adding even more <code>annotate()</code> layers.</p>
+<figure class="fullwidth">
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">extra_labels &lt;-<span class="st"> </span><span class="kw">tribble</span>(</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="op">~</span>x, <span class="op">~</span>y, <span class="op">~</span>text, <span class="op">~</span>align,</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">  <span class="ot">Inf</span>, <span class="op">-</span><span class="ot">Inf</span>, <span class="st">&quot;Longer life&quot;</span>, <span class="st">&quot;right&quot;</span>,</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">  <span class="op">-</span><span class="ot">Inf</span>, <span class="ot">Inf</span>, <span class="st">&quot;Happier country&quot;</span>, <span class="st">&quot;left&quot;</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">)</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">plot1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(happiness_clean, <span class="kw">aes</span>(<span class="dt">x =</span> life_expectancy, <span class="dt">y =</span> happiness_score)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> in_asia, <span class="dt">shape =</span> in_asia)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="st">  </span><span class="kw">geom_label_repel</span>(<span class="kw">aes</span>(<span class="dt">label =</span> label_to_plot), <span class="dt">nudge_x =</span> <span class="dv">1</span>, <span class="dt">nudge_y =</span> <span class="fl">0.25</span>, <span class="dt">force =</span> <span class="dv">50</span>,</a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">                   <span class="dt">arrow =</span> <span class="kw">arrow</span>(<span class="dt">length =</span> <span class="kw">unit</span>(<span class="fl">0.25</span>, <span class="st">&quot;lines&quot;</span>)), <span class="dt">alpha =</span> <span class="fl">0.75</span>,</a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">                   <span class="dt">point.padding =</span> <span class="fl">0.5</span>, <span class="dt">seed =</span> <span class="dv">12345</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">data =</span> <span class="kw">filter</span>(extra_labels, align <span class="op">==</span><span class="st"> &quot;right&quot;</span>), </a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">            <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">label =</span> text),</a>
+<a class="sourceLine" id="cb5-14" data-line-number="14">            <span class="dt">hjust =</span> <span class="st">&quot;right&quot;</span>, <span class="dt">vjust =</span> <span class="dv">-1</span>, <span class="dt">color =</span> <span class="st">&quot;grey50&quot;</span>, <span class="dt">fontface =</span> <span class="st">&quot;italic&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="st">  </span><span class="kw">geom_text</span>(<span class="dt">data =</span> <span class="kw">filter</span>(extra_labels, align <span class="op">==</span><span class="st"> &quot;left&quot;</span>), </a>
+<a class="sourceLine" id="cb5-16" data-line-number="16">            <span class="kw">aes</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, <span class="dt">label =</span> text),</a>
+<a class="sourceLine" id="cb5-17" data-line-number="17">            <span class="dt">hjust =</span> <span class="st">&quot;left&quot;</span>, <span class="dt">vjust =</span> <span class="dv">1</span>, <span class="dt">color =</span> <span class="st">&quot;grey50&quot;</span>, <span class="dt">fontface =</span> <span class="st">&quot;italic&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="st">  </span><span class="co"># annotate(geom = &quot;text&quot;, x = 70, y = 5, label = &quot;HEY&quot;, fontface = &quot;bold&quot;, size = 15) +</span></a>
+<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Life expectancy (years)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Happiness score&quot;</span>,</a>
+<a class="sourceLine" id="cb5-20" data-line-number="20">       <span class="dt">title =</span> <span class="st">&quot;Relationship between life expectancy and national happiness&quot;</span>,</a>
+<a class="sourceLine" id="cb5-21" data-line-number="21">       <span class="dt">subtitle =</span> <span class="st">&quot;East Asia and Oceania highlighted&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-22" data-line-number="22"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;grey40&quot;</span>, <span class="st">&quot;darkred&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="ot">FALSE</span>, <span class="dt">shape =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-24" data-line-number="24"><span class="st">  </span><span class="kw">theme_minimal</span>(<span class="dt">base_size =</span> <span class="dv">13</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-25" data-line-number="25"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.grid.minor =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb5-26" data-line-number="26">        <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="dt">size =</span> <span class="kw">rel</span>(<span class="fl">1.5</span>)),</a>
+<a class="sourceLine" id="cb5-27" data-line-number="27">        <span class="dt">plot.subtitle =</span> <span class="kw">element_text</span>(<span class="dt">margin =</span> <span class="kw">margin</span>(<span class="dt">b =</span> <span class="dv">20</span>)))</a>
+<a class="sourceLine" id="cb5-28" data-line-number="28">plot1</a></code></pre></div>
+<p><img src="/class/12-class_files/figure-html/plot1-1.png" width="960" /></p>
+</figure>
+<h3 id="happiness-explained-by-life-expectancy-colored-by-region">Happiness explained by life expectancy, colored by region</h3>
+<p>Here I collapsed some of the regions with <code>case_when()</code> up above, and then generated a palette of five perceptually uniform and colorblind friendly colors at <a href="http://tools.medialab.sciences-po.fr/iwanthue/">iWantHue</a>.</p>
+<p>The other cool thing about this plot is <code>final_predicted_points</code>, which runs a linear regression model on each region and then determines the final predicted point for each line, which I then use with <code>geom_text_repel()</code> to put region names directly on the plot.</p>
+<figure class="fullwidth">
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">final_predicted_points &lt;-<span class="st"> </span>happiness_clean <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="co"># Look at each region</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw">group_by</span>(region_big) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="co"># Put a miniature data frame inside a cell for each region</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="st">  </span><span class="kw">nest</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="st">  </span><span class="co"># Run a simple regression model on each of those nested data frames</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">model =</span> data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(happiness_score <span class="op">~</span><span class="st"> </span>life_expectancy, <span class="dt">data =</span> .))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="st">  </span><span class="co"># Use augment() to calculate the fitted values from each model</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">fitted =</span> model <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(<span class="op">~</span><span class="st"> </span><span class="kw">augment</span>(.))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="st">  </span><span class="co"># Spread out the nested data frame</span></a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="st">  </span><span class="kw">unnest</span>(fitted) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="st">  </span><span class="co"># Select the first row in each of the fitted values, which is the last row</span></a>
+<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="st">  </span><span class="kw">group_by</span>(region_big) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-14" data-line-number="14"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(life_expectancy)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-15" data-line-number="15"><span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb6-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb6-17" data-line-number="17">plot2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(happiness_clean, </a>
+<a class="sourceLine" id="cb6-18" data-line-number="18">                <span class="kw">aes</span>(<span class="dt">x =</span> life_expectancy, <span class="dt">y =</span> happiness_score, <span class="dt">color =</span> region_big)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">shape =</span> region_big)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-20" data-line-number="20"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-21" data-line-number="21"><span class="st">  </span><span class="kw">geom_text_repel</span>(<span class="dt">data =</span> final_predicted_points, </a>
+<a class="sourceLine" id="cb6-22" data-line-number="22">                  <span class="kw">aes</span>(<span class="dt">x =</span> life_expectancy, <span class="dt">y =</span> .fitted, <span class="dt">label =</span> region_big), </a>
+<a class="sourceLine" id="cb6-23" data-line-number="23">                  <span class="dt">nudge_x =</span> <span class="dv">5</span>, <span class="dt">direction =</span> <span class="st">&quot;y&quot;</span>, <span class="dt">hjust =</span> <span class="st">&quot;left&quot;</span>, <span class="dt">size =</span> <span class="dv">4</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-24" data-line-number="24"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">50</span>, <span class="dv">80</span>, <span class="dv">10</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-25" data-line-number="25"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#b84c7d&quot;</span>, <span class="st">&quot;#56ae6c&quot;</span>, <span class="st">&quot;#7f63b8&quot;</span>, <span class="st">&quot;#ac9c3d&quot;</span>, <span class="st">&quot;#ba543d&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-26" data-line-number="26"><span class="st">  </span><span class="kw">scale_shape_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dv">19</span>, <span class="dv">17</span>, <span class="dv">16</span>, <span class="dv">15</span>, <span class="dv">8</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-27" data-line-number="27"><span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">100</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-28" data-line-number="28"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="ot">FALSE</span>, <span class="dt">shape =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-29" data-line-number="29"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Life expectancy (years)&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Happiness score&quot;</span>,</a>
+<a class="sourceLine" id="cb6-30" data-line-number="30">       <span class="dt">title =</span> <span class="st">&quot;Trends in life expectancy by region&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-31" data-line-number="31"><span class="st">  </span><span class="kw">theme_minimal</span>(<span class="dv">13</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-32" data-line-number="32"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.grid.minor =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb6-33" data-line-number="33">        <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="dt">size =</span> <span class="kw">rel</span>(<span class="fl">1.5</span>)))</a>
+<a class="sourceLine" id="cb6-34" data-line-number="34">plot2</a></code></pre></div>
+<p><img src="/class/12-class_files/figure-html/plot2-1.png" width="960" /></p>
+</figure>
+<h3 id="happiness-by-region">Happiness by region</h3>
+<p>Here I just plot happiness scores (i.e. no comparison with life expectancy or anything else) by region. I use <code>geom_quasirandom()</code> from <a href="https://github.com/eclarke/ggbeeswarm">the <code>ggbeeswarm</code> package</a>, which jitters points in cool shapes.</p>
+<figure class="fullwidth">
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">plot3 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(happiness_clean, </a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">                <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">fct_rev</span>(region_big), <span class="dt">y =</span> happiness_score, <span class="dt">color =</span> region_big)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_quasirandom</span>(<span class="kw">aes</span>(<span class="dt">shape =</span> region_big), <span class="dt">width =</span> <span class="fl">0.2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#b84c7d&quot;</span>, <span class="st">&quot;#56ae6c&quot;</span>, <span class="st">&quot;#7f63b8&quot;</span>, <span class="st">&quot;#ac9c3d&quot;</span>, <span class="st">&quot;#ba543d&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="st">  </span><span class="kw">scale_shape_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="dv">19</span>, <span class="dv">17</span>, <span class="dv">16</span>, <span class="dv">15</span>, <span class="dv">8</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">color =</span> <span class="ot">FALSE</span>, <span class="dt">shape =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="st">&quot;Happiness score&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Happiness scores by region&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="st">  </span><span class="kw">theme_minimal</span>(<span class="dv">13</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.grid.minor =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">        <span class="dt">panel.grid.major.y =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">        <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">face =</span> <span class="st">&quot;bold&quot;</span>, <span class="dt">size =</span> <span class="kw">rel</span>(<span class="fl">1.5</span>)))</a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">plot3</a></code></pre></div>
+<p><img src="/class/12-class_files/figure-html/plot3-1.png" width="672" /></p>
+</figure>
+<h3 id="combined-mega-plot-with-patchwork">Combined mega plot with patchwork</h3>
+<p>Finally, I put all of these together in a final combined plot using <a href="https://github.com/thomasp85/patchwork">the <code>patchwork</code> package</a>.</p>
+<p>Note how I make some adjustments to <code>plot1</code>, <code>plot2</code>, and <code>plot2</code>, like shrinking the titles and adding tags. Also note that I use <code>/</code> and <code>+</code> and <code>*</code> and <code>&amp;</code> to combine the plots in the right configuration. I figured this out by reading the README at <code>patchwork</code>’s GitHub repository.</p>
+<figure class="fullwidth">
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">plot1_to_combine &lt;-<span class="st"> </span>plot1 <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">tag =</span> <span class="st">&quot;A&quot;</span>)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">plot2_to_combine &lt;-<span class="st"> </span>plot2 <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">tag =</span> <span class="st">&quot;B&quot;</span>)</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">plot3_to_combine &lt;-<span class="st"> </span>plot3 <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">tag =</span> <span class="st">&quot;C&quot;</span>)</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">final_plot &lt;-<span class="st"> </span>plot1_to_combine <span class="op">/</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="st">  </span>((plot2_to_combine <span class="op">+</span><span class="st"> </span>plot3_to_combine) <span class="op">+</span><span class="st"> </span><span class="kw">plot_layout</span>(<span class="dt">widths =</span> <span class="kw">c</span>(<span class="fl">0.7</span>, <span class="fl">0.3</span>))) <span class="op">&amp;</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="kw">rel</span>(<span class="dv">1</span>)),</a>
+<a class="sourceLine" id="cb8-13" data-line-number="13">        <span class="dt">plot.subtitle =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="kw">rel</span>(<span class="fl">0.9</span>)),</a>
+<a class="sourceLine" id="cb8-14" data-line-number="14">        <span class="dt">plot.tag =</span> <span class="kw">element_text</span>(<span class="dt">color =</span> <span class="st">&quot;grey50&quot;</span>),</a>
+<a class="sourceLine" id="cb8-15" data-line-number="15">        <span class="dt">axis.title.x =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="dv">0</span>))</a>
+<a class="sourceLine" id="cb8-16" data-line-number="16">final_plot</a></code></pre></div>
+<p><img src="/class/12-class_files/figure-html/combined-1.png" width="1152" /></p>
+</figure>
+<h2 id="clearest-and-muddiest-things">Clearest and muddiest things</h2>
+<p>Go to <a href="https://goo.gl/forms/rSIbw1voOV2vWKMD2">this form</a> and answer these two questions:</p>
+<ol style="list-style-type: decimal">
+<li>What was the muddiest thing from class today? What are you still wondering about?</li>
+<li>What was the clearest thing from class today? What was the most exciting thing you learned?</li>
+</ol>
+<p>I’ll compile the questions and send out answers after class.</p>
