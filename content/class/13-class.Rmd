@@ -1,0 +1,141 @@
+---
+title: "Enhancing graphics"
+date: "2018-12-04"
+citeproc: false
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+    toc_depth: 4
+editor_options: 
+  chunk_output_type: console
+---
+
+# Slides
+
+No slides today!
+
+
+# Live code
+
+Use this link to see the code that I'm actually typing: 
+
+- <i class="fas fa-globe"></i> <https://andhs.co/live-code>
+
+I've saved the R script to Dropbox, and that link goes to a live version of that file. Refresh or re-open the link as needed to copy/paste code I type up on the screen.
+
+
+# Sharing graphics, code, and analysis
+
+- Knitting as PDF or Word
+- Knitting as HTML
+- [Publishing at RStudio Connect](https://www.rstudio.com/products/connect/)
+- [Publishing at RPubs](https://rpubs.com/)
+- [GitHub](https://github.com/) and [Gists](https://gist.github.com/)
+
+Entire projects:
+
+- [RMarkdown websites](https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html) (see [James Sinkovic's capstone](http://jamessinkovic.net/capstone/index.html))
+- [Blogdown](https://bookdown.org/yihui/blogdown/)
+- [Bookdown](https://bookdown.org/)
+
+
+# Refining and enhancing interactive plots
+
+This all goes beyond the scope of this class, because interactive HTML plots all require knowledge of JavaScript and we don't have time in this class to learn a second programming language.^[Even in a 3-credit version of this class I wouldn't cover JavaScript and D3—it would require its own class.] But there are some cool resources for making and enhancing interactive plots:
+
+- [**plotly**](https://plot.ly/): You've already been exposed to this in this class. If you feed a ggplot object to `ggplotly()` in the `plotly` library, you can have instant interactivity. There are all sorts of adjustments you can make without touching JavaScript—[look at the documentation for extensive examples](https://plot.ly/ggplot2/). 
+- [**Highcharts**](https://www.highcharts.com/): This is a competitor to plotly and works kind of similarly, but doesn't let you feed pre-made ggplot objects to it. You have to follow a different syntax. It's very well documented, though, and you can avoid using any JavaScript. [Its R package is very well documented](https://github.com/jbkunst/highcharter).
+- [**Lots of others**](http://www.htmlwidgets.org/showcase_visNetwork.html): There are actually a bunch of other dataviz-focused JavaScript libraries. There's [a neat gallery of examples here](http://www.htmlwidgets.org/showcase_visNetwork.html), with maps, flowcharts, network diagrams, etc., and these libraries are all generally well documented too.
+- [**D3**](https://d3js.org/): This is an entire dialect of JavaScript focused on **d**ata-**d**riven **d**ocuments (hence D3). It's a very high level way of graphing things—you have to to a lot of manual labor and it can be miserable, but you can make incredible stuff. Lots of the libraries in the gallery linked above use D3 behind the scenes. R has a way of working with D3 animations within RStudio using the superbly named [R2D3 package](https://rstudio.github.io/r2d3/).^[Look at its hex sticker!]
+
+
+# Refining and enhancing static plots
+
+## Install a vector image editor
+
+- [**Adobe Illustrator**](https://www.adobe.com/products/illustrator.html): This is the industry standard vector editor; it's expensive, but [it's free for BYU student employees](https://byu.onthehub.com/WebStore/OfferingDetails.aspx?o=3d3dfaf5-0f77-e311-93f9-b8ca3a5db7a1).
+- [**Inkscape**](https://inkscape.org/en/): This is an open source editor, so it's free (yay!) but can be clunky to work with (boo). It's sufficient for what we're going to be doing, though. 
+    - *Important for Mac users*: you have to install [XQuartz](https://www.xquartz.org/) before installing Inkscape, which is fine because you also need it for embedding custom fonts in R anyway
+    - Also, the developers haven't paid for a macOS developer certificate, so Inkscape might show an error saying it can't open the first time you try to open it. If that happens, go find it in your "Applications" folder, right click on Inkscape, and choose "Open". You only have to do this one time—after you've opened it like this once, it will open just fine in the future.
+- [**Gravit Designer**](https://www.designer.io/): This is a freemium vector editor that you can use in your browser or through a desktop application. It works fairly well, but the free verison won't embed fonts. If you want to embed fonts, export your refined graphic as an SVG,^[This is the universal vector image format, like CSV is the universal data format] open that SVG in Inkscape, and use Inkscape to export as a PDF with embedded fonts.
+
+## Make an image and refine it
+
+**Data**: [<i class="fas fa-table"></i> Nathan's Famous Hot Dog contest winners](/data/hot-dog-contest-winners.csv) ^[{-} Data originally from [FlowingData](https://flowingdata.com/2009/07/02/whos-going-to-win-nathans-hot-dog-eating-contest/).]
+
+**Plot with transparent background**:
+
+```{r load-libraries, warning=FALSE, message=FALSE}
+library(tidyverse)
+```
+
+```{r fake-load data, eval=FALSE}
+hotdogs <- read_csv("https://datavizf18.classes.andrewheiss.com/data/hot-dog-contest-winners.csv") %>%
+  rename(dogs = `Dogs eaten`, record = `New record`) %>%
+  mutate(record = factor(record))
+```
+
+```{r real-load-data, include=FALSE}
+hotdogs <- read_csv(here::here("static/data/hot-dog-contest-winners.csv")) %>%
+  rename(dogs = `Dogs eaten`, record = `New record`) %>%
+  mutate(record = factor(record))
+```
+
+```{r plot-hotdogs, fig.width=7, fig.height=4}
+plot_hotdogs <- ggplot(hotdogs, aes(x = Year, y = dogs, fill = record)) + 
+  geom_col() + 
+  scale_fill_manual(values = c("grey80", "#FC7300")) +
+  scale_x_continuous(breaks = seq(1980, 2010, 2), expand = c(0, 0)) +
+  scale_y_continuous(breaks = seq(0, 70, 10), expand = c(0, 0)) +
+  guides(fill = FALSE) +
+  labs(y = "Hot dogs and buns", x = NULL) +
+  theme_minimal() +
+  theme(panel.background = element_rect(fill = "transparent", colour = NA),
+        plot.background = element_rect(fill = "transparent", colour = NA),
+        axis.ticks.x = element_line(size = 0.25),
+        panel.grid.major.x = element_blank(),
+        panel.grid.major.y = element_line(size = 0.5, linetype = "dashed"),
+        panel.grid.minor = element_blank())
+
+plot_hotdogs
+```
+
+```{r save-hotdogs, eval=FALSE}
+ggsave(plot_hotdogs, filename = "output/hotdogs.pdf", device = cairo_pdf,
+       width = 7, height = 4, units = "in", bg = "transparent")
+```
+
+**Text for annotations**: 
+
+- Winners from Nathan's Hot Dog Eating Contest
+- It's that time of year again. Since 1916, the annual eating competition has grown substantially attracting competitors from around the world
+- Frank Dellarosa eats 21 and a half HDBs over 12 minutes, breaking the previous record of 19 and a half
+- Through 2001-2005, Takeru Kobayashi wins by no less than 12 HDBs. In 2006 he only wins by 1.75. After winning 6 years in a row and setting the world record 4 times, Kobayashi places second in 2007.
+- For the first time since 1999, an American reclaims the title when Joey Chestnut consumes 66 HDBs, a new world record. Chestnut repeats in 2008.
+- Source: Wikipedia and Nathan's Famous
+
+**Original enhanced plot**:
+
+<figure class="fullwidth">
+
+![Enhanced hot dog eating contest graph](/images/class/hot-dogs.gif)
+
+</figure>
+
+
+# Clearest and muddiest things
+
+Go to [this form](https://goo.gl/forms/rSIbw1voOV2vWKMD2) and answer these two questions:
+
+1. What was the muddiest thing from class today? What are you still wondering about?
+2. What was the clearest thing from class today? What was the most exciting thing you learned?
+
+I'll compile the questions and send out answers after class.
+
+
+```{r class-stuff, include=FALSE, eval=FALSE}
+
+```
