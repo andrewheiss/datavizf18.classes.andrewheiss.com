@@ -1,0 +1,39 @@
+---
+title: "Truth, beauty, and data revisited"
+date: "2018-12-11"
+citeproc: false
+bibliography: ../../static/bib/references.bib
+csl: ../../static/bib/chicago-syllabus-no-bib.csl
+output:
+  blogdown::html_page:
+    template: ../../pandoc/toc-title_html.template
+    toc: true
+    toc_depth: 4
+editor_options: 
+  chunk_output_type: console
+---
+
+# Slides
+
+[Download the slides from today's lecture](/slides/MPA-635_2018-12-11.pdf).
+
+<figure>
+[![First slide](/images/slides/slides_2018-12-11.png)](/slides/MPA-635_2018-12-11.pdf)
+</figure>
+
+
+# Making an R Markdown-based website
+
+[Follow Alison Hill's tutorial](https://alison.rbind.io/post/up-and-running-with-blogdown/) to start your own free website using R and blogdown. Get your stuff out there!
+
+
+# Class feedback
+
+The post-class form for today is a little different from the past few weeks. Go to [this form](https://goo.gl/forms/mmxRBurW7LUr2lRm1) and answer the questions there.
+
+Thanks for a fantastic semester!
+
+
+```{r class-stuff, include=FALSE, eval=FALSE}
+
+```

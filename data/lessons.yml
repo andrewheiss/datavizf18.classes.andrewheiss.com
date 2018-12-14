@@ -108,6 +108,7 @@ lessons:
   - title: "Truth, beauty, and data revisited"
     date: "December 11"
     reading: "14-reading"
+    class: "14-class"
 
   - title: '<span class="fake-header-table">Final</span>'
     header: True
